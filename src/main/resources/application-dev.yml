@@ -1,0 +1,30 @@
+logging:
+    level:
+        org:
+            springframework:
+                jdbc:
+                    core: DEBUG
+                    core.JdbcTemplate: DEBUG
+                    core.StatementCreatorUtils: TRACE
+spring:
+    datasource:
+        driver-class-name: "com.mysql.cj.jdbc.Driver"
+        init:
+            mode: always
+            platform: mysql
+        password: 1234
+        url: "jdbc:mysql://localhost:3306/sidekick_poc_1"
+        username: root
+    jpa:
+        database: mysql
+        generate-ddl: true
+        hibernate:
+            ddl-auto: update
+        properties:
+            hibernate:
+                format_sql: true
+        show-sql: true
+    devtools:
+        add-properties: false
+server:
+    port: 5000

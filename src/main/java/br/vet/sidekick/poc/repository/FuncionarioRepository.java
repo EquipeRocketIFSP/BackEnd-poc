@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface FuncionarioRepository extends JpaRepository<Funcionario, Long> {
 
-    Boolean existsByUserNameAndPassword(String username, String password);
+    Boolean existsByUsernameAndPassword(String username, String password);
 
-    Funcionario getByUserName(String username);
+    Funcionario getByUsername(String username);
 }
