@@ -1,5 +1,4 @@
 ##configuration
 spring:
   profiles:
-    active: dev
-#    active: hom
+    active: ${PROFILE}

@@ -8,21 +8,34 @@ logging:
                     core.StatementCreatorUtils: TRACE
 spring:
     datasource:
-        driver-class-name: "com.mysql.cj.jdbc.Driver"
         init:
             mode: always
             platform: mysql
-        password: 1234
+        driver-class-name: "com.mysql.cj.jdbc.Driver"
+        #        url: "jdbc:mysql://db:3306/sidekick_poc_1"
         url: "jdbc:mysql://localhost:3306/sidekick_poc_1"
         username: root
+        password: 1234
+        name: poc
+        type: com.zaxxer.hikari.HikariDataSource
+        hikari:
+            #             Configurações de atividade de conexão
+            pool-name: "springPocPool"
+            connection-test-query: "SELECT NOW();"
+            maximum-pool-size: 5
+            minimum-idle: 2
+            connection-timeout: 20000
+            idle-timeout: 10000
     jpa:
         database: mysql
         generate-ddl: true
         hibernate:
-            ddl-auto: update
+            #            ddl-auto: none
+            ddl-auto: update  # Gera a estrutura do banco de dados automaticamente pela JPA
         properties:
             hibernate:
                 format_sql: true
+                dialect: "org.hibernate.dialect.MySQL8Dialect"
         show-sql: true
     devtools:
         add-properties: false
