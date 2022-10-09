@@ -1,5 +1,0 @@
-##configuration
-spring:
-  profiles:
-    active: dev
-#    active: hom
