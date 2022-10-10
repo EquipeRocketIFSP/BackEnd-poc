@@ -6,7 +6,7 @@ services:
 #      dockerfile: ./Dockerfile
 #      args:
 #        network: host
-    image: "h2smd/poc:latest"
+    image: "h2smd/poc:v0_0_2"
     ports:
       - '8080:8080'
       - '5000:5000'
