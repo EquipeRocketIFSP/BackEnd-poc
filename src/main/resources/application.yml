@@ -1,40 +1,40 @@
 logging:
-  level:
-    org:
-      springframework:
-        jdbc:
-          core: DEBUG
-          core.JdbcTemplate: DEBUG
+    level:
+        org:
+            springframework:
+                jdbc:
+                    core: DEBUG
+                    core.JdbcTemplate: DEBUG
 spring:
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    hikari:
-      connection-test-query: SELECT NOW();
-      connection-timeout: 20000
-      idle-timeout: 10000
-      maximum-pool-size: 5
-      minimum-idle: 2
-      pool-name: springPocPool
-      username: admin
-      password: kASe1QkIm5xQUZMF7cXo
-    init:
-      mode: always
-      platform: mysql
-    name: pocDB
-    type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:mysql://poc.cy57hfox1fy1.us-east-1.rds.amazonaws.com:3306/poc
-    username: admin
-    password: kASe1QkIm5xQUZMF7cXo
-  jpa:
-    database: mysql
-    generate-ddl: true
-    hibernate:
-      ddl-auto: update
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.MySQL8Dialect
-        format_sql: true
-    show-sql: true
+    datasource:
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        hikari:
+            connection-test-query: SELECT NOW();
+            connection-timeout: 20000
+            idle-timeout: 10000
+            maximum-pool-size: 5
+            minimum-idle: 2
+            password: kASe1QkIm5xQUZMF7cXo5000
+            pool-name: springPocPool
+            username: admin
+        init:
+            mode: always
+            platform: mysql
+        name: pocDB
+        password: kASe1QkIm5xQUZMF7cXo5000
+        type: com.zaxxer.hikari.HikariDataSource
+        url: jdbc:mysql://poc.cy57hfox1fy1.us-east-1.rds.amazonaws.com:3306/poc?useUnicode=true&characterEncoding=utf8&useSSL=true&allowPublicKeyRetrieval=true&useTimezone=true&serverTimezone=UTC
+        username: admin
+    jpa:
+        database: mysql
+        generate-ddl: true
+        hibernate:
+            ddl-auto: update
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.MySQL8Dialect
+                format_sql: true
+        show-sql: true
 server:
-  port:
-    8080
+    port:
+        8080

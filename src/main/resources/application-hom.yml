@@ -12,7 +12,7 @@ spring:
         init:
             mode: always
             platform: mysql
-        password: kASe1QkIm5xQUZMF7cXo
+        password: kASe1QkIm5xQUZMF7cXo5000
         url: "jdbc:mysql://poc.cy57hfox1fy1.us-east-1.rds.amazonaws.com:3306/poc"
         username: "admin"
     jpa:

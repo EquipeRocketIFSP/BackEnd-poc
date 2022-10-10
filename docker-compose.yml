@@ -1,31 +1,16 @@
 version: '3'
 services:
   app:
-#    depends_on:
-#      - db
-    build:
-      context: ./
-      dockerfile: ./Dockerfile
-    image: "poc:latest"
+#    build:
+#      context: ./
+#      dockerfile: ./Dockerfile
+#      args:
+#        network: host
+    image: "h2smd/poc:latest"
     ports:
+      - '8080:8080'
       - '5000:5000'
-#      - '8080:8080'
-#      - '3306:3306'
     environment:
-#      - SPRING_DATASOURCE_URL=jdbc:mysql://localhost:3306/sidekick_poc_1?useUnicode=true&characterEncoding=utf8&useSSL=false
+      - SPRING_DATASOURCE_URL=jdbc:mysql://poc.cy57hfox1fy1.us-east-1.rds.amazonaws.com:3306/poc?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true
       - ARGS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5000 -Xmx1G -Xms128m -XX:MaxMetaspaceSize=128m
       - PROFILE=dev
-#    links:
-#      - db
-#  db:
-#    image: mysql:8.0.30
-#    container_name: mySqlDB
-#    ports:
-#      - '3306:3306'
-#    environment:
-#      - MYSQL_ROOT_HOST=%
-#      - MYSQL_DATABASE=sidekick_poc_1
-#      - MYSQL_USER=root
-#      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
-#    volumes:
-#      - ./docker/volume_mysql:/var/lib/mysql

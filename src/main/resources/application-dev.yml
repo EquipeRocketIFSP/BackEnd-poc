@@ -16,15 +16,15 @@ spring:
             minimum-idle: 2
             pool-name: springPocPool
             username: admin
-            password: kASe1QkIm5xQUZMF7cXo
+            password: kASe1QkIm5xQUZMF7cXo5000
         init:
             mode: always
             platform: mysql
         name: pocDB
         type: com.zaxxer.hikari.HikariDataSource
-        url: jdbc:mysql://poc.cy57hfox1fy1.us-east-1.rds.amazonaws.com:3306/poc
+        url: jdbc:mysql://poc.cy57hfox1fy1.us-east-1.rds.amazonaws.com:3306/poc?useUnicode=true&characterEncoding=utf8&useSSL=true&allowPublicKeyRetrieval=true&useTimezone=true&serverTimezone=UTC
         username: admin
-        password: kASe1QkIm5xQUZMF7cXo
+        password: kASe1QkIm5xQUZMF7cXo5000
     jpa:
         database: mysql
         generate-ddl: true
@@ -35,3 +35,6 @@ spring:
                 dialect: org.hibernate.dialect.MySQL8Dialect
                 format_sql: true
         show-sql: true
+server:
+    port:
+        8080
