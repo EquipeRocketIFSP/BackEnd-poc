@@ -1,9 +1,14 @@
-//package br.vet.sidekick.poc.service;
-//
-//import br.vet.sidekick.poc.model.Funcionario;
-//
-//public interface FuncionarioService {
-//    Boolean authenticate(String username, String password);
-//
-//    Funcionario get(Funcionario funcionario);
-//}
+package br.vet.sidekick.poc.service;
+
+import br.vet.sidekick.poc.model.Funcionario;
+
+import java.net.URI;
+import java.util.Optional;
+
+public interface FuncionarioService {
+    Boolean authenticate(String username, String password);
+
+    Funcionario get(Funcionario funcionario);
+
+    Optional<Funcionario> create(Funcionario funcionario);
+}
