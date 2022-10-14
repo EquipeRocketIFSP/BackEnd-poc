@@ -15,20 +15,22 @@ spring:
             maximum-pool-size: 5
             minimum-idle: 2
             pool-name: springPocPool
-            username: admin
-            password: kASe1QkIm5xQUZMF7cXo5000
         init:
             mode: always
             platform: mysql
         name: pocDB
         type: com.zaxxer.hikari.HikariDataSource
-        url: jdbc:mysql://poc.cy57hfox1fy1.us-east-1.rds.amazonaws.com:3306/poc?useUnicode=true&characterEncoding=utf8&useSSL=true&allowPublicKeyRetrieval=true&useTimezone=true&serverTimezone=UTC
-        username: admin
-        password: kASe1QkIm5xQUZMF7cXo5000
+#        url: @SPRING_DATASOURCE_URL@
+#        username: @DB_USER@
+#        password: @DB_PASSWORD@
+        url: ${SPRING_DATASOURCE_URL}
+        username: ${DB_USER}
+        password: ${DB_PASSWORD}
     jpa:
         database: mysql
         generate-ddl: true
         hibernate:
+#            ddl-auto: create-drop
             ddl-auto: update
         properties:
             hibernate:

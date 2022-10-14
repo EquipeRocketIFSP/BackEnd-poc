@@ -1,16 +1,21 @@
 version: '3'
 services:
   app:
-#    build:
-#      context: ./
-#      dockerfile: ./Dockerfile
-#      args:
-#        network: host
-    image: "h2smd/poc:v0_0_2"
+    build:
+      dockerfile: ./Dockerfile
+      args:
+        - DB_PASSWORD=kASe1QkIm5xQUZMF7cXo5000
+        - DB_USER=admin
+        - PROFILE=dev
+        - SPRING_DATASOURCE_URL=jdbc:mysql://poc.cy57hfox1fy1.us-east-1.rds.amazonaws.com:3306/poc?useUnicode=true&characterEncoding=utf8&useSSL=true&allowPublicKeyRetrieval=true&useTimezone=true&serverTimezone=UTC
+    image: "poc:latest"
+#    image: "h2smd/poc:latest"
     ports:
       - '8080:8080'
       - '5000:5000'
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://poc.cy57hfox1fy1.us-east-1.rds.amazonaws.com:3306/poc?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true
+      - SPRING_DATASOURCE_URL=jdbc:mysql://poc.cy57hfox1fy1.us-east-1.rds.amazonaws.com:3306/poc?useUnicode=true&characterEncoding=utf8&useSSL=true&allowPublicKeyRetrieval=true
       - ARGS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5000 -Xmx1G -Xms128m -XX:MaxMetaspaceSize=128m
       - PROFILE=dev
+      - DB_PASSWORD=kASe1QkIm5xQUZMF7cXo5000
+      - DB_USER=admin
