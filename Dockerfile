@@ -1,4 +1,4 @@
-FROM amazoncorretto:17.0.4
+FROM public.ecr.aws/amazoncorretto/amazoncorretto:17.0.4
 
 ARG WAR_FILE=target/poc*.jar
 
@@ -18,7 +18,7 @@ COPY ${WAR_FILE} app.jar
 
 SHELL ["/bin/sh", "-c"]
 
-EXPOSE 5000
+EXPOSE 5001
 
 EXPOSE 8080
 

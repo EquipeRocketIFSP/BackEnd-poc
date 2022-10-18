@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class HiController {
     @GetMapping
     public ResponseEntity<String> response(){
-        String sucesso = "Requição com sucesso, parabéns!!";
+        String sucesso = "Requição com sucesso!!";
         log.info(sucesso);
         return ResponseEntity.ok(sucesso);
     }
