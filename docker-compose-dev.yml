@@ -19,3 +19,5 @@ services:
       - PROFILE=dev
       - DB_PASSWORD=kASe1QkIm5xQUZMF7cXo5000
       - DB_USER=admin
+      - AUTH_USER=keycloak_user
+      - AUTH_PASS=keycloak_pass

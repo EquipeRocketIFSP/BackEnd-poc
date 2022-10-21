@@ -9,6 +9,8 @@ public interface FuncionarioRepository extends JpaRepository<Funcionario, Long> 
 
     Boolean existsByUsernameAndPassword(String username, String password);
 
+    Funcionario findByUsername(String username);
+
     Funcionario getByUsername(String username);
 
     Boolean existsByUsername(String username);

@@ -20,9 +20,6 @@ spring:
             platform: mysql
         name: pocDB
         type: com.zaxxer.hikari.HikariDataSource
-#        url: @SPRING_DATASOURCE_URL@
-#        username: @DB_USER@
-#        password: @DB_PASSWORD@
         url: ${SPRING_DATASOURCE_URL}
         username: ${DB_USER}
         password: ${DB_PASSWORD}
@@ -40,3 +37,20 @@ spring:
 server:
     port:
         8080
+    tomcat:
+        uri-encoding=UTF-8:
+    servlet:
+        encoding:
+            charset: UTF-8
+            enabled: true
+            force: true
+app:
+    security:
+        jwt:
+keycloak:
+    server:
+        contextPath: /auth
+        adminUser:
+            username: ${AUTH_USER}
+            password: ${AUTH_PASS}
+        realmImportFile: jwt-config.json

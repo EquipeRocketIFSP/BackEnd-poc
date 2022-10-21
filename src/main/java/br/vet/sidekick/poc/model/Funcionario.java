@@ -6,6 +6,7 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
 
 @Builder
 @AllArgsConstructor
@@ -13,13 +14,14 @@ import javax.validation.constraints.NotBlank;
 @Getter
 @ToString
 @Entity
-public class Funcionario {
+public class Funcionario implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Getter(AccessLevel.NONE)
+    @Getter
     @Column(name = "user_name", nullable = false)
     @Email
     private String username;
@@ -31,8 +33,5 @@ public class Funcionario {
 
     @Email
     private String email = this.username;
-    public String getUsername() {
-        return this.username;
-    }
 
 }
