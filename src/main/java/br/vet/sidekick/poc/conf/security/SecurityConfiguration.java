@@ -1,6 +1,9 @@
 package br.vet.sidekick.poc.conf.security;
 
+import br.vet.sidekick.poc.conf.security.filter.TokenAuthenticationFilter;
 import br.vet.sidekick.poc.conf.security.service.AuthenticationService;
+import br.vet.sidekick.poc.conf.security.service.TokenService;
+import br.vet.sidekick.poc.repository.FuncionarioRepository;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -13,6 +16,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 
 @EnableWebSecurity
@@ -21,8 +25,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     private AuthenticationService authenticationService;
 
-//    @Autowired
-//    private AuthenticationManager authenticationManager;
+    @Autowired
+    private TokenService tokenService;
+
+    @Autowired
+    private FuncionarioRepository repository;
 
     @Override
     @Bean
@@ -36,9 +43,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/auth").permitAll()
                 .antMatchers(HttpMethod.GET, "/usuario").permitAll()
                 .antMatchers(HttpMethod.GET, "/cadastro/*").permitAll()
+                .antMatchers(HttpMethod.GET, "/actuator/**").permitAll()
                 .anyRequest().authenticated()
                 .and().csrf().disable()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and().addFilterBefore(new TokenAuthenticationFilter(tokenService, repository), UsernamePasswordAuthenticationFilter.class);
     }
 
     @Override
