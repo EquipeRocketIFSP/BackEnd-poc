@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -12,7 +13,7 @@ import java.util.List;
 @CrossOrigin
 @Slf4j
 public class CadastroClinicaController {
-    private static CadastroClinicaDto cadastro = CadastroClinicaDto.builder()
+    private static CadastroClinicaDto cadastroDto = CadastroClinicaDto.builder()
             .cliniaRazao("Clinica Ficticia")
             .clinicaBairro("Bairro Fictício")
             .clinicaCelular("(19) 99435-8082")
@@ -54,9 +55,12 @@ public class CadastroClinicaController {
             .tecnicoSenha("afqUXsB4mY")
             .build();
 
+    private List<CadastroClinicaDto> cadastros = Arrays.asList(cadastroDto);
+
     @PostMapping
-    public ResponseEntity<CadastroClinicaDto> cadastrarClinica(
+    public ResponseEntity<CadastroClinicaDto> registerClinica(
             @RequestBody CadastroClinicaDto cadastro){
+        cadastros.add(cadastro);
         return ResponseEntity.ok(cadastro);
     }
 
@@ -64,11 +68,11 @@ public class CadastroClinicaController {
     public ResponseEntity<CadastroClinicaDto> getOne(@PathVariable Long id){
         return id != 1L
                 ? ResponseEntity.notFound().build()
-                : ResponseEntity.ok(cadastro);
+                : ResponseEntity.ok(cadastroDto);
     }
 
     @GetMapping
     public ResponseEntity<List<CadastroClinicaDto>> getAll(){
-        return ResponseEntity.ok(List.of(cadastro));
+        return ResponseEntity.ok(cadastros);
     }
 }
