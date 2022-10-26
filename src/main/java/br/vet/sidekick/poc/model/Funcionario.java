@@ -2,7 +2,6 @@ package br.vet.sidekick.poc.model;
 
 
 import lombok.*;
-
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -28,6 +27,28 @@ public class Funcionario {
     @ToString.Exclude
     @Basic(fetch = FetchType.LAZY)
     private String password;
+
+    private String nome;
+
+    private Long clinica;
+
+    private String logradouro;
+
+    private Integer numero;
+
+    private String cep;
+
+    private String bairro;
+
+    private String cidade;
+
+    private String estado;
+
+    private String cpf;
+
+    private String rg;
+
+    private String celular;
 
     @Email
     private String email = this.username;
