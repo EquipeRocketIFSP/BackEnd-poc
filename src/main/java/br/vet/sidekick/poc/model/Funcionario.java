@@ -39,7 +39,8 @@ public class Funcionario implements UserDetails {
     @Email
     private String email = this.username;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "funcionario")
+    @ToString.Exclude
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "funcionario")
     private List<Perfil> perfis = new ArrayList<>();
 
     public void setPerfis(List<Perfil> perfis) {
@@ -70,5 +71,7 @@ public class Funcionario implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+    @Column(length = 9)
+    private String cep;
 
 }

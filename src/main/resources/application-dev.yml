@@ -44,3 +44,5 @@ app:
     jwt:
         secret: qwertyuiosdfghjk
         expiration: "864000000"
+    temp:
+        path: "/opt/pdf"
