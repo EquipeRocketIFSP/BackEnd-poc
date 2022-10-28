@@ -8,13 +8,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-<<<<<<< HEAD
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-=======
-import java.io.Serializable;
->>>>>>> autenticacaojwt
 
 @Builder
 @AllArgsConstructor
@@ -22,23 +18,12 @@ import java.io.Serializable;
 @Getter
 @ToString
 @Entity
-<<<<<<< HEAD
 public class Funcionario implements UserDetails {
-
-    private static final long serialVersionUID = 1L;
-=======
-public class Funcionario implements Serializable {
->>>>>>> autenticacaojwt
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
-<<<<<<< HEAD
-=======
-    @Getter
->>>>>>> autenticacaojwt
     @Column(name = "user_name", nullable = false)
     @Email
     private String username;
@@ -50,9 +35,9 @@ public class Funcionario implements Serializable {
 
     @Email
     private String email = this.username;
-<<<<<<< HEAD
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "funcionario")
+    @ToString.Exclude
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "funcionario")
     private List<Perfil> perfis = new ArrayList<>();
 
     public void setPerfis(List<Perfil> perfis) {
@@ -83,7 +68,7 @@ public class Funcionario implements Serializable {
     public boolean isEnabled() {
         return true;
     }
-=======
->>>>>>> autenticacaojwt
+    @Column(length = 9)
+    private String cep;
 
 }

@@ -42,6 +42,7 @@ app:
     jwt:
         secret: qwertyuiosdfghjk
         expiration: "864000000"
+<<<<<<< HEAD
 =======
     tomcat:
         uri-encoding=UTF-8:
@@ -61,3 +62,7 @@ keycloak:
             password: ${AUTH_PASS}
         realmImportFile: jwt-config.json
 >>>>>>> autenticacaojwt
+=======
+    temp:
+        path: "/opt/pdf"
+>>>>>>> 93cc5f7421bc5fb3b82e6eb1c9ceca57c36929e0
