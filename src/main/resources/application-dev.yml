@@ -37,13 +37,11 @@ spring:
 server:
     port:
         8080
-<<<<<<< HEAD
 app:
     jwt:
         secret: qwertyuiosdfghjk
+#        expiration: "10000"
         expiration: "864000000"
-<<<<<<< HEAD
-=======
     tomcat:
         uri-encoding=UTF-8:
     servlet:
@@ -51,18 +49,5 @@ app:
             charset: UTF-8
             enabled: true
             force: true
-app:
-    security:
-        jwt:
-keycloak:
-    server:
-        contextPath: /auth
-        adminUser:
-            username: ${AUTH_USER}
-            password: ${AUTH_PASS}
-        realmImportFile: jwt-config.json
->>>>>>> autenticacaojwt
-=======
     temp:
         path: "/opt/pdf"
->>>>>>> 93cc5f7421bc5fb3b82e6eb1c9ceca57c36929e0

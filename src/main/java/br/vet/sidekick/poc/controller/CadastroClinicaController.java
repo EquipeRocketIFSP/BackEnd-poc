@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -55,7 +56,8 @@ public class CadastroClinicaController {
             .tecnicoSenha("afqUXsB4mY")
             .build();
 
-    private List<CadastroClinicaDto> cadastros = Arrays.asList(cadastroDto);
+    private static List<CadastroClinicaDto> cadastros = new ArrayList<>();
+    static {cadastros.add(cadastroDto);}
 
     @PostMapping
     public ResponseEntity<CadastroClinicaDto> registerClinica(

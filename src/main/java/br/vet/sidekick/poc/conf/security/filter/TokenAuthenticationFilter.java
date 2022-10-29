@@ -19,7 +19,7 @@ import java.util.NoSuchElementException;
 @AllArgsConstructor
 @Slf4j
 public class TokenAuthenticationFilter extends OncePerRequestFilter {
-    private static String BEARER = "Bearer ";
+    private static String TYPE = "Bearer ";
 
     private TokenService tokenService;
 
@@ -36,6 +36,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
     private void authenticate(String token) throws NoSuchElementException{
         Long userId = tokenService.getFuncionarioId(token);
+        log.info("Usuário logado: " + userId);
         Funcionario funcionario;
         try{
             funcionario = repository.findById(userId).orElseThrow();
@@ -49,9 +50,9 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
     private String retrieveToken(HttpServletRequest request) {
         String token = request.getHeader("Authorization");
-        if(token == null || token.isEmpty() || !token.startsWith(BEARER)){
+        if(token == null || token.isEmpty() || !token.startsWith(TYPE)){
             return null;
         }
-        return token.substring(BEARER.length(), token.length());
+        return token.substring(TYPE.length(), token.length());
     }
 }

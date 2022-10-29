@@ -30,18 +30,29 @@ public class TokenService {
 
     public Boolean validate(String token) {
         try {
-            Jwts.parser()
-                    .setSigningKey(SECRET)
-                    .parseClaimsJws(token);
+//            Jwts.parser()
+//                    .setSigningKey(SECRET)
+//                    .parseClaimsJws(token);
+            getFuncionarioId(token);
             log.info("Token validado com sucesso!");
             return true;
-        } catch (
-                MalformedJwtException
-                | ExpiredJwtException
-                | UnsupportedJwtException
-                | SignatureException
-                | IllegalArgumentException e
-        ){
+        } catch (MalformedJwtException e){
+            log.error("MalformedJwtException");
+            log.error(e.getLocalizedMessage());
+        } catch (ExpiredJwtException e) {
+            log.error("ExpiredJwtException");
+            log.error(e.getLocalizedMessage());
+        }catch (UnsupportedJwtException e){
+            log.error("UnsupportedJwtException");
+            log.error(e.getLocalizedMessage());
+        }catch (SignatureException e) {
+            log.error("SignatureException");
+            log.error(e.getLocalizedMessage());
+        }catch (IllegalArgumentException e){
+            log.error("IllegalArgumentException");
+            log.error(e.getLocalizedMessage());
+        }catch (Exception e){
+            log.error("Exception");
             log.error(e.getLocalizedMessage());
         }
         return false;

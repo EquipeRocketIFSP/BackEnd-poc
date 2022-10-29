@@ -15,7 +15,6 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.net.URI;
 
 import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
@@ -49,9 +48,7 @@ public class AuthenticationController {
             return ResponseEntity.badRequest().build();
         }
         return ResponseEntity.ok(new TokenDto(token, "Bearer"));
-//        return funcionarioService.authenticate(funcionario.getUsername(), funcionario.getPassword())
-//                ? ResponseEntity.ok(funcionarioService.get(funcionario))
-//                : ResponseEntity.noContent().build();
+
     }
 
     @PostMapping("/create")
