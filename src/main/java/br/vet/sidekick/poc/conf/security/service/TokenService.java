@@ -30,10 +30,7 @@ public class TokenService {
 
     public Boolean validate(String token) {
         try {
-//            Jwts.parser()
-//                    .setSigningKey(SECRET)
-//                    .parseClaimsJws(token);
-            getFuncionarioId(token);
+            jwtDecode(token);
             log.info("Token validado com sucesso!");
             return true;
         } catch (MalformedJwtException e){
@@ -58,11 +55,15 @@ public class TokenService {
         return false;
     }
 
+    private Jws<Claims> jwtDecode(String token) {
+        return Jwts.parser()
+                        .setSigningKey(SECRET)
+                        .parseClaimsJws(token);
+    }
+
     public Long getFuncionarioId(String token) {
         return Long.parseLong(
-                Jwts.parser()
-                        .setSigningKey(SECRET)
-                        .parseClaimsJws(token)
+                jwtDecode(token)
                         .getBody()
                         .getSubject()
         );
