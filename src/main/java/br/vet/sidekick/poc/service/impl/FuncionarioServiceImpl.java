@@ -1,12 +1,11 @@
 package br.vet.sidekick.poc.service.impl;
 
-import br.vet.sidekick.poc.model.Funcionario;
+import br.vet.sidekick.poc.controller.model.Funcionario;
 import br.vet.sidekick.poc.repository.FuncionarioRepository;
 import br.vet.sidekick.poc.service.FuncionarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.net.URI;
 import java.util.Optional;
 
 @Service

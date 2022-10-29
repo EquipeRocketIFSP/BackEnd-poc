@@ -2,8 +2,8 @@ package br.vet.sidekick.poc.controller;
 
 import br.vet.sidekick.poc.conf.security.service.TokenService;
 import br.vet.sidekick.poc.controller.dto.TokenDto;
-import br.vet.sidekick.poc.model.Funcionario;
-import br.vet.sidekick.poc.model.dto.LoginForm;
+import br.vet.sidekick.poc.controller.model.Funcionario;
+import br.vet.sidekick.poc.controller.model.dto.LoginForm;
 import br.vet.sidekick.poc.service.FuncionarioService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,6 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.net.URI;
 
 import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;

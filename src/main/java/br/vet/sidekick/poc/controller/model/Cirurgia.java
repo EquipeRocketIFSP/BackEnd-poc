@@ -1,25 +1,22 @@
-package br.vet.sidekick.poc.model;
+package br.vet.sidekick.poc.controller.model;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.time.LocalDateTime;
 
-public class Documento {
+public class Cirurgia {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
-    private Long id_prontuario;
-
-    private String caminho_arquivo;
+    private String categoria_paciente;
 
     private Long clinica;
 
-    private LocalDateTime criado_em;
+    private Long prontuario;
 
-    private Long tipo_documento;
+    private Long tipo_cirurgia;
 
 }

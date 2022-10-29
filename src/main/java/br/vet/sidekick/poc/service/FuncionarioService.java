@@ -1,8 +1,7 @@
 package br.vet.sidekick.poc.service;
 
-import br.vet.sidekick.poc.model.Funcionario;
+import br.vet.sidekick.poc.controller.model.Funcionario;
 
-import java.net.URI;
 import java.util.Optional;
 
 public interface FuncionarioService {

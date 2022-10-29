@@ -1,6 +1,5 @@
 package br.vet.sidekick.poc.conf.security.service;
 
-import br.vet.sidekick.poc.model.Funcionario;
 import br.vet.sidekick.poc.repository.FuncionarioRepository;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -9,8 +8,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 @NoArgsConstructor

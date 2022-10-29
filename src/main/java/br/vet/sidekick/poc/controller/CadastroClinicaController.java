@@ -1,7 +1,12 @@
 package br.vet.sidekick.poc.controller;
 
 import br.vet.sidekick.poc.controller.dto.CadastroClinicaDto;
+import br.vet.sidekick.poc.controller.model.Funcionario;
+import br.vet.sidekick.poc.controller.model.Veterinario;
+import br.vet.sidekick.poc.service.ClinicaService;
+import br.vet.sidekick.poc.service.FuncionarioService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -55,12 +60,23 @@ public class CadastroClinicaController {
             .tecnicoSenha("afqUXsB4mY")
             .build();
 
+    @Autowired
+    ClinicaService clinicaService;
+
+//    @Autowired
+//    VeterinarioService veterinarioService;
+
+    @Autowired
+    FuncionarioService funcionarioService;
     private List<CadastroClinicaDto> cadastros = Arrays.asList(cadastroDto);
 
     @PostMapping
     public ResponseEntity<CadastroClinicaDto> registerClinica(
             @RequestBody CadastroClinicaDto cadastro){
         cadastros.add(cadastro);
+        clinicaService.cadastrar(cadastro);
+//        veterinarioService.cadastrar(cadastro);
+//        funcionarioService.cadastrar(cadastro);
         return ResponseEntity.ok(cadastro);
     }
 

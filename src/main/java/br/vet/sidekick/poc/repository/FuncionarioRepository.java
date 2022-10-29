@@ -1,6 +1,6 @@
 package br.vet.sidekick.poc.repository;
 
-import br.vet.sidekick.poc.model.Funcionario;
+import br.vet.sidekick.poc.controller.model.Funcionario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,7 +1,7 @@
 package br.vet.sidekick.poc.conf.security.filter;
 
 import br.vet.sidekick.poc.conf.security.service.TokenService;
-import br.vet.sidekick.poc.model.Funcionario;
+import br.vet.sidekick.poc.controller.model.Funcionario;
 import br.vet.sidekick.poc.repository.FuncionarioRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

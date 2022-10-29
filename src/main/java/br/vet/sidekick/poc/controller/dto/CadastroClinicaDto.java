@@ -3,8 +3,10 @@ package br.vet.sidekick.poc.controller.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
+import lombok.Getter;
 
 @Builder
+@Getter
 public class CadastroClinicaDto {
     @JsonProperty("clinica-nome-fantasia")
     private String clinicaNome;

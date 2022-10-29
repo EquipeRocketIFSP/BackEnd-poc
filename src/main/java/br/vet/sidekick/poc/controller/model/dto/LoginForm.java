@@ -1,4 +1,4 @@
-package br.vet.sidekick.poc.model.dto;
+package br.vet.sidekick.poc.controller.model.dto;
 
 import lombok.Getter;
 import lombok.Setter;

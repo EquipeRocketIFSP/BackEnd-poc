@@ -1,11 +1,11 @@
-package br.vet.sidekick.poc.model;
+package br.vet.sidekick.poc.controller.model;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-public class Procedimento {
+public class Veterinario extends Funcionario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -13,8 +13,6 @@ public class Procedimento {
 
     private Long clinica;
 
-    private Long descricao;
-
-    private Long prontuario;
+    private String crmv;
 
 }

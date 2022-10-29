@@ -1,10 +1,12 @@
-package br.vet.sidekick.poc.model;
+package br.vet.sidekick.poc.controller.model;
 
+import lombok.Builder;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+@Builder
 public class Clinica {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
