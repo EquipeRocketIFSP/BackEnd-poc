@@ -1,8 +1,6 @@
 package br.vet.sidekick.poc.controller;
 
 import br.vet.sidekick.poc.controller.dto.CadastroClinicaDto;
-import br.vet.sidekick.poc.controller.model.Funcionario;
-import br.vet.sidekick.poc.controller.model.Veterinario;
 import br.vet.sidekick.poc.service.ClinicaService;
 import br.vet.sidekick.poc.service.FuncionarioService;
 import lombok.extern.slf4j.Slf4j;

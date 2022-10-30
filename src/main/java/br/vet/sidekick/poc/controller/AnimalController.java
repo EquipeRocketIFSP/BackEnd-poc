@@ -1,6 +1,6 @@
 package br.vet.sidekick.poc.controller;
 
-import br.vet.sidekick.poc.controller.model.Animal;
+import br.vet.sidekick.poc.model.Animal;
 import br.vet.sidekick.poc.repository.AnimalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

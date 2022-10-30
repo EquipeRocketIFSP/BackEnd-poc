@@ -1,4 +1,4 @@
-package br.vet.sidekick.poc.controller.model;
+package br.vet.sidekick.poc.model;
 
 import lombok.*;
 import javax.persistence.*;
@@ -11,30 +11,33 @@ import java.time.LocalDateTime;
 @Getter
 @ToString
 @Entity
-public class Agendamento {
+public class Estoque {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_agendamento", nullable = false)
+    @Column(name = "id_estoque", nullable = false)
     private Long id;
-
-    @Column(name = "animal", nullable = false)
-    @NotBlank(message = "Valor não pode ser nulo ou em branco")
-    private Long animal;
 
     @Column(name = "clinica", nullable = false)
     @NotBlank(message = "Valor não pode ser nulo ou em branco")
-    private Long clinica;
+    private Integer clinica;
 
-    @Column(name = "criadoEm", nullable = false)
-    @NotBlank(message = "Valor não pode ser nulo ou em branco")
-    private LocalDateTime criado_em;
+    @Column(name = "entrada_qtd")
+    private Long entradaQtd;
 
-    @Column(name = "dataConsulta", nullable = false)
+    @Column(name = "lote", nullable = false)
     @NotBlank(message = "Valor não pode ser nulo ou em branco")
-    private LocalDateTime data_consulta;
+    private String lote;
 
-    @Column(name = "cpf", nullable = false)
+    @Column(name = "medicamento", nullable = false)
     @NotBlank(message = "Valor não pode ser nulo ou em branco")
-    private String tipo;
+    private Long medicamento;
+
+    @Column(name = "quantidade", nullable = false)
+    @NotBlank(message = "Valor não pode ser nulo ou em branco")
+    private Integer quantidade;
+
+    @Column(name = "validade", nullable = false)
+    @NotBlank(message = "Valor não pode ser nulo ou em branco")
+    private LocalDateTime validade;
 
 }

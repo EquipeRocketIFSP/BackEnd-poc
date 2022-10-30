@@ -1,10 +1,8 @@
-package br.vet.sidekick.poc.controller.model;
+package br.vet.sidekick.poc.model;
 
 import lombok.*;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import java.time.LocalDateTime;
 
 @Builder
 @AllArgsConstructor
@@ -12,28 +10,26 @@ import java.time.LocalDateTime;
 @Getter
 @ToString
 @Entity
-public class Documento {
+public class Cirurgia {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_documento", nullable = false)
+    @Column(name = "id_cirurgia", nullable = false)
     private Long id;
 
-    @Column(name = "id_prontuario")
-    private Long idProntuario;
-
-    @Column(name = "caminho_arquivo", nullable = false)
+    @Column(name = "categoria_paciente", nullable = false)
     @NotBlank(message = "Valor não pode ser nulo ou em branco")
-    private String caminhoArquivo;
+    private String categoriaPaciente;
 
     @Column(name = "clinica", nullable = false)
     @NotBlank(message = "Valor não pode ser nulo ou em branco")
     private Long clinica;
 
-    @Column(name = "criado_em")
-    private LocalDateTime criadoEm;
-
-    @Column(name = "tipo_documento", nullable = false)
+    @Column(name = "prontuario", nullable = false, unique = true)
     @NotBlank(message = "Valor não pode ser nulo ou em branco")
-    private Long tipoDocumento;
+    private Long prontuario;
+
+    @Column(name = "tipo_cirurgia", nullable = false)
+    @NotBlank(message = "Valor não pode ser nulo ou em branco")
+    private Long tipoCirurgia;
 
 }

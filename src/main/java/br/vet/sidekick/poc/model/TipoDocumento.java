@@ -1,4 +1,4 @@
-package br.vet.sidekick.poc.controller.model;
+package br.vet.sidekick.poc.model;
 
 import lombok.*;
 

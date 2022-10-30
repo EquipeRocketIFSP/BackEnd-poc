@@ -1,4 +1,4 @@
-package br.vet.sidekick.poc.controller.model;
+package br.vet.sidekick.poc.model;
 
 import lombok.*;
 
@@ -12,29 +12,28 @@ import java.time.LocalDateTime;
 @Getter
 @ToString
 @Entity
-public class Prontuario {
+public class Documento {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_prontuario", nullable = false)
+    @Column(name = "id_documento", nullable = false)
     private Long id;
 
-    @Column(name = "animal", nullable = false)
+    @Column(name = "id_prontuario")
+    private Long idProntuario;
+
+    @Column(name = "caminho_arquivo", nullable = false)
     @NotBlank(message = "Valor não pode ser nulo ou em branco")
-    private Long animal;
+    private String caminhoArquivo;
 
     @Column(name = "clinica", nullable = false)
     @NotBlank(message = "Valor não pode ser nulo ou em branco")
     private Long clinica;
 
-    @Column(name = "criado_em", nullable = false)
-    @NotBlank(message = "Valor não pode ser nulo ou em branco")
+    @Column(name = "criado_em")
     private LocalDateTime criadoEm;
 
-    @Column(name = "prontuario_retorno")
-    private Long prontuarioRetorno;
-
-    @Column(name = "veterinario", nullable = false)
+    @Column(name = "tipo_documento", nullable = false)
     @NotBlank(message = "Valor não pode ser nulo ou em branco")
-    private Long veterinario;
+    private Long tipoDocumento;
 
 }

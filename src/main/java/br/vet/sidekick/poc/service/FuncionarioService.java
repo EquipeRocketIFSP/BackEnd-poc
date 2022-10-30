@@ -1,6 +1,6 @@
 package br.vet.sidekick.poc.service;
 
-import br.vet.sidekick.poc.controller.model.Funcionario;
+import br.vet.sidekick.poc.model.Funcionario;
 
 import java.util.Optional;
 
