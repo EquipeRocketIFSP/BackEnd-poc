@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -63,7 +64,7 @@ public class CadastroClinicaController {
     public ResponseEntity<CadastroClinicaDto> registerClinica(
             @RequestBody CadastroClinicaDto cadastro){
         cadastros.add(cadastro);
-        return ResponseEntity.ok(cadastro);
+        return ResponseEntity.created(URI.create("1")).build();
     }
 
     @GetMapping("/{id}")
