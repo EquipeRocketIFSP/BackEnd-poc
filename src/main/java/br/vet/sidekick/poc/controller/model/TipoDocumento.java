@@ -1,16 +1,22 @@
 package br.vet.sidekick.poc.controller.model;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import lombok.*;
 
+import javax.persistence.*;
+
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@ToString
+@Entity
 public class TipoDocumento {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @Column(name = "id_tipo_documento", nullable = false)
     private Long id;
 
+    @Column(name = "descricao")
     private String descricao;
 
 }

@@ -1,10 +1,10 @@
 package br.vet.sidekick.poc.controller.model;
 
-
-import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import lombok.*;
+import org.hibernate.validator.constraints.br.CPF;
 
 @Builder
 @AllArgsConstructor
@@ -15,7 +15,7 @@ import javax.validation.constraints.NotBlank;
 public class Funcionario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @Column(name = "funcionario_id", nullable = false)
     private Long id;
 
     @Getter(AccessLevel.NONE)
@@ -23,24 +23,29 @@ public class Funcionario {
     @Email
     private String username;
 
-    @NotBlank(message = "Valor não pode ser nulo ou em branco")
     @ToString.Exclude
     @Basic(fetch = FetchType.LAZY)
+    @NotBlank(message = "Valor não pode ser nulo ou em branco")
     private String password;
 
     @Column(name = "nome", nullable = false)
+    @NotBlank(message = "Valor não pode ser nulo ou em branco")
     private String nome;
 
     @Column(name = "clinica", nullable = false)
+    @NotBlank(message = "Valor não pode ser nulo ou em branco")
     private Long clinica;
 
     @Column(name = "logradouro", nullable = false)
+    @NotBlank(message = "Valor não pode ser nulo ou em branco")
     private String logradouro;
 
     @Column(name = "numero", nullable = false)
+    @NotBlank(message = "Valor não pode ser nulo ou em branco")
     private Integer numero;
 
     @Column(name = "cep", nullable = false)
+    @NotBlank(message = "Valor não pode ser nulo ou em branco")
     private String cep;
 
     @Column(name = "bairro")
@@ -52,7 +57,9 @@ public class Funcionario {
     @Column(name = "estado")
     private String estado;
 
+    @CPF
     @Column(name = "cpf", nullable = false, unique = true)
+    @NotBlank(message = "Valor não pode ser nulo ou em branco")
     private String cpf;
 
     @Column(name = "rg", unique = true)

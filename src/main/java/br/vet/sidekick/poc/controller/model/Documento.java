@@ -1,25 +1,39 @@
 package br.vet.sidekick.poc.controller.model;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import lombok.*;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@ToString
+@Entity
 public class Documento {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @Column(name = "id_documento", nullable = false)
     private Long id;
 
-    private Long id_prontuario;
+    @Column(name = "id_prontuario")
+    private Long idProntuario;
 
-    private String caminho_arquivo;
+    @Column(name = "caminho_arquivo", nullable = false)
+    @NotBlank(message = "Valor não pode ser nulo ou em branco")
+    private String caminhoArquivo;
 
+    @Column(name = "clinica", nullable = false)
+    @NotBlank(message = "Valor não pode ser nulo ou em branco")
     private Long clinica;
 
-    private LocalDateTime criado_em;
+    @Column(name = "criado_em")
+    private LocalDateTime criadoEm;
 
-    private Long tipo_documento;
+    @Column(name = "tipo_documento", nullable = false)
+    @NotBlank(message = "Valor não pode ser nulo ou em branco")
+    private Long tipoDocumento;
 
 }

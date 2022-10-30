@@ -1,27 +1,43 @@
 package br.vet.sidekick.poc.controller.model;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import lombok.*;
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@ToString
+@Entity
 public class Estoque {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @Column(name = "id_estoque", nullable = false)
     private Long id;
 
+    @Column(name = "clinica", nullable = false)
+    @NotBlank(message = "Valor não pode ser nulo ou em branco")
     private Integer clinica;
 
-    private Long entrada_qtd;
+    @Column(name = "entrada_qtd")
+    private Long entradaQtd;
 
+    @Column(name = "lote", nullable = false)
+    @NotBlank(message = "Valor não pode ser nulo ou em branco")
     private String lote;
 
+    @Column(name = "medicamento", nullable = false)
+    @NotBlank(message = "Valor não pode ser nulo ou em branco")
     private Long medicamento;
 
+    @Column(name = "quantidade", nullable = false)
+    @NotBlank(message = "Valor não pode ser nulo ou em branco")
     private Integer quantidade;
 
+    @Column(name = "validade", nullable = false)
+    @NotBlank(message = "Valor não pode ser nulo ou em branco")
     private LocalDateTime validade;
 
 }
