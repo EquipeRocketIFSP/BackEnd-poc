@@ -5,16 +5,19 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-@RestController("/cadastro-agendamento")
+@RestController
+@RequestMapping("/cadastro-agendamento")
 @CrossOrigin
 public class CadastroAgendamentoController {
 
-    private CadastroAgendamentoDto cadastroAgendamentoDto = CadastroAgendamentoDto.getMock();
+    private static CadastroAgendamentoDto cadastroAgendamentoDto = CadastroAgendamentoDto.getMock();
 
-    private List<CadastroAgendamentoDto> list = Arrays.asList(cadastroAgendamentoDto);
+    private static List<CadastroAgendamentoDto> list = new ArrayList<>();
+    static {list.add(cadastroAgendamentoDto);}
 
     @PostMapping
     public ResponseEntity<CadastroAgendamentoDto> registerAgendamento(
@@ -26,9 +29,9 @@ public class CadastroAgendamentoController {
                 )).build();
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<CadastroAgendamentoDto> getOne(
-            @RequestParam Integer id
+            @PathVariable Integer id
     ){
         CadastroAgendamentoDto agendamento = list.get(id);
         return agendamento != null

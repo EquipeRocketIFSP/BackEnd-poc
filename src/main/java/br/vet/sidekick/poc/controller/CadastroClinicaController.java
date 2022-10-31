@@ -34,7 +34,7 @@ public class CadastroClinicaController {
                 : ResponseEntity.ok(cadastroDto);
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<List<CadastroClinicaDto>> getAll(){
         return ResponseEntity.ok(cadastros);
     }

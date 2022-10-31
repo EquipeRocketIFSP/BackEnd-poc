@@ -5,17 +5,21 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 @CrossOrigin
-@RestController("/cadastro-funcionario")
+@RestController
+@RequestMapping("/cadastro-funcionario")
 public class CadastroFuncionarioController {
 
-    private CadastroFuncionarioDto funcionarioMock = CadastroFuncionarioDto.getMock();
+    private static CadastroFuncionarioDto funcionarioMock = CadastroFuncionarioDto.getMock();
 
-    private List<CadastroFuncionarioDto> list = Arrays.asList(funcionarioMock);
-    
+    private static List<CadastroFuncionarioDto> list = new ArrayList<>();
+
+    static {list.add(funcionarioMock);}
+
     @PostMapping
     public ResponseEntity<CadastroFuncionarioDto> registerfuncionario(
             @RequestBody CadastroFuncionarioDto funcionario
@@ -26,9 +30,9 @@ public class CadastroFuncionarioController {
                 )).build();
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<CadastroFuncionarioDto> getOne(
-            @RequestParam Integer id
+            @PathVariable() Integer id
     ){
         CadastroFuncionarioDto funcionario = list.get(id);
         return funcionario != null

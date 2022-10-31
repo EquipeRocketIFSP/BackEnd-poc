@@ -5,17 +5,21 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 @CrossOrigin
-@RestController("/cadastro-animal")
+@RestController
+@RequestMapping("/cadastro-animal")
 public class CadastroAnimalController {
 
 
-    private CadastroAnimalDto cadastroAnimalDto = CadastroAnimalDto.getMock();
+    private static CadastroAnimalDto cadastroAnimalDto = CadastroAnimalDto.getMock();
 
-    private List<CadastroAnimalDto> list = Arrays.asList(cadastroAnimalDto);
+    private static List<CadastroAnimalDto> list = new ArrayList<>();
+
+    static {list.add(cadastroAnimalDto);}
 
     @PostMapping
     public ResponseEntity<CadastroAnimalDto> registerAnimal(
@@ -27,9 +31,9 @@ public class CadastroAnimalController {
                 )).build();
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<CadastroAnimalDto> getOne(
-            @RequestParam Integer id
+            @PathVariable Integer id
     ){
         CadastroAnimalDto animal = list.get(id);
         return animal != null
