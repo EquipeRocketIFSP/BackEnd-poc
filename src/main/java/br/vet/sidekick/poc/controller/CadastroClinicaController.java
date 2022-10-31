@@ -3,11 +3,11 @@ package br.vet.sidekick.poc.controller;
 import br.vet.sidekick.poc.controller.dto.CadastroClinicaDto;
 import br.vet.sidekick.poc.service.ClinicaService;
 import br.vet.sidekick.poc.service.FuncionarioService;
+import br.vet.sidekick.poc.service.VeterinarioService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.Arrays;
 import java.util.List;
 
@@ -28,7 +28,7 @@ public class CadastroClinicaController {
             .clinicaEstado("SP")
             .clinicaLogradouro("Avenida Gilberto Targon")
             .clinicaNome("Mário e Edson Marketing ME")
-            .clinicaNumero("635")
+//            .clinicaNumero("635")
             .clinicaTelefone("(19) 3713-9577")
             .donoBairro("Velame")
             .donoCelular("(83) 98920-8496")
@@ -53,7 +53,7 @@ public class CadastroClinicaController {
             .tecnicoEmail("alessandra-nunes93@torah.com.br")
             .tecnicoEstado("SE")
             .tecnicoLogradouro("Travessa José Lemos")
-            .tecnicoNumero("815")
+//            .tecnicoNumero("815")
             .tecnicoRg("21.702.952-8")
             .tecnicoSenha("afqUXsB4mY")
             .build();
@@ -61,8 +61,8 @@ public class CadastroClinicaController {
     @Autowired
     ClinicaService clinicaService;
 
-//    @Autowired
-//    VeterinarioService veterinarioService;
+    @Autowired
+    VeterinarioService veterinarioService;
 
     @Autowired
     FuncionarioService funcionarioService;
@@ -72,9 +72,9 @@ public class CadastroClinicaController {
     public ResponseEntity<CadastroClinicaDto> registerClinica(
             @RequestBody CadastroClinicaDto cadastro){
         cadastros.add(cadastro);
-        clinicaService.cadastrar(cadastro);
+        clinicaService.create(cadastro);
 //        veterinarioService.cadastrar(cadastro);
-//        funcionarioService.cadastrar(cadastro);
+//        funcionarioService.create(cadastro);
         return ResponseEntity.ok(cadastro);
     }
 

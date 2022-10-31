@@ -11,11 +11,22 @@ import org.springframework.stereotype.Service;
 public class ClinicaServiceImpl implements ClinicaService {
     @Autowired
     private ClinicaRepository clinicaRepository;
+
     @Override
-    public void cadastrar(CadastroClinicaDto cadastroClinicaDto) {
+    public void create(CadastroClinicaDto cadastroClinicaDto) {
         clinicaRepository.save(Clinica.builder()
                         .bairro(cadastroClinicaDto.getClinicaBairro())
                         .celular(cadastroClinicaDto.getClinicaCelular())
+                        .cep(cadastroClinicaDto.getClinicaCep())
+                        .cidade(cadastroClinicaDto.getClinicaCidade())
+                        .cnpj(cadastroClinicaDto.getClinicaCnpj())
+                        .email(cadastroClinicaDto.getClinicaEmail())
+                        .estado(cadastroClinicaDto.getClinicaEstado())
+                        .logradouro(cadastroClinicaDto.getClinicaLogradouro())
+                        .numero(cadastroClinicaDto.getClinicaNumero())
+                        .razaoSocial(cadastroClinicaDto.getCliniaRazao())
+//                        .responsavelTecnico()
+                        .telefone(cadastroClinicaDto.getClinicaTelefone())
                 .build());
     }
 }

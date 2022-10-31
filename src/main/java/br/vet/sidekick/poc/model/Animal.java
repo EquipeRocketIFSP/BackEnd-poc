@@ -51,5 +51,8 @@ public class Animal {
     @NotBlank(message = "Valor não pode ser nulo ou em branco")
     private String sexo;
 
+    @Column(name = "tutor", nullable = false)
+    @NotBlank(message = "Valor não pode ser nulo ou em branco")
+    private Long tutor;
 
 }

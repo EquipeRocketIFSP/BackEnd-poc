@@ -26,7 +26,7 @@ public class CadastroClinicaDto {
     private String clinicaLogradouro;
 
     @JsonProperty("clinica-numero")
-    private String clinicaNumero;
+    private Integer clinicaNumero;
 
     @JsonProperty("clinica-bairro")
     private String clinicaBairro;
@@ -104,7 +104,7 @@ public class CadastroClinicaDto {
     private String tecnicoLogradouro;
 
     @JsonProperty("tecnico-numero")
-    private String tecnicoNumero;
+    private Integer tecnicoNumero;
 
     @JsonProperty("tecnico-bairro")
     private String tecnicoBairro;

@@ -5,5 +5,5 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface ClinicaService {
-    void cadastrar(CadastroClinicaDto cadastroClinicaDto);
+    void create(CadastroClinicaDto cadastroClinicaDto);
 }

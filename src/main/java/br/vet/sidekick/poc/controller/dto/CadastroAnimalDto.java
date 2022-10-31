@@ -12,7 +12,7 @@ public class CadastroAnimalDto {
     private String nome;
 
     @JsonProperty("idade")
-    private String idade;
+    private Integer idade;
 
     @JsonProperty("sexo")
     private String sexo;
