@@ -14,7 +14,7 @@ public class CadastroFuncionarioController {
 
     private CadastroFuncionarioDto funcionarioMock = CadastroFuncionarioDto.getMock();
 
-    List<CadastroFuncionarioDto> list = Arrays.asList(funcionarioMock);
+    private List<CadastroFuncionarioDto> list = Arrays.asList(funcionarioMock);
     
     @PostMapping
     public ResponseEntity<CadastroFuncionarioDto> registerfuncionario(

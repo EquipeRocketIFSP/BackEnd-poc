@@ -13,8 +13,8 @@ import java.util.List;
 public class CadastroAgendamentoController {
 
     private CadastroAgendamentoDto cadastroAgendamentoDto = CadastroAgendamentoDto.getMock();
-    
-    List<CadastroAgendamentoDto> list = Arrays.asList(cadastroAgendamentoDto);
+
+    private List<CadastroAgendamentoDto> list = Arrays.asList(cadastroAgendamentoDto);
 
     @PostMapping
     public ResponseEntity<CadastroAgendamentoDto> registerAgendamento(

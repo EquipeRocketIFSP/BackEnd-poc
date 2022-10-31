@@ -14,7 +14,7 @@ public class CadastroTutorController {
 
     private CadastroTutorDto tutorMock = CadastroTutorDto.getMock();
 
-    List<CadastroTutorDto> list = Arrays.asList(tutorMock);
+    private List<CadastroTutorDto> list = Arrays.asList(tutorMock);
 
     @PostMapping
     public ResponseEntity<CadastroTutorDto> registerTutor(
