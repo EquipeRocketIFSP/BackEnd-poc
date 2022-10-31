@@ -5,16 +5,19 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-@RestController("/cadastro-tutor")
+@RestController
+@RequestMapping("/cadastro-tutor")
 @CrossOrigin
 public class CadastroTutorController {
 
-    private CadastroTutorDto tutorMock = CadastroTutorDto.getMock();
+    private static CadastroTutorDto tutorMock = CadastroTutorDto.getMock();
 
-    private List<CadastroTutorDto> list = Arrays.asList(tutorMock);
+    private static List<CadastroTutorDto> list = new ArrayList<>();
+    static { list.add(tutorMock);}
 
     @PostMapping
     public ResponseEntity<CadastroTutorDto> registerTutor(
@@ -26,9 +29,9 @@ public class CadastroTutorController {
                 )).build();
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<CadastroTutorDto> getOne(
-            @RequestParam Integer id
+            @PathVariable Integer id
     ){
         CadastroTutorDto tutor = list.get(id);
         return tutor != null
