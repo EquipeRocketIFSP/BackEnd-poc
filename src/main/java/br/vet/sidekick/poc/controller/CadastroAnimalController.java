@@ -1,6 +1,7 @@
 package br.vet.sidekick.poc.controller;
 
 import br.vet.sidekick.poc.controller.dto.CadastroAnimalDto;
+import br.vet.sidekick.poc.repository.AnimalRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,7 +15,7 @@ import java.util.List;
 @RequestMapping("/cadastro-animal")
 public class CadastroAnimalController {
 
-
+    private AnimalRepository animalRepository;
     private static CadastroAnimalDto cadastroAnimalDto = CadastroAnimalDto.getMock();
 
     private static List<CadastroAnimalDto> list = new ArrayList<>();

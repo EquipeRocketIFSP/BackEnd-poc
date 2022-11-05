@@ -11,14 +11,17 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Builder
 @Getter
-//@Entity
+@Entity
 public class Veterinario {
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(name = "id", nullable = false)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private Long id;
 
+    @Column(name = "nome", nullable = false)
     private String nome;
+
+    @Column(name = "registro-crmv", nullable = false)
     private String registroCRMV;
 
     public void setId(Long id) {

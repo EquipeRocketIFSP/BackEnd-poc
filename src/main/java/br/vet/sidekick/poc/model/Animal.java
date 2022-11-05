@@ -9,19 +9,46 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Builder
-//@Entity
+@Entity
 public class Animal {
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(name = "id", nullable = false)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private Long id;
 
-    private String nome;
+    @Column(name = "clinica", nullable = false)
+    private Long clinica;
+
+    @Column(name = "especie", nullable = false)
     private String especie;
-    private String raca;
-    private String sexo;
+
+    @Column(name = "forma_identificacao", nullable = false)
+    private String formaIdentificacao;
+
+    @Column(name = "idade")
     private Integer idade;
+
+    @Column(name = "mae")
+    private Long mae;
+
+    @Column(name = "nome")
+    private String nome;
+
+    @Column(name = "pai")
+    private Long pai;
+
+    @Column(name = "pelagem")
     private String pelagem;
+
+    @Column(name = "raca", nullable = false)
+    private String raca;
+
+    @Column(name = "sexo", nullable = false)
+    private String sexo;
+
+    @Column(name = "tutor", nullable = false)
+    private Long tutor;
+
     private String outros;
 
 }

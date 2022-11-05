@@ -1,25 +1,23 @@
 package br.vet.sidekick.poc.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.br.CPF;
-
+import lombok.*;
+import org.hibernate.validator.constraints.br.CNPJ;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@Builder
+@ToString
 @Entity
-public class Tutor {
+public class Clinica {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @Column(name = "bairro")
     private String bairro;
 
     @Column(name = "celular")
@@ -31,33 +29,29 @@ public class Tutor {
     @Column(name = "cidade", nullable = false)
     private String cidade;
 
-    @Column(name = "clinica", nullable = false)
-    private Long clinica;
+    @CNPJ
+    @Column(name = "cnpj", nullable = false, unique = true)
+    private String cnpj;
 
-    @CPF
-    @Column(name = "cpf", nullable = false, unique = true)
-    private String cpf;
+    @Email
+    @Column(name = "email", nullable = false, unique = true)
+    private String email;
 
     @Column(name = "estado", nullable = false)
     private String estado;
 
-    @Email
-    @Column(name = "email", nullable = false)
-    private String email;
-
-    @Column(name = "logradouro")
+    @Column(name = "logradouro", nullable = false)
     private String logradouro;
-
-    @Column(name = "nome", nullable = false)
-    private String nome;
 
     @Column(name = "numero", nullable = false)
     private Integer numero;
 
-    @Column(name = "rg")
-    private String rg;
+    @Column(name = "razao_social", nullable = false)
+    private String razaoSocial;
+
+    @Column(name = "responsavel_tecnico", nullable = false, unique = true)
+    private String responsavelTecnico;
 
     @Column(name = "telefone")
     private String telefone;
-
 }

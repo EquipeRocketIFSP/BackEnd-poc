@@ -57,7 +57,8 @@ public class PdfServicePdfBoxImpl implements PdfService {
                 tutor.getNome(),
                 tutor.getRg(),
                 tutor.getCpf(),
-                tutor.getEndereco(),
+                tutor.getLogradouro(),
+                tutor.getNumero(),
                 tutor.getTelefone(),
                 tutor.getEmail()
         );
@@ -217,7 +218,8 @@ public class PdfServicePdfBoxImpl implements PdfService {
                         .cpf("228.831.350-10")
                         .rg("12345689")
                         .email("email@valido.com")
-                        .endereco("endereco random")
+                        .logradouro("endereco random")
+                        .numero(13)
                         .telefone("123456789")
                         .build()
         );

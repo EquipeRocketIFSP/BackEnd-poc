@@ -1,10 +1,9 @@
 package br.vet.sidekick.poc.model;
 
-
 import lombok.*;
+import org.hibernate.validator.constraints.br.CPF;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -17,6 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @ToString
+@Table(name = "funcionarios")
 @Entity
 public class Funcionario implements UserDetails {
     @Id
@@ -32,6 +32,40 @@ public class Funcionario implements UserDetails {
     @ToString.Exclude
     @Basic(fetch = FetchType.LAZY)
     private String password;
+
+    @Column(name = "nome", nullable = false)
+    private String nome;
+
+    @Column(name = "clinica", nullable = false)
+    private Long clinica;
+
+    @Column(name = "logradouro", nullable = false)
+    private String logradouro;
+
+    @Column(name = "numero", nullable = false)
+    private Integer numero;
+
+    @Column(name = "cep", nullable = false, length = 9)
+    private String cep;
+
+    @Column(name = "bairro")
+    private String bairro;
+
+    @Column(name = "cidade")
+    private String cidade;
+
+    @Column(name = "estado")
+    private String estado;
+
+    @CPF
+    @Column(name = "cpf", nullable = false, unique = true)
+    private String cpf;
+
+    @Column(name = "rg", unique = true)
+    private String rg;
+
+    @Column(name = "celular")
+    private String celular;
 
     @Email
     private String email = this.username;
@@ -68,7 +102,5 @@ public class Funcionario implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-    @Column(length = 9)
-    private String cep;
 
 }
