@@ -10,13 +10,13 @@ spring:
         driver-class-name: com.mysql.cj.jdbc.Driver
         hikari:
             connection-test-query: SELECT NOW();
-            connection-timeout: 20000
-            idle-timeout: 10000
+            connection-timeout: 20000 # 20s
+            idle-timeout: 10000 # 10s
             maximum-pool-size: 5
             minimum-idle: 2
             pool-name: springPocPool
         init:
-            mode: always
+#            mode: always
             platform: mysql
         name: pocDB
         type: com.zaxxer.hikari.HikariDataSource
@@ -34,6 +34,9 @@ spring:
                 dialect: org.hibernate.dialect.MySQL8Dialect
                 format_sql: true
         show-sql: true
+#    sql:
+#        init:
+#            continue-on-error: true
 server:
     port:
         8080

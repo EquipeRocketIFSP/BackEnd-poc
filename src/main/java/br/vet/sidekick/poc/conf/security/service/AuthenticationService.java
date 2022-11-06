@@ -26,4 +26,6 @@ public class AuthenticationService implements UserDetailsService {
         return repository.findByEmail(username)
                 .orElseThrow(() -> new UsernameNotFoundException(NOT_AUTHORIZED));
     }
+
+
 }

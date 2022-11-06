@@ -11,15 +11,16 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Builder
 @Getter
-//@Entity
+@Entity
 public class Veterinario {
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(name = "id", nullable = false)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private Long id;
 
     private String nome;
     private String registroCRMV;
+    private String email;
 
     public void setId(Long id) {
         this.id = id;
