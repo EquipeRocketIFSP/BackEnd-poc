@@ -13,6 +13,7 @@ import javax.persistence.*;
 @Getter
 @Entity
 public class Veterinario {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -22,7 +23,4 @@ public class Veterinario {
     private String registroCRMV;
     private String email;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
 }
