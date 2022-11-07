@@ -58,13 +58,11 @@ public class AuthenticationController {
                 vet.isPresent()
                 ? TokenDto.builder()
                         .token(token)
+                        .type("Bearer")
                         .nome(vet.get().getNome())
                         .crmv(vet.get().getRegistroCRMV())
                         .build()
-                :
-                        TokenDto.builder()
-                        .token(token)
-                        .build()
+                : TokenDto.of(token, "Bearer")
         );
 
     }
