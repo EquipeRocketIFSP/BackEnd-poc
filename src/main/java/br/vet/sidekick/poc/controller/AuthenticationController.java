@@ -54,7 +54,7 @@ public class AuthenticationController {
             return ResponseEntity.badRequest().build();
         }
         Optional<Veterinario> vet = veterinarioService.findByEmail(login.getEmail());
-        return  ResponseEntity.ok(
+        return  ResponseEntity.ok(//new TokenDto(token, "Bearer")
                 vet.isPresent()
                 ? TokenDto.builder()
                         .token(token)

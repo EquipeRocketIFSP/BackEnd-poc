@@ -1,29 +1,28 @@
 package br.vet.sidekick.poc.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
 @Getter
 @Entity
-public class Veterinario {
-
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class Prescricao {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
+    private String descricao;
 
-    private String nome;
-    private String registroCRMV;
-    private String email;
+    @ManyToOne
+    @JoinColumn(name = "prontuario_id")
+    @JsonIgnore
+    private Prontuario prontuario;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "id")
-    private List<Prontuario> prontuarios;
 }

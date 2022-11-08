@@ -1,29 +1,19 @@
 package br.vet.sidekick.poc.model;
 
-import lombok.*;
+import lombok.Getter;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.util.List;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
-@Builder
 @Entity
-public class Animal {
+@Getter
+public class Clinica {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
-
-    private String nome;
-    private String especie;
-    private String raca;
-    private String sexo;
-    private Integer idade;
-    private String pelagem;
-    private String outros;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "id")
     private List<Prontuario> prontuarios;
