@@ -8,16 +8,17 @@ import org.hibernate.validator.constraints.br.CPF;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Builder
-//@Entity
+@Entity
 public class Tutor {
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(name = "id", nullable = false)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private Long id;
 
     private String nome;
@@ -29,4 +30,6 @@ public class Tutor {
     @Email
     private String email;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "id")
+    private List<Prontuario> prontuarios;
 }
