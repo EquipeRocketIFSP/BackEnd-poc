@@ -16,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @ToString
-@Table(name = "funcionarios")
+@Table(name = "funcionario")
 @Entity
 public class Funcionario implements UserDetails {
     @Id
@@ -43,7 +43,7 @@ public class Funcionario implements UserDetails {
     private String logradouro;
 
     @Column(name = "numero", nullable = false)
-    private Integer numero;
+    private String numero;
 
     @Column(name = "cep", nullable = false, length = 9)
     private String cep;
