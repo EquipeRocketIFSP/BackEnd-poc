@@ -208,7 +208,6 @@ public class PdfServicePdfBoxImpl implements PdfService {
                         .idade(2)
                         .nome("doguinho")
                         .pelagem("curta")
-                        .outros("chip 123456485312")
                         .build(),
                 Veterinario.builder()
                         .registroCRMV("SP-12345")

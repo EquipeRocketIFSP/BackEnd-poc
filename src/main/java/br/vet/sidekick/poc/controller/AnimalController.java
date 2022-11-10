@@ -9,13 +9,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/cadastro-animal")
-public class CadastroAnimalController {
+@RequestMapping("/animal")
+public class AnimalController {
 
     @Autowired
     private AnimalRepository animalRepository;

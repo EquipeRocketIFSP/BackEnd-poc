@@ -3,6 +3,11 @@ package br.vet.sidekick.poc.model;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -13,42 +18,51 @@ import javax.persistence.*;
 public class Animal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @Column(name = "id")
     private Long id;
 
-    @Column(name = "clinica", nullable = false)
-    private Long clinica;
+    @ManyToOne
+    @JoinColumn(name = "clinica_id")
+    private Clinica clinica;
 
     @Column(name = "especie", nullable = false)
     private String especie;
 
+    @OneToMany(mappedBy = "id")
+    @Column(name = "filho_id")
+    private List<Animal> filho;
+
     @Column(name = "forma_identificacao", nullable = false)
     private String formaIdentificacao;
 
+    @PositiveOrZero(message = "Idade tem que ser maior ou igual a zero ano(s)")
     @Column(name = "idade")
     private Integer idade;
 
-    @Column(name = "mae")
-    private Long mae;
+    @ManyToOne
+    @JoinColumn(name = "mae_id", insertable = false, updatable = false)
+    private Animal mae;
 
     @Column(name = "nome")
     private String nome;
 
-    @Column(name = "pai")
-    private Long pai;
+    @ManyToOne
+    @JoinColumn(name = "pai_id", insertable = false, updatable = false)
+    private Animal pai;
 
     @Column(name = "pelagem")
     private String pelagem;
 
+    @NotBlank(message = "É necessário informar a raça do animal")
     @Column(name = "raca", nullable = false)
     private String raca;
 
+    @Pattern(message = "O sexo do animal deve ser: MASCULINO, FEMININO ou INDEFINIDO", regexp = "(MASCULINO|FEMININO|INDEFINIDO)")
     @Column(name = "sexo", nullable = false)
     private String sexo;
 
-    @Column(name = "tutor", nullable = false)
-    private Long tutor;
-
-    private String outros;
+    @ManyToMany
+    @Column(name = "tutor_id", nullable = false)
+    private List<Tutor> tutor;
 
 }

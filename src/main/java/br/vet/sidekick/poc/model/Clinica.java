@@ -4,6 +4,8 @@ import lombok.*;
 import org.hibernate.validator.constraints.br.CNPJ;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 @Builder
 @AllArgsConstructor
@@ -17,6 +19,9 @@ public class Clinica {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @OneToMany(mappedBy = "clinica")
+    private List<Animal> animais;
+
     @Column(name = "bairro")
     private String bairro;
 
@@ -28,6 +33,10 @@ public class Clinica {
 
     @Column(name = "cidade", nullable = false)
     private String cidade;
+
+    @NotBlank(message = "Informar o Código de Atividade do CNAE")
+    @Column(name = "cnae")
+    private String cnae;
 
     @CNPJ
     @Column(name = "cnpj", nullable = false, unique = true)
@@ -44,12 +53,15 @@ public class Clinica {
     private String logradouro;
 
     @Column(name = "numero", nullable = false)
-    private Integer numero;
+    private String numero;
 
-    @Column(name = "razao_social", nullable = false)
+    @Column(name = "nome_fantasia")
+    private String nomeFantasia;
+
+    @Column(name = "razao_social")
     private String razaoSocial;
 
-    @Column(name = "responsavel_tecnico", nullable = false, unique = true)
+    @Column(name = "responsavel_tecnico", nullable = false)
     private String responsavelTecnico;
 
     @Column(name = "telefone")
