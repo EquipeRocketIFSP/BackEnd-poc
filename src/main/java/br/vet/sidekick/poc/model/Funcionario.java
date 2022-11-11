@@ -40,10 +40,6 @@ public class Funcionario implements UserDetails {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "funcionario")
     private List<Perfil> perfis = new ArrayList<>();
 
-    public void setPerfis(List<Perfil> perfis) {
-        this.perfis = perfis;
-    }
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
@@ -70,5 +66,4 @@ public class Funcionario implements UserDetails {
     }
     @Column(length = 9)
     private String cep;
-
 }

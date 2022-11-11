@@ -1,4 +1,6 @@
-INSERT INTO funcionario(user_name, password, email) VALUES ('Usuario Mario', '$2a$10$IyMS1RLQcAJg.lMKb6WKBuzQV0DTN63rhZ9i/MKxWscC.Avsh0ka.', 'mario@quem.viu');
+INSERT INTO funcionario
+    (user_name, password, email)
+VALUES ('Usuario Mario', '$2a$10$IyMS1RLQcAJg.lMKb6WKBuzQV0DTN63rhZ9i/MKxWscC.Avsh0ka.', 'mario@quem.viu');
 
 INSERT INTO animal(especie, idade, nome, outros, pelagem, raca, sexo) VALUES ('canina', '3', 'totó', 'outros', 'curta', 'SRD', 'M');
 INSERT INTO veterinario(email, nome, registrocrmv) VALUES ('vet@novo.com', 'Doolittle', 'SP-12345');

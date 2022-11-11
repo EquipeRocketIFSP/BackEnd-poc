@@ -5,6 +5,7 @@ import br.vet.sidekick.poc.conf.security.service.AuthenticationService;
 import br.vet.sidekick.poc.conf.security.service.TokenService;
 import br.vet.sidekick.poc.repository.FuncionarioRepository;
 import lombok.NoArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
@@ -22,6 +23,14 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @NoArgsConstructor
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+    static final String[] IGNORED = {
+            "/**.html",
+            "/v3/api-docs/**",
+            "/webjars/**",
+            "/configuration/**",
+            "/swagger-resources/**",
+            "/swagger-ui/**"
+    };
     @Autowired
     private AuthenticationService authenticationService;
 
@@ -41,7 +50,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/auth").permitAll()
-//                .antMatchers(HttpMethod.GET, "/usuario").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/swagger-ui/*").authenticated()
+                .antMatchers(HttpMethod.GET, "/api/swagger-ui/**").authenticated()
                 .antMatchers(HttpMethod.GET, "/actuator/**").permitAll()
                 .antMatchers(HttpMethod.POST,"/cadastro-clinica/*").permitAll()
                 .antMatchers(HttpMethod.POST,"/cadastro-clinica/**").permitAll()
@@ -72,7 +82,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        super.configure(web);
+        web.ignoring().antMatchers(IGNORED);
+//        web.ignoring().antMatchers(StringUtils.join(IGNORED));
     }
 
 }
