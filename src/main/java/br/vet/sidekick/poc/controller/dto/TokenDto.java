@@ -10,6 +10,7 @@ import lombok.*;
 @RequiredArgsConstructor(staticName = "of")
 public class TokenDto {
 
+    private Long id;
     @NonNull private String token;
     @NonNull private String type;
     private String nome;
