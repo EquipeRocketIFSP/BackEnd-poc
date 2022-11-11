@@ -61,6 +61,7 @@ public class AuthenticationController {
                         .type("Bearer")
                         .nome(vet.get().getNome())
                         .crmv(vet.get().getRegistroCRMV())
+                        .id(vet.get().getId())
                         .build()
                 : TokenDto.of(token, "Bearer")
         );
