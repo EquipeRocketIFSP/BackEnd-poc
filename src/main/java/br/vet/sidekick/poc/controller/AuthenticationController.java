@@ -7,6 +7,7 @@ import br.vet.sidekick.poc.controller.dto.LoginForm;
 import br.vet.sidekick.poc.model.Veterinario;
 import br.vet.sidekick.poc.service.FuncionarioService;
 import br.vet.sidekick.poc.service.VeterinarioService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirements;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -41,6 +42,7 @@ public class AuthenticationController {
     private TokenService tokenService;
 
     @PostMapping
+    @SecurityRequirements(value = {})
     public ResponseEntity<TokenDto> authenticate(
             @Validated @RequestBody LoginForm login
     ){
@@ -69,6 +71,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/create")
+    @SecurityRequirements(value = {})
     public ResponseEntity<Funcionario> create(
             @Validated @RequestBody Funcionario funcionario
     ){

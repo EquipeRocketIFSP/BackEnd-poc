@@ -57,3 +57,9 @@ app:
 springdoc:
     swagger-ui:
         path: "/api/swagger-ui.html"
+api:
+    version: "v0.0.1"
+    description: "Interface de aplicação para sistema CertVet"
+    server:
+        # TODO: Checar a URL que será a base no momento do deploy
+        url: "http://localhost:8080"

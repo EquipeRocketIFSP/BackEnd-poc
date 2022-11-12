@@ -23,14 +23,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @NoArgsConstructor
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-    static final String[] IGNORED = {
-            "/**.html",
-            "/v3/api-docs/**",
-            "/webjars/**",
-            "/configuration/**",
-            "/swagger-resources/**",
-            "/swagger-ui/**"
-    };
     @Autowired
     private AuthenticationService authenticationService;
 
@@ -50,8 +42,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/auth").permitAll()
-                .antMatchers(HttpMethod.GET, "/api/swagger-ui/*").authenticated()
-                .antMatchers(HttpMethod.GET, "/api/swagger-ui/**").authenticated()
+                .antMatchers(HttpMethod.GET, "/api/swagger-ui/*").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/swagger-ui/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/v3/api-docs/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/actuator/**").permitAll()
                 .antMatchers(HttpMethod.POST,"/cadastro-clinica/*").permitAll()
                 .antMatchers(HttpMethod.POST,"/cadastro-clinica/**").permitAll()
@@ -82,8 +75,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers(IGNORED);
-//        web.ignoring().antMatchers(StringUtils.join(IGNORED));
+        super.configure(web);
     }
 
 }
