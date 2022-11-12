@@ -1,6 +1,7 @@
 package br.vet.sidekick.poc.service;
 
 import br.vet.sidekick.poc.model.Animal;
+import br.vet.sidekick.poc.model.Prontuario;
 import br.vet.sidekick.poc.model.Tutor;
 import br.vet.sidekick.poc.model.Veterinario;
 import org.springframework.stereotype.Service;
@@ -16,5 +17,7 @@ public interface PdfService {
             Animal animal,
             Veterinario veterinario,
             Tutor tutor
-    ) throws IOException;
+    ) throws Exception;
+
+    byte[] writeProntuario(Prontuario prontuario) throws Exception;
 }

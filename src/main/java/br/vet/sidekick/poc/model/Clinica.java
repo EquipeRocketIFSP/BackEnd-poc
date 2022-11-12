@@ -18,4 +18,10 @@ public class Clinica {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "id")
     private List<Prontuario> prontuarios;
 
+    private String razaoSocial;
+
+    @OneToMany(mappedBy = "id")
+    private List<Telefone> telefones;
+
+    private String logradouro;
 }
