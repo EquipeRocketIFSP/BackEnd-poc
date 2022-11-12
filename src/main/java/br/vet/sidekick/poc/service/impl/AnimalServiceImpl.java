@@ -6,6 +6,8 @@ import br.vet.sidekick.poc.service.AnimalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class AnimalServiceImpl implements AnimalService {
 
@@ -13,13 +15,10 @@ public class AnimalServiceImpl implements AnimalService {
     private AnimalRepository animalRepository;
 
     @Override
-    public Animal save(Animal animal){
-        //TODO: validar se o usuario existe
-        return animalRepository.save(animal);
+    public Optional<Animal> create(Animal animal) {
+        if (animalRepository.existsById(animal.getId()))
+            return Optional.empty();
+        return Optional.of(animalRepository.save(animal));
     }
 
-    @Override
-    public void deleteById(Long id){
-        animalRepository.deleteById(id);
-    }
 }

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin
 @RestController
@@ -18,66 +19,59 @@ public class AnimalController {
 
     @Autowired
     private AnimalRepository animalRepository;
+
+    @Autowired
+    private AnimalService animalService;
     private static CadastroAnimalDto cadastroAnimalDto = CadastroAnimalDto.getMock();
 
+    //TODO: remover depois
     private static List<CadastroAnimalDto> list = new ArrayList<>();
-
     static {list.add(cadastroAnimalDto);}
 
-    private AnimalService animalService;
 
     @PostMapping
     public ResponseEntity<Animal> registerAnimal(
             @RequestBody Animal animal
     ){
-        try {
-            animal = animalService.save(animal);
-            return ResponseEntity.created(
-                    URI.create("/animal/" + String.valueOf(animal.getId())
-                    )).build();
-        } catch (Exception e){
+        Optional<Animal> referenceAnimal = animalService.create(animal);
+        if (referenceAnimal.isEmpty())
             return ResponseEntity.badRequest().build();
-        }
+        return ResponseEntity.created(
+                URI.create("/animal/" + animal.getId().toString())
+        ).build();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Animal> getOne(
+            @PathVariable Long id
+    ){
+        Optional<Animal> referenceAnimal = animalRepository.findById(id);
+        if (referenceAnimal.isEmpty())
+            return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(animalRepository.getOne(id));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Animal>> getAll(){
+        if (animalRepository.findAll().isEmpty())
+            return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(animalRepository.findAll());
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Animal> delete(
+    public ResponseEntity<Animal> deleteAnimal(
             @PathVariable Long id
     ) {
-        try {
-            animalService.deleteById(id);
-            return ResponseEntity.noContent().build();
-
-        } catch (Exception e) {
-            return ResponseEntity.notFound().build();
+        if (animalRepository.existsById(id)){
+            animalRepository.deleteById(id);
+            return ResponseEntity.ok().build();
         }
+
+        return ResponseEntity.notFound().build();
     }
 
-//    @PostMapping
-//    public ResponseEntity<CadastroAnimalDto> registerAnimal(
-//            @RequestBody CadastroAnimalDto animal
-//    ){
-//        list.add(animal);
-//        return ResponseEntity.created(
-//                URI.create("/animal/" + String.valueOf(list.indexOf(animal))
-//                )).build();
-//    }
-//
-//    @GetMapping("/{id}")
-//    public ResponseEntity<CadastroAnimalDto> getOne(
-//            @PathVariable Integer id
-//    ){
-//        CadastroAnimalDto animal = list.get(id);
-//        return animal != null
-//                ? ResponseEntity.ok(animal)
-//                : ResponseEntity.notFound().build();
-//    }
-//
-//    @GetMapping
-//    public ResponseEntity<List<CadastroAnimalDto>> getAll(){
-//        return list.size() == 0
-//                ? ResponseEntity.notFound().build()
-//                : ResponseEntity.ok(list);
-//    }
+    //TODO
+    @PutMapping
+    public ResponseEntity<Animal> updateAnimal(){ return null;}
 
 }

@@ -24,10 +24,10 @@ public class Agendamento {
     @Column(name = "criado_em")
     private LocalDateTime criadoEm;
 
-    @Column(name = "data_consulta", nullable = false)
+    @Column(name = "data_consulta")
     private LocalDateTime dataConsulta;
 
-    @Column(name = "tipo_consulta", nullable = false)
+    @Column(name = "tipo_consulta")
     private String tipoConsulta;
 
 }

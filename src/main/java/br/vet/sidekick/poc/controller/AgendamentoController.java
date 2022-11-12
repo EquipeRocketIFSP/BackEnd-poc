@@ -31,23 +31,22 @@ public class AgendamentoController {
 
     @PostMapping
     public ResponseEntity<Agendamento> registerAgendamento(
-            @RequestBody CadastroAgendamentoDto agendamento
+            @RequestBody Agendamento agendamento
     ){
         Optional<Agendamento> referenceAgendamento = agendamentoService.create(agendamento);
         if (referenceAgendamento.isEmpty())
             return ResponseEntity.badRequest().build();
 
         return ResponseEntity.created(
-                URI.create("/agendamento/" + referenceAgendamento.get().getId().toString())
+                URI.create("/agendamento/" + agendamento.getId().toString())
         ).build();
-
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Agendamento> getOne(
             @PathVariable Long id
     ){
-        Optional<Agendamento> referenceAgendamento = agendamentoService.get(id);
+        Optional<Agendamento> referenceAgendamento = agendamentoRepository.findById(id);
         if (referenceAgendamento.isEmpty())
             return ResponseEntity.badRequest().build();
 
@@ -57,6 +56,8 @@ public class AgendamentoController {
 
     @GetMapping
     public ResponseEntity<List<Agendamento>> getAll(){
+        if (agendamentoRepository.findAll().isEmpty())
+            return ResponseEntity.notFound().build();
         return ResponseEntity.ok(agendamentoRepository.findAll());
         //TODO: jogar as lógicas correspondentes no service e repository . incluir ResponseEntity.notFound().build();
     }

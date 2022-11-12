@@ -17,15 +17,14 @@ public class AgendamentoServiceImpl implements AgendamentoService {
     private AgendamentoRepository agendamentoRepository;
 
     @Override
-    public Optional<Agendamento> create(CadastroAgendamentoDto agendamento) {
-        Agendamento referenceAgendamento = Agendamento.builder()
-                .tipoConsulta("Tipo consulta")
-                .dataConsulta(LocalDateTime.parse("2022-10-29T15:31"))
-//                .animal()
-                .build();
-        if (agendamentoRepository.existsById(referenceAgendamento.getId()))
+    public Optional<Agendamento> create(Agendamento agendamento) {
+
+        //classe animal criada, quando fazer agendamento puxar o animal do bd, setar ele no agendamento e salvar o agendamento no bd
+
+        if (agendamentoRepository.existsById(agendamento.getId()))
             return Optional.empty();
-        return Optional.of(agendamentoRepository.save(referenceAgendamento));
+
+        return Optional.of(agendamentoRepository.save(agendamento));
     }
 
     @Override

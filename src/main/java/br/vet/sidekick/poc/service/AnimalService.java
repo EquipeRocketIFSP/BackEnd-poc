@@ -3,9 +3,9 @@ package br.vet.sidekick.poc.service;
 import br.vet.sidekick.poc.model.Animal;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public interface AnimalService {
-    Animal save(Animal animal);
-
-    void deleteById(Long id);
+    Optional<Animal> create(Animal animal);
 }

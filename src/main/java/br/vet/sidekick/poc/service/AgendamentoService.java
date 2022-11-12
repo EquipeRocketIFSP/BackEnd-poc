@@ -8,7 +8,7 @@ import java.util.Optional;
 
 @Service
 public interface AgendamentoService {
-    Optional<Agendamento> create(CadastroAgendamentoDto agendamento);
+    Optional<Agendamento> create(Agendamento agendamento);
 
     Optional<Agendamento> get(Long id);
 }
