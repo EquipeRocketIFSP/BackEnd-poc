@@ -8,4 +8,6 @@ INSERT INTO funcionario(user_name, password, email, cep, clinica, cpf, logradour
                                                             'meu',
                                                             '1');
 
+INSERT INTO agendamento(animal_id, data_consulta, tipo_consulta) VALUES (1, 1, '2022-10-29T15:31', 'Tipo da consulta');
+
 INSERT INTO perfil(perfil_id, funcionario_id) VALUES (1,3);

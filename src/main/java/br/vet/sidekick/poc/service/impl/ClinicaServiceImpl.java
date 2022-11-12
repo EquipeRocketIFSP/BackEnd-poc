@@ -6,7 +6,6 @@ import br.vet.sidekick.poc.repository.ClinicaRepository;
 import br.vet.sidekick.poc.service.ClinicaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.Optional;
 
 @Service

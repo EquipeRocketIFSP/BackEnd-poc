@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@Setter
 @ToString
 @Entity
 public class Agendamento {
@@ -16,19 +17,17 @@ public class Agendamento {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "animal", nullable = false)
-    private Long animal;
+    @ManyToOne
+    @JoinColumn(name = "animal_id", insertable = false, updatable = false)
+    private Animal animal;
 
-    @Column(name = "clinica", nullable = false)
-    private Long clinica;
+    @Column(name = "criado_em")
+    private LocalDateTime criadoEm;
 
-    @Column(name = "criadoEm", nullable = false)
-    private LocalDateTime criado_em;
+    @Column(name = "data_consulta", nullable = false)
+    private LocalDateTime dataConsulta;
 
-    @Column(name = "dataConsulta", nullable = false)
-    private LocalDateTime data_consulta;
-
-    @Column(name = "cpf", nullable = false)
-    private String tipo;
+    @Column(name = "tipo_consulta", nullable = false)
+    private String tipoConsulta;
 
 }
