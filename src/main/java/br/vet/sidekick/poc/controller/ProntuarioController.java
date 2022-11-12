@@ -15,8 +15,8 @@ import java.net.URI;
 
 
 @RestController
-@RequestMapping("/prontuario")
 @Slf4j
+@RequestMapping("/prontuario")
 public class ProntuarioController {
 
     @Autowired
