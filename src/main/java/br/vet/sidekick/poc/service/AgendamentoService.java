@@ -10,5 +10,4 @@ import java.util.Optional;
 public interface AgendamentoService {
     Optional<Agendamento> create(Agendamento agendamento);
 
-    Optional<Agendamento> get(Long id);
 }

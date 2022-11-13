@@ -19,21 +19,11 @@ public class AgendamentoServiceImpl implements AgendamentoService {
     @Override
     public Optional<Agendamento> create(Agendamento agendamento) {
 
-        //classe animal criada, quando fazer agendamento puxar o animal do bd, setar ele no agendamento e salvar o agendamento no bd
-
+        //PRECISAMOS SETAR O ANIMAL AQUI NA HORA DO AGENDAMENTO
         if (agendamentoRepository.existsById(agendamento.getId()))
             return Optional.empty();
 
         return Optional.of(agendamentoRepository.save(agendamento));
     }
-
-    @Override
-    public Optional<Agendamento> get(Long id) {
-        if (agendamentoRepository.existsById(id)){
-            return agendamentoRepository.findById(id);
-        }
-        return Optional.empty();
-    }
-
 
 }

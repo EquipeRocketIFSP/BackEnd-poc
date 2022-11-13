@@ -28,7 +28,6 @@ public class AnimalController {
     private static List<CadastroAnimalDto> list = new ArrayList<>();
     static {list.add(cadastroAnimalDto);}
 
-
     @PostMapping
     public ResponseEntity<Animal> registerAnimal(
             @RequestBody Animal animal

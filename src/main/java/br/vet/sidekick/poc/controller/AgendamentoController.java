@@ -48,10 +48,9 @@ public class AgendamentoController {
     ){
         Optional<Agendamento> referenceAgendamento = agendamentoRepository.findById(id);
         if (referenceAgendamento.isEmpty())
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.notFound().build();
 
         return ResponseEntity.ok(agendamentoRepository.getOne(id));
-        //TODO: testar usabilidade do getOne() pois está deprecated, ver se altera para getReferenceById(). OBS: findById() não funciona com Optional
     }
 
     @GetMapping
@@ -59,9 +58,9 @@ public class AgendamentoController {
         if (agendamentoRepository.findAll().isEmpty())
             return ResponseEntity.notFound().build();
         return ResponseEntity.ok(agendamentoRepository.findAll());
-        //TODO: jogar as lógicas correspondentes no service e repository . incluir ResponseEntity.notFound().build();
     }
 
+    //TODO: TESTAR e revisar se há uma forma melhor de fazer o put method
     @PutMapping("/editar/{id}")
     public ResponseEntity<Agendamento> updateAgendamento(
             @PathVariable Long id,
