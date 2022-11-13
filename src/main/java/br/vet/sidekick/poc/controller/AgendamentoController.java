@@ -67,7 +67,6 @@ public class AgendamentoController {
             @PathVariable Long id,
             @RequestBody Agendamento agendamento
     ){
-
         if (agendamentoRepository.existsById(id)){
             agendamentoRepository.findById(id)
                     .map( updatedAgendamento -> {
@@ -77,7 +76,7 @@ public class AgendamentoController {
                 agendamento.setTipoConsulta(updatedAgendamento.getTipoConsulta());
                 agendamentoRepository.save(agendamento);
 
-                return ResponseEntity.ok(updatedAgendamento);
+                return ResponseEntity.ok(agendamento);
             });
         }
 

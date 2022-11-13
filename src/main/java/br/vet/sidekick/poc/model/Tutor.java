@@ -1,9 +1,6 @@
 package br.vet.sidekick.poc.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.validator.constraints.br.CPF;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -12,6 +9,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@Setter
 @Builder
 @Entity
 public class Tutor {
@@ -37,7 +35,7 @@ public class Tutor {
 //    @Column(name = "clinica", nullable = false)
 //    private Long clinica;
 
-    @CPF
+//    @CPF
     @Column(name = "cpf", nullable = false, unique = true)
     private String cpf;
 
