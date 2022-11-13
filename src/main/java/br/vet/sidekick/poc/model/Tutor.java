@@ -5,7 +5,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.br.CPF;
-
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import java.util.List;
@@ -29,14 +28,14 @@ public class Tutor {
     @Column(name = "celular")
     private String celular;
 
-    @Column(name = "cep", nullable = false)
+    @Column(name = "cep")
     private String cep;
 
-    @Column(name = "cidade", nullable = false)
+    @Column(name = "cidade")
     private String cidade;
 
-    @Column(name = "clinica", nullable = false)
-    private Long clinica;
+//    @Column(name = "clinica", nullable = false)
+//    private Long clinica;
 
     @CPF
     @Column(name = "cpf", nullable = false, unique = true)

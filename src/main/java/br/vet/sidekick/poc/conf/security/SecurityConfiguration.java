@@ -53,6 +53,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/agendamento/**").authenticated()
                 .antMatchers(HttpMethod.POST, "/cadastro-funcionario/*").authenticated()
                 .antMatchers(HttpMethod.POST, "/cadastro-funcionario/**").authenticated()
+                .antMatchers(HttpMethod.POST, "/tutor/*").authenticated()
+                .antMatchers(HttpMethod.POST, "/tutor/**").authenticated()
                 .anyRequest().authenticated()
                 .and().cors()
                 .and().csrf().disable()
