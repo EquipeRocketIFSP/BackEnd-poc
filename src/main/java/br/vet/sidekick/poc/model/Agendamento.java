@@ -22,6 +22,9 @@ public class Agendamento {
     @Column(name = "animal_id")
     private Long animal;
 
+    @Column(name = "clinica_id")
+    private Long clinica;
+
     @Column(name = "criado_em")
     private LocalDateTime criadoEm;
 

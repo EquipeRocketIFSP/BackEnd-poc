@@ -29,6 +29,7 @@ public class ClinicaServiceImpl implements ClinicaService {
                 .logradouro("Avenida Gilberto Targon")
                 .nomeFantasia("Clinica Ficticia")
                 .numero("635")
+                .responsavelTecnico("Nome Qualquer")
                 .telefone("(19) 3713-9577").build();
         if (clinicaRepository.existsByCnpj(clinica.getCnpj())) {
             return Optional.empty();
