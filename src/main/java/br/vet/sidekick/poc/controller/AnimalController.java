@@ -47,7 +47,7 @@ public class AnimalController {
         Optional<Animal> referenceAnimal = animalRepository.findById(id);
         if (referenceAnimal.isEmpty())
             return ResponseEntity.notFound().build();
-        return ResponseEntity.ok(animalRepository.getOne(id));
+        return ResponseEntity.ok(animalRepository.getReferenceById(id));
     }
 
     @GetMapping

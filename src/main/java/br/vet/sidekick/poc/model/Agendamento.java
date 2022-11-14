@@ -17,9 +17,10 @@ public class Agendamento {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "animal_id", insertable = false, updatable = false)
-    private Animal animal;
+//    @ManyToOne
+//    @JoinColumn(name = "animal_id", insertable = false, updatable = false)
+    @Column(name = "animal_id")
+    private Long animal;
 
     @Column(name = "criado_em")
     private LocalDateTime criadoEm;

@@ -70,7 +70,8 @@ public class AgendamentoController {
             agendamentoRepository.findById(id)
                     .map( updatedAgendamento -> {
                 agendamento.setAnimal(updatedAgendamento.getAnimal());
-                agendamento.getAnimal().getClinica().setId(updatedAgendamento.getAnimal().getClinica().getId());
+//                agendamento.getAnimal().getClinica().setId(updatedAgendamento.getAnimal().getClinica().getId());
+                agendamento.setAnimal(updatedAgendamento.getAnimal());
                 agendamento.setDataConsulta(updatedAgendamento.getDataConsulta());
                 agendamento.setTipoConsulta(updatedAgendamento.getTipoConsulta());
                 agendamentoRepository.save(agendamento);

@@ -61,8 +61,8 @@ public class Animal {
     @Column(name = "sexo", nullable = false)
     private String sexo;
 
-    @ManyToMany
+//    @ManyToMany
     @Column(name = "tutor_id", nullable = false)
-    private List<Tutor> tutor;
+    private Long tutor;
 
 }
