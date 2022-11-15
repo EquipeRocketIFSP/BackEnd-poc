@@ -50,14 +50,15 @@ public class AgendamentoController {
         if (referenceAgendamento.isEmpty())
             return ResponseEntity.notFound().build();
 
-        return ResponseEntity.ok(agendamentoRepository.getOne(id));
+        return ResponseEntity.ok(agendamentoRepository.getReferenceById(id));
     }
 
     @GetMapping
     public ResponseEntity<List<Agendamento>> getAll(){
-        if (agendamentoRepository.findAll().isEmpty())
+        List<Agendamento> agendamentos = agendamentoRepository.findAll();
+        if (agendamentos.isEmpty())
             return ResponseEntity.notFound().build();
-        return ResponseEntity.ok(agendamentoRepository.findAll());
+        return ResponseEntity.ok(agendamentos);
     }
 
     //TODO: TESTAR e revisar se há uma forma melhor de fazer o put method

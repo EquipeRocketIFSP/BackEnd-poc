@@ -40,14 +40,15 @@ public class TutorController {
         Optional<Tutor> referenceTutor = tutorRepository.findById(id);
         if (referenceTutor.isEmpty())
             return ResponseEntity.notFound().build();
-        return  ResponseEntity.ok(tutorRepository.getOne(id));
+        return  ResponseEntity.ok(tutorRepository.getReferenceById(id));
     }
 
     @GetMapping
     public ResponseEntity<List<Tutor>> getAll(){
-        if (tutorRepository.findAll().isEmpty())
+        List<Tutor> tutores = tutorRepository.findAll();
+        if (tutores.isEmpty())
             return ResponseEntity.notFound().build();
-        return ResponseEntity.ok(tutorRepository.findAll());
+        return ResponseEntity.ok(tutores);
     }
 
     //TODO: arrumar lógica do put method

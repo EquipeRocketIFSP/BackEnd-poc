@@ -52,9 +52,10 @@ public class AnimalController {
 
     @GetMapping
     public ResponseEntity<List<Animal>> getAll(){
-        if (animalRepository.findAll().isEmpty())
+        List<Animal> animais = animalRepository.findAll();
+        if (animais.isEmpty())
             return ResponseEntity.notFound().build();
-        return ResponseEntity.ok(animalRepository.findAll());
+        return ResponseEntity.ok(animais);
     }
 
     @DeleteMapping("/{id}")

@@ -62,7 +62,7 @@ public class Clinica {
     @Column(name = "razao_social")
     private String razaoSocial;
 
-    @Column(name = "responsavel_tecnico", nullable = false)
+    @Column(name = "responsavel_tecnico")
     private String responsavelTecnico;
 
     @Column(name = "telefone")
