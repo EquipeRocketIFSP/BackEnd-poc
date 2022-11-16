@@ -21,9 +21,10 @@ public class Animal {
     @Column(name = "id")
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "clinica_id")
-    private Clinica clinica;
+//    @ManyToOne
+//    @JoinColumn(name = "clinica_id", nullable = false)
+    @Column(name = "clinica_id", nullable = false)
+    private Long clinica;
 
     @Column(name = "especie", nullable = false)
     private String especie;
@@ -32,7 +33,7 @@ public class Animal {
     @Column(name = "filho_id")
     private List<Animal> filho;
 
-    @Column(name = "forma_identificacao", nullable = false)
+    @Column(name = "forma_identificacao")
     private String formaIdentificacao;
 
     @PositiveOrZero(message = "Idade tem que ser maior ou igual a zero ano(s)")

@@ -1,6 +1,5 @@
 package br.vet.sidekick.poc.service.impl;
 
-import br.vet.sidekick.poc.controller.dto.CadastroAgendamentoDto;
 import br.vet.sidekick.poc.model.Agendamento;
 import br.vet.sidekick.poc.model.Animal;
 import br.vet.sidekick.poc.model.Clinica;
@@ -11,7 +10,6 @@ import br.vet.sidekick.poc.service.AgendamentoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -29,14 +27,13 @@ public class AgendamentoServiceImpl implements AgendamentoService {
     @Override
     public Optional<Agendamento> create(Agendamento agendamento) {
 
-        //PRECISAMOS SETAR A CLINICA AQUI NA HORA DO AGENDAMENTO
 //        if (agendamentoRepository.existsById(agendamento.getId()))
 //            return Optional.empty();
 
-        Animal animalId = animalRepository.getById(agendamento.getAnimal());
+        Animal animalId = animalRepository.getReferenceById(agendamento.getAnimal());
         agendamento.setAnimal(animalId.getId());
 
-        Clinica clinicaId = clinicaRepository.getById(agendamento.getClinica());
+        Clinica clinicaId = clinicaRepository.getReferenceById(agendamento.getClinica());
         agendamento.setClinica(clinicaId.getId());
 
         return Optional.of(agendamentoRepository.save(agendamento));
