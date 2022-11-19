@@ -33,7 +33,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     @Bean
-    protected AuthenticationManager authenticationManager()throws Exception{
+    protected AuthenticationManager authenticationManager() throws Exception {
         return super.authenticationManager();
     }
 
@@ -41,20 +41,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/auth").permitAll()
-//                .antMatchers(HttpMethod.GET, "/usuario").permitAll()
                 .antMatchers(HttpMethod.GET, "/actuator/**").permitAll()
-                .antMatchers(HttpMethod.POST,"/cadastro/clinica/*").permitAll()
-                .antMatchers(HttpMethod.POST,"/cadastro/clinica/**").permitAll()
-                .antMatchers(HttpMethod.POST, "/cadastro-animal/*").authenticated()
-                .antMatchers(HttpMethod.POST, "/cadastro-animal/**").authenticated()
-                .antMatchers(HttpMethod.POST, "/cadastro-tutor/*").authenticated()
-                .antMatchers(HttpMethod.POST, "/cadastro-tutor/**").authenticated()
-                .antMatchers(HttpMethod.POST, "/agendamento/*").authenticated()
-                .antMatchers(HttpMethod.POST, "/agendamento/**").authenticated()
-                .antMatchers(HttpMethod.POST, "/cadastro-funcionario/*").authenticated()
-                .antMatchers(HttpMethod.POST, "/cadastro-funcionario/**").authenticated()
-                .antMatchers(HttpMethod.POST, "/tutor/*").authenticated()
-                .antMatchers(HttpMethod.POST, "/tutor/**").authenticated()
+                .antMatchers(HttpMethod.POST, "/cadastro/clinica/*").permitAll()
+                .antMatchers(HttpMethod.POST, "/cadastro/clinica/**").permitAll()
                 .anyRequest().authenticated()
                 .and().cors()
                 .and().csrf().disable()
