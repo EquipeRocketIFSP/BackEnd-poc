@@ -1,16 +1,15 @@
 package br.vet.sidekick.poc.controller;
 
-import br.vet.sidekick.poc.controller.dto.AnimalResponse;
 import br.vet.sidekick.poc.controller.dto.CadastroAnimalDto;
 import br.vet.sidekick.poc.model.Animal;
+import br.vet.sidekick.poc.model.Tutor;
 import br.vet.sidekick.poc.repository.AnimalRepository;
 import br.vet.sidekick.poc.service.AnimalService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,12 +30,13 @@ public class AnimalController {
 
     //TODO: remover depois
     private static List<CadastroAnimalDto> list = new ArrayList<>();
-    static {list.add(cadastroAnimalDto);}
+
+    static {
+        list.add(cadastroAnimalDto);
+    }
 
     @PostMapping
-    public ResponseEntity<Animal> registerAnimal(
-            @RequestBody Animal animal
-    ){
+    public ResponseEntity<Animal> registerAnimal(@RequestBody Animal animal) {
         Optional<Animal> referenceAnimal = animalService.create(animal);
         if (referenceAnimal.isEmpty())
             return ResponseEntity.badRequest().build();
@@ -46,20 +46,27 @@ public class AnimalController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AnimalResponse> getOne(
-            @PathVariable Long id
-    ){
+    public ResponseEntity<Animal> getOne(@PathVariable Long id) {
         Optional<Animal> referenceAnimal = animalRepository.findById(id);
+
         if (referenceAnimal.isEmpty())
             return ResponseEntity.notFound().build();
-        return ResponseEntity.ok().body(new AnimalResponse(animalRepository.findById(id).get()));
+
+        Animal animal = referenceAnimal.get();
+        List<Tutor> tutores = referenceAnimal.get().getTutores();
+
+        tutores.forEach(tutor -> tutor.setAnimais(null));
+        animal.setTutores(tutores);
+
+        return ResponseEntity.ok().body(animal);
     }
 
     @GetMapping
-    public ResponseEntity<List<Animal>> getAll(){
+    public ResponseEntity<List<Animal>> getAll() {
         List<Animal> animais = animalRepository.findAll();
-        if (animais.isEmpty())
-            return ResponseEntity.notFound().build();
+
+        animais.forEach(animal -> animal.setTutores(null));
+
         return ResponseEntity.ok(animais);
     }
 
@@ -67,7 +74,7 @@ public class AnimalController {
     public ResponseEntity<Animal> deleteAnimal(
             @PathVariable Long id
     ) {
-        if (animalRepository.existsById(id)){
+        if (animalRepository.existsById(id)) {
             animalRepository.deleteById(id);
             return ResponseEntity.ok().build();
         }
@@ -77,6 +84,8 @@ public class AnimalController {
 
     //TODO
     @PutMapping
-    public ResponseEntity<Animal> updateAnimal(){ return null;}
+    public ResponseEntity<Animal> updateAnimal() {
+        return null;
+    }
 
 }
