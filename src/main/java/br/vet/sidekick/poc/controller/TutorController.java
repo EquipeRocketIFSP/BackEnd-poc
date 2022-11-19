@@ -1,11 +1,13 @@
 package br.vet.sidekick.poc.controller;
 
+import br.vet.sidekick.poc.model.Animal;
 import br.vet.sidekick.poc.model.Tutor;
 import br.vet.sidekick.poc.repository.TutorRepository;
 import br.vet.sidekick.poc.service.TutorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
@@ -22,9 +24,7 @@ public class TutorController {
     private TutorRepository tutorRepository;
 
     @PostMapping
-    public ResponseEntity<Tutor> registerTutor(
-            @RequestBody Tutor tutor
-    ){
+    public ResponseEntity<Tutor> registerTutor(@RequestBody Tutor tutor) {
         Optional<Tutor> referenceTutor = tutorService.create(tutor);
         if (referenceTutor.isEmpty())
             return ResponseEntity.badRequest().build();
@@ -34,20 +34,27 @@ public class TutorController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Tutor> getOne(
-            @PathVariable Long id
-    ){
+    public ResponseEntity<Tutor> getOne(@PathVariable Long id) {
         Optional<Tutor> referenceTutor = tutorRepository.findById(id);
+
         if (referenceTutor.isEmpty())
             return ResponseEntity.notFound().build();
-        return  ResponseEntity.ok(tutorRepository.getReferenceById(id));
+
+        Tutor tutor = referenceTutor.get();
+        List<Animal> animais = referenceTutor.get().getAnimais();
+
+        animais.forEach(animal -> animal.setTutores(null));
+        tutor.setAnimais(animais);
+
+        return ResponseEntity.ok(tutor);
     }
 
     @GetMapping
-    public ResponseEntity<List<Tutor>> getAll(){
+    public ResponseEntity<List<Tutor>> getAll() {
         List<Tutor> tutores = tutorRepository.findAll();
-        if (tutores.isEmpty())
-            return ResponseEntity.notFound().build();
+
+        tutores.forEach((tutor) -> tutor.setAnimais(null));
+
         return ResponseEntity.ok(tutores);
     }
 
@@ -85,8 +92,8 @@ public class TutorController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Tutor> deleteTutor(
             @PathVariable Long id
-    ){
-        if (tutorRepository.existsById(id)){
+    ) {
+        if (tutorRepository.existsById(id)) {
             tutorRepository.deleteById(id);
             return ResponseEntity.ok().build();
         }

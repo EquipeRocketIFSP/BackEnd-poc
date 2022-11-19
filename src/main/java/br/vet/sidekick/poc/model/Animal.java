@@ -1,8 +1,6 @@
 package br.vet.sidekick.poc.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -63,9 +61,11 @@ public class Animal {
     @Column(name = "sexo", nullable = false)
     private String sexo;
 
-    @ManyToMany(mappedBy = "animais")
+    @Setter
+    @ManyToMany
 //    @Column(name = "tutor_id")
 //    @JsonBackReference//(value = "tutor_animal")
+    @JoinTable(name = "tutor_animal", joinColumns = {@JoinColumn(name = "animal_id")}, inverseJoinColumns = {@JoinColumn(name = "tutor_id")})
     private List<Tutor> tutores;
 
 }
