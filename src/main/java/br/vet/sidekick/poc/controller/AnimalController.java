@@ -1,10 +1,14 @@
 package br.vet.sidekick.poc.controller;
 
+import br.vet.sidekick.poc.controller.dto.AnimalResponse;
 import br.vet.sidekick.poc.controller.dto.CadastroAnimalDto;
 import br.vet.sidekick.poc.model.Animal;
 import br.vet.sidekick.poc.repository.AnimalRepository;
 import br.vet.sidekick.poc.service.AnimalService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.net.URI;
@@ -15,6 +19,7 @@ import java.util.Optional;
 @CrossOrigin
 @RestController
 @RequestMapping("/animal")
+@Slf4j
 public class AnimalController {
 
     @Autowired
@@ -41,13 +46,13 @@ public class AnimalController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Animal> getOne(
+    public ResponseEntity<AnimalResponse> getOne(
             @PathVariable Long id
     ){
         Optional<Animal> referenceAnimal = animalRepository.findById(id);
         if (referenceAnimal.isEmpty())
             return ResponseEntity.notFound().build();
-        return ResponseEntity.ok(animalRepository.getReferenceById(id));
+        return ResponseEntity.ok().body(new AnimalResponse(animalRepository.findById(id).get()));
     }
 
     @GetMapping

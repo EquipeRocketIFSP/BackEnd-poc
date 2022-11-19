@@ -1,11 +1,13 @@
 package br.vet.sidekick.poc.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
 import java.util.List;
 
@@ -21,8 +23,6 @@ public class Animal {
     @Column(name = "id")
     private Long id;
 
-//    @ManyToOne
-//    @JoinColumn(name = "clinica_id", nullable = false)
     @Column(name = "clinica_id", nullable = false)
     private Long clinica;
 
@@ -31,6 +31,7 @@ public class Animal {
 
     @OneToMany(mappedBy = "id")
     @Column(name = "filho_id")
+    @JsonIgnore
     private List<Animal> filho;
 
     @Column(name = "forma_identificacao")
@@ -62,8 +63,9 @@ public class Animal {
     @Column(name = "sexo", nullable = false)
     private String sexo;
 
-//    @ManyToMany
-    @Column(name = "tutor_id", nullable = false)
-    private Long tutor;
+    @ManyToMany(mappedBy = "animais")
+//    @Column(name = "tutor_id")
+//    @JsonBackReference//(value = "tutor_animal")
+    private List<Tutor> tutores;
 
 }

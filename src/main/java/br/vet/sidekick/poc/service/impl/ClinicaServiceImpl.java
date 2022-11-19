@@ -31,10 +31,10 @@ public class ClinicaServiceImpl implements ClinicaService {
                 .numero("635")
                 .responsavelTecnico("Nome Qualquer")
                 .telefone("(19) 3713-9577").build();
-        //está verificando sempre o cnpj do DTO, mudar para o da request
-//        if (clinicaRepository.existsByCnpj(clinica.getCnpj())) {
-//            return Optional.empty();
-//        }
+//        está verificando sempre o cnpj do DTO, mudar para o da request
+        if (clinicaRepository.existsByCnpj(clinica.getCnpj())) {
+            return Optional.empty();
+        }
         return Optional.of(clinicaRepository.save(clinica));
     }
 }

@@ -218,7 +218,7 @@ public class PdfServicePdfBoxImpl implements PdfService {
                         .rg("12345689")
                         .email("email@valido.com")
                         .logradouro("endereco random")
-                        .numero(13)
+                        .numero("13")
                         .telefone("123456789")
                         .build()
         );

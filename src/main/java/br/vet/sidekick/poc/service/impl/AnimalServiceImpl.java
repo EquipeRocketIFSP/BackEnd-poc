@@ -1,7 +1,6 @@
 package br.vet.sidekick.poc.service.impl;
 
 import br.vet.sidekick.poc.model.Animal;
-import br.vet.sidekick.poc.model.Tutor;
 import br.vet.sidekick.poc.repository.AnimalRepository;
 import br.vet.sidekick.poc.repository.TutorRepository;
 import br.vet.sidekick.poc.service.AnimalService;
@@ -9,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class AnimalServiceImpl implements AnimalService {
@@ -24,8 +24,7 @@ public class AnimalServiceImpl implements AnimalService {
         //PRECISAMOS SETAR A LISTA DE TUTORES AQUI NO REGISTRO DE ANIMAL
 //        if (animalRepository.getAnimalByTutorCpf())
 //            return Optional.empty();
-        Tutor tutorId = tutorRepository.getById(animal.getTutor());
-        animal.setTutor(tutorId.getId());
+
         return Optional.of(animalRepository.save(animal));
     }
 

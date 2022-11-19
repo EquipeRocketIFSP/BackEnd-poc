@@ -1,5 +1,8 @@
 package br.vet.sidekick.poc.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.hibernate.validator.constraints.br.CPF;
 import javax.persistence.*;
@@ -15,10 +18,16 @@ import java.util.List;
 public class Tutor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @Column(name = "id")
     private Long id;
 
     @ManyToMany
+    @JoinTable(name="tutor_animal",
+            joinColumns={@JoinColumn(name="tutor_id")},
+            inverseJoinColumns={@JoinColumn(name="animal_id")})
+//    @Column(name = "animal_id")
+//    @JsonManagedReference(value = "tutor_animal")
+    @JsonIgnore
     private List<Animal> animais;
 
     private String bairro;
@@ -32,11 +41,11 @@ public class Tutor {
     @Column(name = "cidade")
     private String cidade;
 
-//    @Column(name = "clinica", nullable = false)
-//    private Long clinica;
+    @Column(name = "clinica_id", nullable = false)
+    private Long clinica;
 
-//    @CPF
-    @Column(name = "cpf", nullable = false, unique = true)
+    @CPF
+    @Column(name = "cpf", nullable = false)
     private String cpf;
 
     @Column(name = "estado", nullable = false)
@@ -52,8 +61,8 @@ public class Tutor {
     @Column(name = "nome", nullable = false)
     private String nome;
 
-    @Column(name = "numero", nullable = false)
-    private Integer numero;
+    @Column(name = "numero")
+    private String numero;
 
     @Column(name = "rg")
     private String rg;

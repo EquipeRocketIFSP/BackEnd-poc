@@ -17,8 +17,7 @@ public class Agendamento {
     @Column(name = "id", nullable = false)
     private Long id;
 
-//    @ManyToOne
-//    @JoinColumn(name = "animal_id", insertable = false, updatable = false)
+//    @OneToMany(mappedBy = "id") Illegal attempt to map a non collection as a @OneToMany, @ManyToMany or @CollectionOfElements: br.vet.sidekick.poc.model.Agendamento.animal
     @Column(name = "animal_id")
     private Long animal;
 

@@ -21,7 +21,7 @@ public class Veterinario {
     @Column(name = "nome", nullable = false)
     private String nome;
 
-    @Column(name = "registro-crmv", nullable = false)
+    @Column(name = "registro_crmv", nullable = false)
     private String registroCRMV;
 
     public void setId(Long id) {

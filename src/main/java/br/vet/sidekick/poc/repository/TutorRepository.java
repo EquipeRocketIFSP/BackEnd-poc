@@ -7,6 +7,6 @@ import java.util.List;
 
 @Repository
 public interface TutorRepository extends JpaRepository<Tutor, Long> {
-    boolean findByCpf(String cpf);
 
+    boolean existsByCpfAndClinica(String cpf, Long clinica);
 }
