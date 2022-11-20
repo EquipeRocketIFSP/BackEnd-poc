@@ -1,29 +1,35 @@
 package br.vet.sidekick.poc.model;
 
 import lombok.*;
-
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import java.time.LocalDateTime;
 
-@Entity
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @ToString
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
+@Entity
 public class Documento {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
-    private String name;
-    private String tipoAutorizacao;
+    @Column(name = "id_prontuario")
+    private Long idProntuario;
+
+    @Column(name = "caminho_arquivo", nullable = false)
     private String caminhoArquivo;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "prontuario_id", nullable = false)
-    @ToString.Exclude
-    private Prontuario prontuario;
+    @Column(name = "clinica", nullable = false)
+    private Long clinica;
+
+    @Column(name = "criado_em")
+    private LocalDateTime criadoEm;
+
+    @Column(name = "tipo_documento", nullable = false)
+    private Long tipoDocumento;
 
 }

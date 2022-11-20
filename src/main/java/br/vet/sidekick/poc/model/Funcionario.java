@@ -1,7 +1,7 @@
 package br.vet.sidekick.poc.model;
 
-
 import lombok.*;
+import org.hibernate.validator.constraints.br.CPF;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -15,9 +15,12 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Setter
 @Getter
 @ToString
+@Table(name = "funcionario")
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Funcionario implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,12 +36,55 @@ public class Funcionario implements UserDetails {
     @Basic(fetch = FetchType.LAZY)
     private String password;
 
+    @Column(name = "nome", nullable = false)
+    private String nome;
+
+
+    @ManyToOne
+    @JoinColumn(name = "clinica")
+    private Clinica clinica;
+
+    @Column(name = "logradouro", nullable = false)
+    private String logradouro;
+
+    @Column(name = "numero", nullable = false)
+    private String numero;
+
+    @Column(name = "cep", nullable = false, length = 9)
+    private String cep;
+
+    @Column(name = "bairro")
+    private String bairro;
+
+    @Column(name = "cidade")
+    private String cidade;
+
+    @Column(name = "estado")
+    private String estado;
+
+    @CPF
+    @Column(name = "cpf", nullable = false, unique = true)
+    private String cpf;
+
+    @Column(name = "rg", unique = true)
+    private String rg;
+
+    @Column(name = "celular")
+    private String celular;
+
+    @Column(name = "telefone", nullable = true)
+    private String telefone;
+
     @Email
     private String email = this.username;
 
     @ToString.Exclude
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "funcionario")
     private List<Perfil> perfis = new ArrayList<>();
+
+    public void setPerfis(List<Perfil> perfis) {
+        this.perfis = perfis;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -64,6 +110,5 @@ public class Funcionario implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-    @Column(length = 9)
-    private String cep;
+
 }

@@ -1,12 +1,12 @@
 package br.vet.sidekick.poc.service.impl;
 
+import br.vet.sidekick.poc.exceptionResolver.exception.FuncionarioAlreadyExistsException;
+import br.vet.sidekick.poc.model.Clinica;
 import br.vet.sidekick.poc.model.Funcionario;
 import br.vet.sidekick.poc.repository.FuncionarioRepository;
 import br.vet.sidekick.poc.service.FuncionarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.net.URI;
 import java.util.Optional;
 
 @Service
@@ -19,5 +19,15 @@ public class FuncionarioServiceImpl implements FuncionarioService {
         return funcionarioRepository.existsByUsername(funcionario.getUsername())
                 ? Optional.empty()
                 : Optional.of(funcionarioRepository.save(funcionario));
+    }
+
+    @Override
+    public Funcionario save(Funcionario funcionario){
+        return funcionarioRepository.save(funcionario);
+    }
+
+    @Override
+    public void deleteById(Long id){
+        funcionarioRepository.deleteById(id);
     }
 }

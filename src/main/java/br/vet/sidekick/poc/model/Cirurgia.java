@@ -1,43 +1,29 @@
 package br.vet.sidekick.poc.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-
+import lombok.*;
 import javax.persistence.*;
 
-@Getter
-@Entity
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@ToString
+@Entity
 public class Cirurgia {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
-    private ASA asa;
-    private TipoCirurgia tipo;
 
-    @OneToOne
-    private Prontuario prontuario;
+    @Column(name = "categoria_paciente", nullable = false)
+    private String categoriaPaciente;
 
-    public void setProntuario(Prontuario prontuario) {
-        this.prontuario = prontuario;
-    }
+    @Column(name = "clinica", nullable = false)
+    private Long clinica;
 
-    public enum ASA {
-        ASA1,
-        ASA2,
-        ASA3,
-        ASA4
-    }
-    public enum TipoCirurgia {
-        CASTRACAO,
-        ORTOPEDICA,
-        OFTALMICA,
-        TECIDOS_MOLES,
-        ODONTOLOGICA
-    }
+    @Column(name = "prontuario", nullable = false, unique = true)
+    private Long prontuario;
+
+    @Column(name = "tipo_cirurgia", nullable = false)
+    private Long tipoCirurgia;
 }

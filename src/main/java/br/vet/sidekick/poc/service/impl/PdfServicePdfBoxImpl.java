@@ -57,7 +57,8 @@ public class PdfServicePdfBoxImpl implements PdfService {
                 tutor.getNome(),
                 tutor.getRg(),
                 tutor.getCpf(),
-                tutor.getEndereco(),
+                tutor.getLogradouro(),
+                tutor.getNumero(),
                 tutor.getTelefone(),
                 tutor.getEmail()
         );
@@ -195,7 +196,7 @@ public class PdfServicePdfBoxImpl implements PdfService {
         document.close();
     }
 
-    public static void main(String[] args) throws IOException {
+    /*public static void main(String[] args) throws IOException {
         new PdfServicePdfBoxImpl().termoAutorizacaoProcedimentoCirurgico(
                 "estabelecimento",
                 "Operação",
@@ -207,7 +208,6 @@ public class PdfServicePdfBoxImpl implements PdfService {
                         .idade(2)
                         .nome("doguinho")
                         .pelagem("curta")
-                        .outros("chip 123456485312")
                         .build(),
                 Veterinario.builder()
                         .registroCRMV("SP-12345")
@@ -217,7 +217,8 @@ public class PdfServicePdfBoxImpl implements PdfService {
                         .cpf("228.831.350-10")
                         .rg("12345689")
                         .email("email@valido.com")
-                        .endereco("endereco random")
+                        .logradouro("endereco random")
+                        .numero("13")
                         .telefone("123456789")
                         .build()
         );
@@ -225,5 +226,5 @@ public class PdfServicePdfBoxImpl implements PdfService {
 
 //        run();
 
-    }
+    }*/
 }
