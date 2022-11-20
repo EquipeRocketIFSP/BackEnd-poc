@@ -52,8 +52,9 @@ app:
             charset: UTF-8
             enabled: true
             force: true
-    temp:
-        path: "/opt/pdf"
+    default:
+        pdf:
+            pass: ${DEFAULT_PDF_PASS}
 springdoc:
     swagger-ui:
         path: "/api/swagger-ui.html"

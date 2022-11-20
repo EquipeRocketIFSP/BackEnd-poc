@@ -6,6 +6,7 @@ import br.vet.sidekick.poc.model.Tutor;
 import br.vet.sidekick.poc.model.Veterinario;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.io.IOException;
 
 @Service
@@ -20,4 +21,7 @@ public interface PdfService {
     ) throws Exception;
 
     byte[] writeProntuario(Prontuario prontuario) throws Exception;
+
+    byte[] retrieveFromRepository(Prontuario prontuario) throws IOException;
+
 }

@@ -7,8 +7,6 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 @SpringBootApplication(scanBasePackages = "br.vet.sidekick.poc")
 @EntityScan(basePackages = "br.vet.sidekick.poc.model")
 public class PocApplication {
-	public static void main(String[] args) {
-		SpringApplication.run(PocApplication.class, args);
-	}
+	public static void main(String[] args) { SpringApplication.run(PocApplication.class, args); }
 
 }

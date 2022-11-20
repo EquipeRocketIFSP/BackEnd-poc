@@ -3,6 +3,7 @@ package br.vet.sidekick.poc.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -18,8 +19,9 @@ public class Documento {
     private Long id;
 
     private String name;
-    private String tipoAutorizacao;
-    private String caminhoArquivo;
+    private String tipoDocumento;
+    private LocalDateTime dateCreation;
+    private Integer versao;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "prontuario_id", nullable = false)

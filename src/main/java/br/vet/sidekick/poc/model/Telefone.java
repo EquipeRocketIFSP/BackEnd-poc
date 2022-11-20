@@ -12,4 +12,5 @@ public class Telefone {
     @Column(name = "id", nullable = false)
     private Long id;
     private String numeracao;
+    private String tipo;
 }

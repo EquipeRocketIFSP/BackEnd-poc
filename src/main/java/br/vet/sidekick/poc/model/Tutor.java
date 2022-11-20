@@ -26,6 +26,9 @@ public class Tutor {
     @CPF
     private String cpf;
     private String endereco;
+
+//    @OneToMany(mappedBy = "id")
+//    private List<Telefone> telefones;
     private String telefone;
     @Email
     private String email;

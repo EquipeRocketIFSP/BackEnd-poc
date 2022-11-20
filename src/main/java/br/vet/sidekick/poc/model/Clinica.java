@@ -1,14 +1,19 @@
 package br.vet.sidekick.poc.model;
 
-import lombok.Getter;
+import lombok.*;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.hibernate.validator.constraints.br.CNPJ;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 public class Clinica {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,4 +29,7 @@ public class Clinica {
     private List<Telefone> telefones;
 
     private String logradouro;
+
+    @CNPJ
+    private String cnpj;
 }

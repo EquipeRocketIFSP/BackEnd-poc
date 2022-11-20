@@ -1,5 +1,6 @@
 package br.vet.sidekick.poc.repository;
 
+import br.vet.sidekick.poc.model.Documento;
 import br.vet.sidekick.poc.model.Prontuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -9,12 +10,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface ProntuarioRepository extends JpaRepository<Prontuario, Long> {
-
-    boolean existsByDataAtendimento(LocalDateTime dataAtendimento);
-
-    Boolean existsByCodigo(String codigo);
-
-
-    Optional<List<Prontuario>> findAllByCodigo(String codigo);
+public interface DocumentoRepository extends JpaRepository<Documento, Long> {
+    Optional<List<Prontuario>> findByVeterinario_IdAndDateCreationBetween(LocalDateTime minusSeconds, LocalDateTime now, Long veterinarioId);
 }

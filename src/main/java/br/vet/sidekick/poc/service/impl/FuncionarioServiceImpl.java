@@ -6,7 +6,6 @@ import br.vet.sidekick.poc.service.FuncionarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.net.URI;
 import java.util.Optional;
 
 @Service
@@ -19,5 +18,10 @@ public class FuncionarioServiceImpl implements FuncionarioService {
         return funcionarioRepository.existsByUsername(funcionario.getUsername())
                 ? Optional.empty()
                 : Optional.of(funcionarioRepository.save(funcionario));
+    }
+
+    @Override
+    public Optional<Funcionario> findById(long id) {
+        return funcionarioRepository.findById(id);
     }
 }

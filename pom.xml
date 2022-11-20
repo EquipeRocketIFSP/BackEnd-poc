@@ -19,6 +19,9 @@
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
+<!--				<groupId>software.amazon.awssdk</groupId>-->
+<!--				<artifactId>bom</artifactId>-->
+<!--				<version>2.18.19</version>-->
 				<groupId>com.amazonaws</groupId>
 				<artifactId>aws-java-sdk-bom</artifactId>
 				<version>1.11.1000</version>
@@ -43,7 +46,7 @@
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-<!--			<version>8.0.30</version>-->
+			<version>8.0.30</version>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
@@ -90,6 +93,8 @@
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 		<dependency>
+<!--			<groupId>software.amazon.awssdk</groupId>-->
+<!--			<artifactId>s3</artifactId>-->
 			<groupId>com.amazonaws</groupId>
 			<artifactId>aws-java-sdk-s3</artifactId>
 		</dependency>

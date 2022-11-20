@@ -19,6 +19,7 @@ public class TokenService {
     private Date today = new Date();
 
     public String create(Authentication auth) {
+        log.debug("TokenService#create");
         return Jwts.builder()
                 .setIssuer("CertVet")
                 .setSubject(((Funcionario) auth.getPrincipal()).getId().toString())
@@ -29,6 +30,7 @@ public class TokenService {
     }
 
     public Boolean validate(String token) {
+        log.debug("TokenService#validate");
         try {
             jwtDecode(token);
             log.info("Token validado com sucesso!");
@@ -51,13 +53,15 @@ public class TokenService {
         return false;
     }
 
-    private Jws<Claims> jwtDecode(String token) {
+    public Jws<Claims> jwtDecode(String token) {
+        log.debug("TokenService#jwtDecode");
         return Jwts.parser()
                         .setSigningKey(SECRET)
                         .parseClaimsJws(token);
     }
 
     public Long getFuncionarioId(String token) {
+        log.debug("TokenService#getFuncinario");
         return Long.parseLong(
                 jwtDecode(token)
                         .getBody()

@@ -36,6 +36,9 @@ public class Funcionario implements UserDetails {
     @Email
     private String email = this.username;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Clinica clinica;
+
     @ToString.Exclude
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "funcionario")
     private List<Perfil> perfis = new ArrayList<>();

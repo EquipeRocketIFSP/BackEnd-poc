@@ -17,6 +17,8 @@ public class Animal {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "id")
+    private List<Tutor> tutores;
     private String nome;
     private String especie;
     private String raca;
@@ -27,5 +29,4 @@ public class Animal {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "id")
     private List<Prontuario> prontuarios;
-
 }

@@ -4,8 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.List;
 
 @AllArgsConstructor
@@ -13,7 +15,7 @@ import java.util.List;
 @Builder
 @Getter
 @Entity
-public class Veterinario {
+public class Veterinario extends Funcionario{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
