@@ -196,7 +196,7 @@ public class PdfServicePdfBoxImpl implements PdfService {
         document.close();
     }
 
-    public static void main(String[] args) throws IOException {
+    /*public static void main(String[] args) throws IOException {
         new PdfServicePdfBoxImpl().termoAutorizacaoProcedimentoCirurgico(
                 "estabelecimento",
                 "Operação",
@@ -226,5 +226,5 @@ public class PdfServicePdfBoxImpl implements PdfService {
 
 //        run();
 
-    }
+    }*/
 }

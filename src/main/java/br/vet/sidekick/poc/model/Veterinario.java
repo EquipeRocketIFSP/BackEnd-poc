@@ -1,30 +1,35 @@
 package br.vet.sidekick.poc.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @Getter
 @Entity
-public class Veterinario {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Long id;
-
-    @Column(name = "nome", nullable = false)
-    private String nome;
-
+@Setter
+public class Veterinario extends Funcionario {
     @Column(name = "registro_crmv", nullable = false)
     private String registroCRMV;
 
-    public void setId(Long id) {
-        this.id = id;
+    public Veterinario(Funcionario funcionario) {
+        super();
+
+        this.setUsername(funcionario.getUsername());
+        this.setPassword(funcionario.getPassword());
+        this.setNome(funcionario.getNome());
+        this.setClinica(funcionario.getClinica());
+        this.setLogradouro(funcionario.getLogradouro());
+        this.setNumero(funcionario.getNumero());
+        this.setCep(funcionario.getCep());
+        this.setBairro(funcionario.getBairro());
+        this.setCidade(funcionario.getCidade());
+        this.setEstado(funcionario.getEstado());
+        this.setCpf(funcionario.getCpf());
+        this.setRg(funcionario.getRg());
+        this.setCelular(funcionario.getCelular());
+        this.setTelefone(funcionario.getTelefone());
+        this.setEmail(funcionario.getEmail());
     }
 }

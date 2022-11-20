@@ -1,45 +1,62 @@
 package br.vet.sidekick.poc.controller;
 
 import br.vet.sidekick.poc.controller.dto.CadastroFuncionarioDto;
+import br.vet.sidekick.poc.model.Clinica;
 import br.vet.sidekick.poc.model.Funcionario;
+import br.vet.sidekick.poc.model.Veterinario;
+import br.vet.sidekick.poc.repository.ClinicaRepository;
 import br.vet.sidekick.poc.repository.FuncionarioRepository;
 import br.vet.sidekick.poc.service.FuncionarioService;
+import br.vet.sidekick.poc.service.VeterinarioService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/cadastro-funcionario")
-public class CadastroFuncionarioController {
-
-    private static CadastroFuncionarioDto funcionarioMock = CadastroFuncionarioDto.getMock();
-
-//    private static List<CadastroFuncionarioDto> list = new ArrayList<>();
-
-//    static {list.add(funcionarioMock);}
-
+@RequestMapping("/funcionario")
+public class FuncionarioController {
     @Autowired
     private FuncionarioRepository funcionarioRepository;
 
     @Autowired
     private FuncionarioService funcionarioService;
 
+    @Autowired
+    private VeterinarioService veterinarioService;
+
+    @Autowired
+    private ClinicaRepository clinicaService;
+
     @PostMapping
-    public ResponseEntity<Funcionario> registerFuncionario(
-            @RequestBody Funcionario funcionario
-    ){
+    public ResponseEntity<Funcionario> registerFuncionario(@RequestBody CadastroFuncionarioDto funcionarioDto) {
         try {
-            funcionario = funcionarioService.save(funcionario);
-            return ResponseEntity.created(
-                    URI.create("/funcionario/" + String.valueOf(funcionario.getId())
-                    )).build();
-        } catch (Exception e){
+            Optional<Clinica> clinica = this.clinicaService.findById(funcionarioDto.getClinica());
+
+            if (clinica.isEmpty())
+                return ResponseEntity.badRequest().build();
+
+            Funcionario funcionario = funcionarioDto.convert();
+            funcionario.setClinica(clinica.get());
+
+            if (funcionarioDto.getCrmv().length() != 0) {
+                Veterinario veterinario = new Veterinario(funcionario);
+                veterinario.setRegistroCRMV(funcionarioDto.getCrmv());
+
+                this.veterinarioService.save(veterinario);
+
+                return ResponseEntity.created(URI.create("/funcionario/" + String.valueOf(funcionario.getId()))).build();
+            }
+
+            this.funcionarioService.save(funcionario);
+
+            return ResponseEntity.created(URI.create("/funcionario/" + String.valueOf(funcionario.getId()))).build();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
             return ResponseEntity.badRequest().build();
         }
     }
@@ -47,7 +64,7 @@ public class CadastroFuncionarioController {
     @GetMapping("/{id}")
     public ResponseEntity<Funcionario> getOne(
             @PathVariable() Long id
-    ){
+    ) {
         Optional<Funcionario> funcionario = funcionarioRepository.findById(id);
         if (funcionario.isPresent())
             return ResponseEntity.ok(funcionario.get());

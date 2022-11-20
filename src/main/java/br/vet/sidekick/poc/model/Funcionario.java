@@ -4,6 +4,7 @@ import lombok.*;
 import org.hibernate.validator.constraints.br.CPF;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -14,10 +15,12 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Setter
 @Getter
 @ToString
 @Table(name = "funcionario")
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Funcionario implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,8 +39,10 @@ public class Funcionario implements UserDetails {
     @Column(name = "nome", nullable = false)
     private String nome;
 
-    @Column(name = "clinica", nullable = false)
-    private Long clinica;
+
+    @ManyToOne
+    @JoinColumn(name = "clinica")
+    private Clinica clinica;
 
     @Column(name = "logradouro", nullable = false)
     private String logradouro;
@@ -66,6 +71,9 @@ public class Funcionario implements UserDetails {
 
     @Column(name = "celular")
     private String celular;
+
+    @Column(name = "telefone", nullable = true)
+    private String telefone;
 
     @Email
     private String email = this.username;
