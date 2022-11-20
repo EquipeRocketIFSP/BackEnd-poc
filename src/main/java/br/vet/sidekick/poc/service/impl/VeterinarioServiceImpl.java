@@ -1,5 +1,7 @@
 package br.vet.sidekick.poc.service.impl;
 
+import br.vet.sidekick.poc.exceptionResolver.exception.FuncionarioAlreadyExistsException;
+import br.vet.sidekick.poc.model.Clinica;
 import br.vet.sidekick.poc.model.Veterinario;
 import br.vet.sidekick.poc.repository.VeterinarioRepository;
 import br.vet.sidekick.poc.service.VeterinarioService;
@@ -38,5 +40,12 @@ public class VeterinarioServiceImpl implements VeterinarioService {
     @Override
     public void deleteById(Long id){
         veterinarioRepository.deleteById(id);
+    }
+
+    @Override
+    public Optional<Veterinario> createResponsavelTecnico(String crmv, Clinica clinica) throws FuncionarioAlreadyExistsException {
+        Optional<Veterinario> resp = veterinarioRepository.findByCrmvAndClinica__id(crmv, clinica.getId());
+        // TODO: Finalizar implementação
+        return Optional.empty();
     }
 }

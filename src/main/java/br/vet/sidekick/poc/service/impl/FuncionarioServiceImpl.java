@@ -1,5 +1,7 @@
 package br.vet.sidekick.poc.service.impl;
 
+import br.vet.sidekick.poc.exceptionResolver.exception.FuncionarioAlreadyExistsException;
+import br.vet.sidekick.poc.model.Clinica;
 import br.vet.sidekick.poc.model.Funcionario;
 import br.vet.sidekick.poc.repository.FuncionarioRepository;
 import br.vet.sidekick.poc.service.FuncionarioService;

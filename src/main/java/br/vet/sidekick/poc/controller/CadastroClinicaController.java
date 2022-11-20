@@ -1,8 +1,14 @@
 package br.vet.sidekick.poc.controller;
 
 import br.vet.sidekick.poc.controller.dto.CadastroClinicaDto;
+import br.vet.sidekick.poc.exceptionResolver.exception.ClinicaAlreadyExistsException;
+import br.vet.sidekick.poc.exceptionResolver.exception.FuncionarioAlreadyExistsException;
 import br.vet.sidekick.poc.model.Clinica;
+import br.vet.sidekick.poc.model.Funcionario;
+import br.vet.sidekick.poc.model.Veterinario;
 import br.vet.sidekick.poc.service.ClinicaService;
+import br.vet.sidekick.poc.service.FuncionarioService;
+import br.vet.sidekick.poc.service.VeterinarioService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -24,20 +30,34 @@ public class CadastroClinicaController {
     @Autowired
     private ClinicaService clinicaService;
 
+    @Autowired
+    private VeterinarioService veterinarioService;
+
     //TODO: remover as duas linhas abaixo
     private static List<CadastroClinicaDto> cadastros = new ArrayList<>();
     static {cadastros.add(cadastroDto);}
 
+    private void throwExceptionFromController(RuntimeException e) throws RuntimeException {
+        log.error(e.getLocalizedMessage());
+        throw e;
+    }
     @PostMapping
     public ResponseEntity<Clinica> registerClinica(
-            @RequestBody CadastroClinicaDto cadastro){
-        Optional<Clinica> clinica = clinicaService.create(cadastro);
-        if (clinica.isEmpty())
-            return ResponseEntity.badRequest().build();
-
-        return ResponseEntity.created(
-                URI.create("/clinica/" + clinica
-                        .get().getId().toString())).build();
+            @RequestBody CadastroClinicaDto cadastro) throws RuntimeException {
+        Optional<Clinica> clinica = null;
+        try {
+            clinica = clinicaService.create(cadastro);
+            if(clinica.isPresent()) {
+                Optional<Veterinario> responsavelTecnico = veterinarioService.createResponsavelTecnico(cadastro.getTecnicoCrmv(), clinica.get());
+            }
+        } catch (ClinicaAlreadyExistsException e){
+            throwExceptionFromController(e);
+        } catch (FuncionarioAlreadyExistsException e){
+            throwExceptionFromController(e);
+        }
+        return clinica.isEmpty()
+                ? ResponseEntity.badRequest().build()
+                : ResponseEntity.created(URI.create("/clinica/" + clinica.get().getId().toString())).build();
     }
 
     @GetMapping("/{id}")

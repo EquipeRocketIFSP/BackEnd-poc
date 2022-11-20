@@ -17,21 +17,21 @@ public class ClinicaServiceImpl implements ClinicaService {
     @Override
     public Optional<Clinica> create(CadastroClinicaDto cadastro) {
         Clinica clinica = Clinica.builder()
-                .razaoSocial("Mário e Edson Marketing ME")
-                .bairro("Bairro Fictício")
-                .celular("(19) 99435-8082")
-                .cep("13060-587")
-                .cidade("Campinas")
-                .cnae("7500-1/00")
-                .cnpj("69.136.908/0001-23")
-                .email("diretoria@marioeedsonmarketingme.com.br")
-                .estado("SP")
-                .logradouro("Avenida Gilberto Targon")
-                .nomeFantasia("Clinica Ficticia")
-                .numero("635")
-                .responsavelTecnico("Nome Qualquer")
-                .telefone("(19) 3713-9577").build();
-//        está verificando sempre o cnpj do DTO, mudar para o da request
+                .razaoSocial(cadastro.getCliniaRazao())
+                .bairro(cadastro.getClinicaBairro())
+                .celular(cadastro.getClinicaCelular())
+                .cep(cadastro.getClinicaCep())
+                .cidade(cadastro.getClinicaCidade())
+                .cnae(cadastro.getClinicaCnae())
+                .cnpj(cadastro.getClinicaCnpj())
+                .email(cadastro.getClinicaEmail())
+                .estado(cadastro.getClinicaEstado())
+                .logradouro(cadastro.getClinicaLogradouro())
+                .nomeFantasia(cadastro.getClinicaNome())
+                .numero(cadastro.getClinicaNumero())
+                .responsavelTecnico(cadastro.getTecnicoCpf())
+                .telefone(cadastro.getTecnicoTelefone())
+                .build();
         if (clinicaRepository.existsByCnpj(clinica.getCnpj())) {
             return Optional.empty();
         }
