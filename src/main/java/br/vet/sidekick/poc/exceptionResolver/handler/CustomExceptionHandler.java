@@ -2,6 +2,7 @@ package br.vet.sidekick.poc.exceptionResolver.handler;
 
 import br.vet.sidekick.poc.exceptionResolver.exception.ClinicaAlreadyExistsException;
 import br.vet.sidekick.poc.exceptionResolver.exception.FuncionarioAlreadyExistsException;
+import br.vet.sidekick.poc.exceptionResolver.exception.ResponsavelTecnicoAlreadyExistsException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +14,8 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(value = {
             FuncionarioAlreadyExistsException.class,
-            ClinicaAlreadyExistsException.class
+            ClinicaAlreadyExistsException.class,
+            ResponsavelTecnicoAlreadyExistsException.class
     })
     protected ResponseEntity<Object> handleConflict(
             RuntimeException ex,

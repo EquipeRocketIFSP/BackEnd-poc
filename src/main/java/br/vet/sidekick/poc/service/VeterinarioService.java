@@ -1,5 +1,6 @@
 package br.vet.sidekick.poc.service;
 
+import br.vet.sidekick.poc.controller.dto.CadastroClinicaDto;
 import br.vet.sidekick.poc.exceptionResolver.exception.FuncionarioAlreadyExistsException;
 import br.vet.sidekick.poc.model.Clinica;
 import br.vet.sidekick.poc.model.Funcionario;
@@ -18,5 +19,5 @@ public interface VeterinarioService {
 
     void deleteById(Long id);
 
-    Optional<Veterinario> createResponsavelTecnico(String crmv, Clinica clinica) throws FuncionarioAlreadyExistsException;
+    Optional<Veterinario> createResponsavelTecnico(CadastroClinicaDto cadastro, Clinica clinica) throws FuncionarioAlreadyExistsException;
 }

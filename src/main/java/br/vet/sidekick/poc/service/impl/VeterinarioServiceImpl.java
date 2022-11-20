@@ -1,7 +1,10 @@
 package br.vet.sidekick.poc.service.impl;
 
+import br.vet.sidekick.poc.controller.dto.CadastroClinicaDto;
 import br.vet.sidekick.poc.exceptionResolver.exception.FuncionarioAlreadyExistsException;
+import br.vet.sidekick.poc.exceptionResolver.exception.ResponsavelTecnicoAlreadyExistsException;
 import br.vet.sidekick.poc.model.Clinica;
+import br.vet.sidekick.poc.model.Funcionario;
 import br.vet.sidekick.poc.model.Veterinario;
 import br.vet.sidekick.poc.repository.VeterinarioRepository;
 import br.vet.sidekick.poc.service.VeterinarioService;
@@ -43,8 +46,24 @@ public class VeterinarioServiceImpl implements VeterinarioService {
     }
 
     @Override
-    public Optional<Veterinario> createResponsavelTecnico(String crmv, Clinica clinica) throws FuncionarioAlreadyExistsException {
-        Optional<Veterinario> resp = veterinarioRepository.findByCrmvAndClinica__id(crmv, clinica.getId());
+    public Optional<Veterinario> createResponsavelTecnico(CadastroClinicaDto cadastro, Clinica clinica) throws ResponsavelTecnicoAlreadyExistsException {
+        if(veterinarioRepository.existsByCrmvAndClinica__id(cadastro.getTecnicoCrmv(), clinica.getId())){
+            throw new ResponsavelTecnicoAlreadyExistsException("O responsável Técnico para a clínica já está cadastrado.");
+        }
+        Veterinario preVet = new Veterinario(Funcionario.builder()
+                .clinica(clinica)
+                .cpf(cadastro.getDonoCpf())
+                .bairro(cadastro.getTecnicoBairro())
+                .celular(cadastro.getTecnicoCelular())
+                .cep(cadastro.getTecnicoCep())
+                .cidade(cadastro.getTecnicoCidade())
+                .email(cadastro.getTecnicoEmail())
+                .rg(cadastro.getTecnicoRg())
+                .estado(cadastro.getTecnicoEstado())
+//                .nome(cadastro.)
+                .build());
+
+        Veterinario vet = veterinarioRepository.save(preVet);
         // TODO: Finalizar implementação
         return Optional.empty();
     }

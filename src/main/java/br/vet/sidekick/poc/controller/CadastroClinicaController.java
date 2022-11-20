@@ -3,6 +3,7 @@ package br.vet.sidekick.poc.controller;
 import br.vet.sidekick.poc.controller.dto.CadastroClinicaDto;
 import br.vet.sidekick.poc.exceptionResolver.exception.ClinicaAlreadyExistsException;
 import br.vet.sidekick.poc.exceptionResolver.exception.FuncionarioAlreadyExistsException;
+import br.vet.sidekick.poc.exceptionResolver.exception.ResponsavelTecnicoAlreadyExistsException;
 import br.vet.sidekick.poc.model.Clinica;
 import br.vet.sidekick.poc.model.Funcionario;
 import br.vet.sidekick.poc.model.Veterinario;
@@ -48,7 +49,11 @@ public class CadastroClinicaController {
         try {
             clinica = clinicaService.create(cadastro);
             if(clinica.isPresent()) {
-                Optional<Veterinario> responsavelTecnico = veterinarioService.createResponsavelTecnico(cadastro.getTecnicoCrmv(), clinica.get());
+                try {
+                    Optional<Veterinario> responsavelTecnico = veterinarioService.createResponsavelTecnico(cadastro, clinica.get());
+                } catch (ResponsavelTecnicoAlreadyExistsException e){
+                    log.warn("Responsável Técnico não adicionado pois já existe um cadastrado para a clínica.");
+                }
             }
         } catch (ClinicaAlreadyExistsException e){
             throwExceptionFromController(e);
