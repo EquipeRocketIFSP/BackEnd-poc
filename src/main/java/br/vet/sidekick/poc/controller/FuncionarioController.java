@@ -64,7 +64,7 @@ public class FuncionarioController {
         }
     }
 
-    @GetMapping("/")
+    @GetMapping
     public ResponseEntity<List<ListagemFuncionarioDto>> getAll() {
         List<ListagemFuncionarioDto> funcionarioDtos = this.funcionarioRepository.findAll()
                 .stream()

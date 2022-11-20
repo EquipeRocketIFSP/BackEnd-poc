@@ -1,13 +1,19 @@
 package br.vet.sidekick.poc.controller.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import br.vet.sidekick.poc.model.Veterinario;
+import lombok.*;
 
 @Getter
-@Setter
+@NoArgsConstructor
 @AllArgsConstructor
+@Builder
+@RequiredArgsConstructor(staticName = "of")
 public class TokenDto {
-    private String token;
-    private String bearer;
+
+    private Long id;
+    @NonNull private String token;
+    @NonNull private String type;
+    private String nome;
+    private String crmv;
+
 }

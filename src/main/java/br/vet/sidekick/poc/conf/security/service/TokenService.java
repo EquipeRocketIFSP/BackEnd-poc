@@ -34,24 +34,20 @@ public class TokenService {
             log.info("Token validado com sucesso!");
             return true;
         } catch (MalformedJwtException e){
-            log.error("MalformedJwtException");
-            log.error(e.getLocalizedMessage());
+            log.error("MalformedJwtException: " + e.getLocalizedMessage());
         } catch (ExpiredJwtException e) {
-            log.error("ExpiredJwtException");
-            log.error(e.getLocalizedMessage());
+            log.error("ExpiredJwtException: " + e.getLocalizedMessage());
         }catch (UnsupportedJwtException e){
-            log.error("UnsupportedJwtException");
-            log.error(e.getLocalizedMessage());
+            log.error("UnsupportedJwtException: " + e.getLocalizedMessage());
         }catch (SignatureException e) {
             log.error("SignatureException");
             log.error(e.getLocalizedMessage());
         }catch (IllegalArgumentException e){
-            log.error("IllegalArgumentException");
-            log.error(e.getLocalizedMessage());
+            log.error("IllegalArgumentException: " + e.getLocalizedMessage());
         }catch (Exception e){
-            log.error("Exception");
-            log.error(e.getLocalizedMessage());
+            log.error("Exception: " + e.getLocalizedMessage());
         }
+        log.info("Login sem sucesso");
         return false;
     }
 

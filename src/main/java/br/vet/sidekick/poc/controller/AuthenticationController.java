@@ -4,7 +4,10 @@ import br.vet.sidekick.poc.conf.security.service.TokenService;
 import br.vet.sidekick.poc.controller.dto.TokenDto;
 import br.vet.sidekick.poc.model.Funcionario;
 import br.vet.sidekick.poc.controller.dto.LoginForm;
+import br.vet.sidekick.poc.model.Veterinario;
 import br.vet.sidekick.poc.service.FuncionarioService;
+import br.vet.sidekick.poc.service.VeterinarioService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirements;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +19,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.Optional;
 
 import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
 
@@ -29,12 +33,16 @@ public class AuthenticationController {
     private FuncionarioService funcionarioService;
 
     @Autowired
+    private VeterinarioService veterinarioService;
+
+    @Autowired
     private AuthenticationManager authenticationManager;
 
     @Autowired
     private TokenService tokenService;
 
     @PostMapping
+    @SecurityRequirements(value = {})
     public ResponseEntity<TokenDto> authenticate(
             @Validated @RequestBody LoginForm login
     ){
@@ -47,11 +55,23 @@ public class AuthenticationController {
         }catch (AuthenticationException e){
             return ResponseEntity.badRequest().build();
         }
-        return ResponseEntity.ok(new TokenDto(token, "Bearer"));
+        Optional<Veterinario> vet = veterinarioService.findByEmail(login.getEmail());
+        return  ResponseEntity.ok(//new TokenDto(token, "Bearer")
+                vet.isPresent()
+                ? TokenDto.builder()
+                        .token(token)
+                        .type("Bearer")
+                        .nome(vet.get().getNome())
+                        .crmv(vet.get().getRegistroCRMV())
+                        .id(vet.get().getId())
+                        .build()
+                : TokenDto.of(token, "Bearer")
+        );
 
     }
 
     @PostMapping("/create")
+    @SecurityRequirements(value = {})
     public ResponseEntity<Funcionario> create(
             @Validated @RequestBody Funcionario funcionario
     ){

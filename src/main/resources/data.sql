@@ -8,4 +8,7 @@ INSERT INTO funcionario(user_name, password, email, cep, clinica, cpf, logradour
                                                             'meu',
                                                             '1');
 
+INSERT INTO clinica (nome_fantasia,razao_social,cnpj,cnae,cep,logradouro,numero,bairro,cidade,estado,responsavel_tecnico,email)
+VALUES ("cLI","Teste", "65.622.164/0001-04","46546","03808-130","Rua Miguel Rachid", "546","Vila Paranaguá","São Paulo","AM","resp. tecnico","teste");
+
 INSERT INTO perfil(perfil_id, funcionario_id) VALUES (1,3);

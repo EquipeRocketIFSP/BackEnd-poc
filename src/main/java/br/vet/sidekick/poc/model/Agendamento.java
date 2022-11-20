@@ -1,8 +1,10 @@
 package br.vet.sidekick.poc.model;
 
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Builder
 @AllArgsConstructor
@@ -24,8 +26,10 @@ public class Agendamento {
     @Column(name = "clinica_id")
     private Long clinica;
 
+    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "criado_em")
-    private LocalDateTime criadoEm;
+    private Date criadoEm;
 
     @Column(name = "data_consulta")
     private LocalDateTime dataConsulta;

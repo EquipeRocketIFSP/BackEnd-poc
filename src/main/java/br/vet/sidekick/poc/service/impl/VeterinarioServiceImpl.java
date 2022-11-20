@@ -19,6 +19,11 @@ public class VeterinarioServiceImpl implements VeterinarioService {
     private VeterinarioRepository veterinarioRepository;
 
     @Override
+    public Optional<Veterinario> findByEmail(String email) {
+        return veterinarioRepository.findByEmail(email);
+    }
+
+    @Override
     public Boolean authenticate(String username, String password) {
         return veterinarioRepository.existsByUsernameAndPassword(username, password);
     }

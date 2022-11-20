@@ -9,6 +9,8 @@ import br.vet.sidekick.poc.model.Veterinario;
 import java.util.Optional;
 
 public interface VeterinarioService {
+
+    Optional<Veterinario> findByEmail(String email);
     Boolean authenticate(String username, String password);
 
     Funcionario get(Veterinario veterinario);
