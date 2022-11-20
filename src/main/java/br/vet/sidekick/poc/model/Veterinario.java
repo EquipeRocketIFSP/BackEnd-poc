@@ -15,7 +15,6 @@ public class Veterinario extends Funcionario {
 
     public Veterinario(Funcionario funcionario) {
         super();
-
         this.setUsername(funcionario.getUsername());
         this.setPassword(funcionario.getPassword());
         this.setNome(funcionario.getNome());
