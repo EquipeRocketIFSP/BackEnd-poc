@@ -1,6 +1,7 @@
 package br.vet.sidekick.poc.controller;
 
 import br.vet.sidekick.poc.controller.dto.CadastroFuncionarioDto;
+import br.vet.sidekick.poc.controller.dto.ListagemFuncionarioDto;
 import br.vet.sidekick.poc.model.Clinica;
 import br.vet.sidekick.poc.model.Funcionario;
 import br.vet.sidekick.poc.model.Veterinario;
@@ -14,7 +15,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @CrossOrigin
 @RestController
@@ -59,6 +62,21 @@ public class FuncionarioController {
             System.out.println(e.getMessage());
             return ResponseEntity.badRequest().build();
         }
+    }
+
+    @GetMapping("/")
+    public ResponseEntity<List<ListagemFuncionarioDto>> getAll() {
+        List<ListagemFuncionarioDto> funcionarioDtos = this.funcionarioRepository.findAll()
+                .stream()
+                .map((funcionario) -> {
+                    ListagemFuncionarioDto funcionarioDto = new ListagemFuncionarioDto(funcionario);
+
+                    //TODO: Setar CRMV
+                    return funcionarioDto;
+                })
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(funcionarioDtos);
     }
 
     @GetMapping("/{id}")
