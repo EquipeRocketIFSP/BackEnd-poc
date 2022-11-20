@@ -1,3 +1,4 @@
+/*
 package br.vet.sidekick.poc.controller;
 
 import br.vet.sidekick.poc.controller.dto.ProntuarioDto;
@@ -31,11 +32,16 @@ public class ProntuarioController {
                     .header("motivo", "Já existe um item em elaboração no momento. Tente novamente.")
                     .build();
         }
-        Prontuario prontuario = prontuarioService.save(prontuarioDto.convert());
+        //Prontuario prontuario = prontuarioService.save(prontuarioDto.convert());
         log.info("prontuário salvo");
-        return ResponseEntity
+        */
+/*return ResponseEntity
                 .created(URI.create("/prontuario/" + prontuario.getId()))
-                .build();
+                .build();*//*
+
+
+        return ResponseEntity.ok().build();
     }
 
 }
+*/

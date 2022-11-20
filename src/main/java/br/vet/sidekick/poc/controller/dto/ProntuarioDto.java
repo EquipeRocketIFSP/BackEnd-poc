@@ -50,7 +50,7 @@ public class ProntuarioDto {
     private Prontuario prontuarioOrigem;
     private List<Map<String, Map<String, String>>> medicamentos;
 
-    public Prontuario convert() {
+    /*public Prontuario convert() {
         return Prontuario.builder()
                 .tutor(Tutor.builder().id(tutor).build())
                 .veterinario(Veterinario.builder().id(veterinario).build())
@@ -80,5 +80,5 @@ public class ProntuarioDto {
 //                        .collect(Collectors.toList()))
                 .prontuarioOrigem(getProntuarioOrigem())
                 .build();
-    }
+    }*/
 }

@@ -1,3 +1,4 @@
+/*
 package br.vet.sidekick.poc.service.impl;
 
 import br.vet.sidekick.poc.model.Cirurgia;
@@ -38,3 +39,4 @@ public class ProntuarioServiceImpl implements ProntuarioService {
         return prontuarioRepository.existsByDataAtendimento(dataAtendimento);
     }
 }
+*/

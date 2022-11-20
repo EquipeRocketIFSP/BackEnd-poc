@@ -15,6 +15,16 @@ public class FuncionarioServiceImpl implements FuncionarioService {
     private FuncionarioRepository funcionarioRepository;
 
     @Override
+    public Boolean authenticate(String username, String password) {
+        return funcionarioRepository.existsByUsernameAndPassword(username, password);
+    }
+
+    @Override
+    public Funcionario get(Funcionario funcionario) {
+        return funcionarioRepository.getByUsername(funcionario.getUsername());
+    }
+
+    @Override
     public Optional<Funcionario> create(Funcionario funcionario) {
         return funcionarioRepository.existsByUsername(funcionario.getUsername())
                 ? Optional.empty()
