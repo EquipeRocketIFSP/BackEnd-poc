@@ -48,8 +48,7 @@ public class AgendamentoController {
     @GetMapping
     public ResponseEntity<List<Agendamento>> getAll(){
         List<Agendamento> agendamentos = agendamentoRepository.findAll();
-        if (agendamentos.isEmpty())
-            return ResponseEntity.notFound().build();
+
         return ResponseEntity.ok(agendamentos);
     }
 
