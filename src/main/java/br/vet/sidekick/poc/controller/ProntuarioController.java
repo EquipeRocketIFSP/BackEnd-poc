@@ -2,6 +2,7 @@ package br.vet.sidekick.poc.controller;
 
 import br.vet.sidekick.poc.controller.dto.ListagemProntuarioDto;
 import br.vet.sidekick.poc.controller.dto.ProntuarioDto;
+import br.vet.sidekick.poc.controller.dto.RecuperarProntuarioDto;
 import br.vet.sidekick.poc.model.Animal;
 import br.vet.sidekick.poc.model.Clinica;
 import br.vet.sidekick.poc.model.Prontuario;
@@ -66,12 +67,22 @@ public class ProntuarioController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ListagemProntuarioDto>> getAll() {
-        List<ListagemProntuarioDto> prontuarios = this.prontuarioRepository
+    public ResponseEntity<List<RecuperarProntuarioDto>> getAll() {
+        List<RecuperarProntuarioDto> prontuarios = this.prontuarioRepository
                 .findAll().stream()
-                .map((prontuario) -> new ListagemProntuarioDto(prontuario))
+                .map((prontuario) -> new RecuperarProntuarioDto(prontuario))
                 .collect(Collectors.toList());
 
         return ResponseEntity.ok(prontuarios);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ListagemProntuarioDto> getOne(@PathVariable Long id) {
+        Optional<Prontuario> responseProntuario = this.prontuarioRepository.findById(id);
+
+        if (responseProntuario.isEmpty())
+            return ResponseEntity.notFound().build();
+
+        return ResponseEntity.ok(new ListagemProntuarioDto(responseProntuario.get()));
     }
 }

@@ -8,6 +8,7 @@ import lombok.Setter;
 @Setter
 @Getter
 public class ListagemProntuarioDto {
+    private Long id;
     private String veterinario;
     private Animal animal;
     private String diagnostico;
@@ -22,6 +23,7 @@ public class ListagemProntuarioDto {
     private int quantidade;
 
     public ListagemProntuarioDto(Prontuario prontuario) {
+        this.id = prontuario.getId();
         this.veterinario = prontuario.getVeterinario().getNome();
         this.animal = prontuario.getAnimal();
         this.diagnostico = prontuario.getDiagnostico();
