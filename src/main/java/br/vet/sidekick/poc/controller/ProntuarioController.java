@@ -1,5 +1,6 @@
 package br.vet.sidekick.poc.controller;
 
+import br.vet.sidekick.poc.controller.dto.ListagemProntuarioDto;
 import br.vet.sidekick.poc.controller.dto.ProntuarioDto;
 import br.vet.sidekick.poc.model.Animal;
 import br.vet.sidekick.poc.model.Clinica;
@@ -16,7 +17,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @Slf4j
@@ -62,5 +65,13 @@ public class ProntuarioController {
                 .build();
     }
 
+    @GetMapping
+    public ResponseEntity<List<ListagemProntuarioDto>> getAll() {
+        List<ListagemProntuarioDto> prontuarios = this.prontuarioRepository
+                .findAll().stream()
+                .map((prontuario) -> new ListagemProntuarioDto(prontuario))
+                .collect(Collectors.toList());
 
+        return ResponseEntity.ok(prontuarios);
+    }
 }
