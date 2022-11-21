@@ -8,39 +8,41 @@ import java.util.Optional;
 
 @Getter
 public class RecuperarFuncionarioDto {
-    private Long id;
-    private String email, nome, logradouro, numero, cep, bairro, estado, cpf, rg, celular, telofone;
-    private Optional<String> crmv;
+    private final Long id;
+    private final String email, nome, logradouro, numero, cep, bairro, estado, cpf, rg, celular, cidade;
+    private final Optional<String> crmv, telefone;
 
-    public RecuperarFuncionarioDto(Funcionario funcionario) {
-        this.id = funcionario.getId();
-        this.email = funcionario.getUsername();
-        this.nome = funcionario.getNome();
-        this.logradouro = funcionario.getLogradouro();
-        this.numero = funcionario.getNumero();
-        this.cep = funcionario.getCep();
-        this.bairro = funcionario.getBairro();
-        this.estado = funcionario.getEstado();
-        this.cpf = funcionario.getCpf();
-        this.rg = funcionario.getRg();
-        this.celular = funcionario.getCelular();
-        this.telofone = funcionario.getTelefone();
+    public RecuperarFuncionarioDto(Funcionario data) {
+        this.id = data.getId();
+        this.email = data.getUsername();
+        this.nome = data.getNome();
+        this.logradouro = data.getLogradouro();
+        this.numero = data.getNumero();
+        this.cep = data.getCep();
+        this.bairro = data.getBairro();
+        this.estado = data.getEstado();
+        this.cpf = data.getCpf();
+        this.rg = data.getRg();
+        this.celular = data.getCelular();
+        this.telefone = Optional.ofNullable(data.getTelefone());
+        this.cidade = data.getCidade();
         this.crmv = Optional.empty();
     }
 
-    public RecuperarFuncionarioDto(Veterinario veterinario) {
-        this.id = veterinario.getId();
-        this.email = veterinario.getUsername();
-        this.nome = veterinario.getNome();
-        this.logradouro = veterinario.getLogradouro();
-        this.numero = veterinario.getNumero();
-        this.cep = veterinario.getCep();
-        this.bairro = veterinario.getBairro();
-        this.estado = veterinario.getEstado();
-        this.cpf = veterinario.getCpf();
-        this.rg = veterinario.getRg();
-        this.celular = veterinario.getCelular();
-        this.telofone = veterinario.getTelefone();
-        this.crmv = Optional.of(veterinario.getRegistroCRMV());
+    public RecuperarFuncionarioDto(Veterinario data) {
+        this.id = data.getId();
+        this.email = data.getUsername();
+        this.nome = data.getNome();
+        this.logradouro = data.getLogradouro();
+        this.numero = data.getNumero();
+        this.cep = data.getCep();
+        this.bairro = data.getBairro();
+        this.estado = data.getEstado();
+        this.cpf = data.getCpf();
+        this.rg = data.getRg();
+        this.celular = data.getCelular();
+        this.telefone = Optional.ofNullable(data.getTelefone());
+        this.cidade = data.getCidade();
+        this.crmv = Optional.of(data.getRegistroCRMV());
     }
 }
