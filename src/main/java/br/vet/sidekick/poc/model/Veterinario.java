@@ -1,31 +1,46 @@
 package br.vet.sidekick.poc.model;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.security.core.GrantedAuthority;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
-import java.util.Collection;
 import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @Getter
+@Setter
 @Entity
-public class Veterinario extends Funcionario{
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Long id;
-
-    private String nome;
+@SuperBuilder
+public class Veterinario extends Funcionario {
+    @Column(nullable = false)
     private String registroCRMV;
-    private String email;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "id")
+    @OneToMany(mappedBy = "id")
     private List<Prontuario> prontuarios;
+
+    @OneToMany
+    private List<Documento> documentos;
+
+    public Veterinario(Funcionario funcionario) {
+        super();
+        this.setUsername(funcionario.getUsername());
+        this.setPassword(funcionario.getPassword());
+        this.setNome(funcionario.getNome());
+        this.setClinica(funcionario.getClinica());
+        this.setLogradouro(funcionario.getLogradouro());
+        this.setNumero(funcionario.getNumero());
+        this.setCep(funcionario.getCep());
+        this.setBairro(funcionario.getBairro());
+        this.setCidade(funcionario.getCidade());
+        this.setEstado(funcionario.getEstado());
+        this.setCpf(funcionario.getCpf());
+        this.setRg(funcionario.getRg());
+        this.setCelular(funcionario.getCelular());
+        this.setTelefone(funcionario.getTelefone());
+        this.setEmail(funcionario.getEmail());
+    }
 }

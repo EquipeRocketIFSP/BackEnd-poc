@@ -5,7 +5,6 @@ import br.vet.sidekick.poc.conf.security.service.AuthenticationService;
 import br.vet.sidekick.poc.conf.security.service.TokenService;
 import br.vet.sidekick.poc.repository.FuncionarioRepository;
 import lombok.NoArgsConstructor;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
@@ -34,7 +33,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     @Bean
-    protected AuthenticationManager authenticationManager()throws Exception{
+    protected AuthenticationManager authenticationManager() throws Exception {
         return super.authenticationManager();
     }
 
@@ -46,20 +45,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/api/swagger-ui/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/v3/api-docs/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/actuator/**").permitAll()
-                .antMatchers(HttpMethod.POST,"/cadastro-clinica/*").permitAll()
-                .antMatchers(HttpMethod.POST,"/cadastro-clinica/**").permitAll()
-                .antMatchers(HttpMethod.POST, "/cadastro-animal/*").authenticated()
-                .antMatchers(HttpMethod.POST, "/cadastro-animal/**").authenticated()
-                .antMatchers(HttpMethod.POST, "/cadastro-tutor/*").authenticated()
-                .antMatchers(HttpMethod.POST, "/cadastro-tutor/**").authenticated()
-                .antMatchers(HttpMethod.POST, "/cadastro-agendamento/*").authenticated()
-                .antMatchers(HttpMethod.POST, "/cadastro-agendamento/**").authenticated()
-                .antMatchers(HttpMethod.POST, "/cadastro-funcionario/*").authenticated()
-                .antMatchers(HttpMethod.POST, "/cadastro-funcionario/**").authenticated()
-                .antMatchers(HttpMethod.POST, "/pronturario/*").authenticated()
-                .antMatchers(HttpMethod.POST, "/pronturario/**").authenticated()
-                .antMatchers(HttpMethod.GET, "/pronturario/*").authenticated()
-                .antMatchers(HttpMethod.GET, "/pronturario/**").authenticated()
+                .antMatchers(HttpMethod.POST, "/cadastro/clinica/*").permitAll()
+                .antMatchers(HttpMethod.POST, "/cadastro/clinica/**").permitAll()
                 .anyRequest().authenticated()
                 .and().cors()
                 .and().csrf().disable()

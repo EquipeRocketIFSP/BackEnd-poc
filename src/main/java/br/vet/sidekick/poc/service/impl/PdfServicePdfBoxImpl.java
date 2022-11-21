@@ -96,7 +96,8 @@ public class PdfServicePdfBoxImpl implements PdfService {
                 tutor.getNome(),
                 tutor.getRg(),
                 tutor.getCpf(),
-                tutor.getEndereco(),
+                tutor.getLogradouro(),
+                tutor.getNumero(),
                 tutor.getTelefone(),
                 tutor.getEmail()
         );
@@ -409,59 +410,59 @@ public class PdfServicePdfBoxImpl implements PdfService {
         );
     }
 
-    public static void main(String[] args) throws Exception {
-//        new PdfServicePdfBoxImpl().termoAutorizacaoProcedimentoCirurgico(
-//                "estabelecimento",
-//                "Operação",
-//                "São Paulo",
-//                Animal.builder()
-//                        .especie("cachorro")
-//                        .raca("vira-lata")
-//                        .sexo("masc")
-//                        .idade(2)
-//                        .nome("doguinho")
-//                        .pelagem("curta")
-//                        .outros("chip 123456485312")
-//                        .build(),
-//                Veterinario.builder()
-//                        .registroCRMV("SP-12345")
-//                        .nome("VET")
-//                        .build(),
-//                Tutor.builder()
-//                        .cpf("228.831.350-10")
-//                        .rg("12345689")
-//                        .email("email@valido.com")
-//                        .endereco("endereco random")
-//                        .telefone("123456789")
+//    public static void main(String[] args) throws Exception {
+////        new PdfServicePdfBoxImpl().termoAutorizacaoProcedimentoCirurgico(
+////                "estabelecimento",
+////                "Operação",
+////                "São Paulo",
+////                Animal.builder()
+////                        .especie("cachorro")
+////                        .raca("vira-lata")
+////                        .sexo("masc")
+////                        .idade(2)
+////                        .nome("doguinho")
+////                        .pelagem("curta")
+////                        .outros("chip 123456485312")
+////                        .build(),
+////                Veterinario.builder()
+////                        .registroCRMV("SP-12345")
+////                        .nome("VET")
+////                        .build(),
+////                Tutor.builder()
+////                        .cpf("228.831.350-10")
+////                        .rg("12345689")
+////                        .email("email@valido.com")
+////                        .endereco("endereco random")
+////                        .telefone("123456789")
+////                        .build()
+////        );
+//        new PdfServicePdfBoxImpl().writeProntuario(
+//                Prontuario.builder()
+//                        .tutor(Tutor.builder().id(1L).build())
+//                        .veterinario(Veterinario.builder().id(1L).build())
+//                        .animal(Animal.builder().id(1L).build())
+//                        .dataAtendimento(LocalDateTime.now())
+//                        .procedimentos(List.of(Procedimento.builder()
+//                                .tipoProcedimento(Procedimento.TipoProcedimento.valueOf("IMUNIZACAO"))
+//                                .tipo(Procedimento.Tipo.valueOf("PRESCRITIVO"))
+//                                .descricao("Procedimento")
+//                                .build()))
+//                        .cirurgia(Cirurgia.builder()
+//                                .asa(Cirurgia.ASA.valueOf("ASA1"))
+//                                .tipo(Cirurgia.TipoCirurgia.valueOf("CASTRACAO"))
+//                                .build())
+//                        .prescricoes(List.of(Prescricao.builder()
+//                                                .descricao("Medicacao muito longa e cheia de caracteres")
+//                                                .build()))
+//                        .diagnostico("Mussum Ipsum, cacilds vidis litro abertis. Nullam volutpat risus nec leo commodo, ut interdum diam laoreet. Sed non consequat odio.Quem num gosta di mim que vai caçá sua turmis!Quem num gosta di mé, boa gentis num é.Manduma pindureta quium dia nois paga.")
+//                        .observacoes("Mussum Ipsum, cacilds vidis litro abertis. Tá deprimidis, eu conheço uma cachacis que pode alegrar sua vidis.Suco de cevadiss, é um leite divinis, qui tem lupuliz, matis, aguis e fermentis.Praesent vel viverra nisi. Mauris aliquet nunc non turpis scelerisque, eget.Quem num gosta di mim que vai caçá sua turmis!")
+////                .documentos(getAutorizacoes().stream()
+////                        .map(aut -> Documento.builder()
+////                                .build())
+////                        .collect(Collectors.toList()))
+//                        .prontuarioOrigem(null)
 //                        .build()
 //        );
-        new PdfServicePdfBoxImpl().writeProntuario(
-                Prontuario.builder()
-                        .tutor(Tutor.builder().id(1L).build())
-                        .veterinario(Veterinario.builder().id(1L).build())
-                        .animal(Animal.builder().id(1L).build())
-                        .dataAtendimento(LocalDateTime.now())
-                        .procedimentos(List.of(Procedimento.builder()
-                                .tipoProcedimento(Procedimento.TipoProcedimento.valueOf("IMUNIZACAO"))
-                                .tipo(Procedimento.Tipo.valueOf("PRESCRITIVO"))
-                                .descricao("Procedimento")
-                                .build()))
-                        .cirurgia(Cirurgia.builder()
-                                .asa(Cirurgia.ASA.valueOf("ASA1"))
-                                .tipo(Cirurgia.TipoCirurgia.valueOf("CASTRACAO"))
-                                .build())
-                        .prescricoes(List.of(Prescricao.builder()
-                                                .descricao("Medicacao muito longa e cheia de caracteres")
-                                                .build()))
-                        .diagnostico("Mussum Ipsum, cacilds vidis litro abertis. Nullam volutpat risus nec leo commodo, ut interdum diam laoreet. Sed non consequat odio.Quem num gosta di mim que vai caçá sua turmis!Quem num gosta di mé, boa gentis num é.Manduma pindureta quium dia nois paga.")
-                        .observacoes("Mussum Ipsum, cacilds vidis litro abertis. Tá deprimidis, eu conheço uma cachacis que pode alegrar sua vidis.Suco de cevadiss, é um leite divinis, qui tem lupuliz, matis, aguis e fermentis.Praesent vel viverra nisi. Mauris aliquet nunc non turpis scelerisque, eget.Quem num gosta di mim que vai caçá sua turmis!")
-//                .documentos(getAutorizacoes().stream()
-//                        .map(aut -> Documento.builder()
-//                                .build())
-//                        .collect(Collectors.toList()))
-                        .prontuarioOrigem(null)
-                        .build()
-        );
-
-    }
+//
+//    }
 }

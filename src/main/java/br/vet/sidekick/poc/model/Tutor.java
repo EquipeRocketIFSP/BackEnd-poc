@@ -1,11 +1,7 @@
 package br.vet.sidekick.poc.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.validator.constraints.br.CPF;
-
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import java.util.List;
@@ -13,26 +9,58 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@Setter
 @Builder
 @Entity
 public class Tutor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @Column(name = "id")
     private Long id;
 
-    private String nome;
-    private String rg;
+    @ManyToMany(mappedBy = "tutores")
+//    @Column(name = "animal_id")
+//    @JsonManagedReference(value = "tutor_animal")
+
+    private List<Animal> animais;
+
+    private String bairro;
+
+    private String celular;
+
+    private String cep;
+
+    private String cidade;
+
+    @ManyToOne
+    private Clinica clinica;
+
     @CPF
+    @Column(nullable = false)
     private String cpf;
     private String endereco;
 
 //    @OneToMany(mappedBy = "id")
 //    private List<Telefone> telefones;
     private String telefone;
+
+    @Column(nullable = false)
+    private String estado;
+
     @Email
+    @Column(name = "email", nullable = false)
     private String email;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "id")
-    private List<Prontuario> prontuarios;
+    @Column(name = "logradouro")
+    private String logradouro;
+
+    @Column(name = "nome", nullable = false)
+    private String nome;
+
+    @Column(name = "numero")
+    private String numero;
+
+    @Column(name = "rg")
+    private String rg;
+
 }

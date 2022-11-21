@@ -1,28 +1,22 @@
 package br.vet.sidekick.poc.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
-import java.security.cert.CertPathBuilder;
-import java.util.List;
 
-@Entity
-@Getter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@ToString
+@Entity
 public class Procedimento {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
     private Long id;
 
     private TipoProcedimento tipoProcedimento;
-    private String descricao;
     private Tipo tipo;
 
     @ManyToOne
@@ -30,6 +24,8 @@ public class Procedimento {
     @JsonIgnore
     private Prontuario prontuario;
 
+    @Column(nullable = false)
+    private String descricao;
 
     public enum Tipo {
         PRESCRITIVO,

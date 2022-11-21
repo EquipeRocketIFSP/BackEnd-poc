@@ -15,12 +15,4 @@ public class CadastroAgendamentoDto {
 
     @JsonProperty("tipo-consulta")
     private String tipoConsulta;
-
-    public static CadastroAgendamentoDto getMock(){
-        return CadastroAgendamentoDto.builder()
-                .animal(1L)
-                .dataConsulta("2022-10-29T15:31")
-                .tipoConsulta("Tipo da consulta")
-                .build();
-    }
 }

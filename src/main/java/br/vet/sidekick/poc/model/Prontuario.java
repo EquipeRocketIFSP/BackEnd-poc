@@ -8,20 +8,18 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
-@Getter
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@ToString
 @Entity
 public class Prontuario {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
     private Long id;
 
     private String codigo;
-
     private Integer versao;
 
     @ManyToOne
@@ -29,19 +27,16 @@ public class Prontuario {
     private Tutor tutor;
 
     @ManyToOne
-    @JoinColumn(name = "veterinario_id")
-    private Veterinario veterinario;
-
-    @ManyToOne
-    @JoinColumn(name = "clinica_id")
-    private Clinica clinica;
-
-    @ManyToOne
-    @JoinColumn(name = "animal_id")
     private Animal animal;
 
-    private LocalDateTime createdAt = LocalDateTime.now();
+    @ManyToOne
+    private Clinica clinica;
 
+    @Column(nullable = false)
+    private LocalDateTime criadoEm;
+
+    @ManyToOne
+    private Veterinario veterinario;
     private LocalDateTime dataAtendimento;
 
     @OneToMany(mappedBy = "prontuario")
@@ -57,7 +52,7 @@ public class Prontuario {
 
     private String observacoes;
 
-    @OneToMany(mappedBy = "prontuario")
+    @OneToMany(mappedBy = "id")
     private List<Documento> documentos;
 
     @OneToOne(fetch = FetchType.LAZY)
@@ -69,7 +64,7 @@ public class Prontuario {
         if (!Objects.equals(veterinario, that.veterinario)) veterinario = that.veterinario;
         if (!Objects.equals(clinica, that.clinica)) clinica = that.clinica;
         if (!Objects.equals(animal, that.animal)) animal = that.animal;
-        if (!Objects.equals(createdAt, that.createdAt)) createdAt = that.createdAt;
+        if (!Objects.equals(criadoEm, that.criadoEm)) criadoEm = that.criadoEm;
         if (!Objects.equals(dataAtendimento, that.dataAtendimento)) dataAtendimento = that.dataAtendimento;
         if (!Objects.equals(procedimentos, that.procedimentos)) procedimentos = that.procedimentos;
         if (!Objects.equals(cirurgia, that.cirurgia)) cirurgia = that.cirurgia;

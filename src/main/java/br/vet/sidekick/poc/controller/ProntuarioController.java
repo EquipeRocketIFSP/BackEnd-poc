@@ -1,3 +1,4 @@
+/*
 package br.vet.sidekick.poc.controller;
 
 import br.vet.sidekick.poc.conf.security.service.TokenService;
@@ -56,9 +57,21 @@ public class ProntuarioController {
             log.info("prontuário já em elaboração");
             throw e;
         }
+<<<<<<< HEAD
         return ResponseEntity
                 .created(URI.create("/prontuario/" + prontuario.getCodigo()))
                 .build();
+=======
+        //Prontuario prontuario = prontuarioService.save(prontuarioDto.convert());
+        log.info("prontuário salvo");
+        */
+/*return ResponseEntity
+                .created(URI.create("/prontuario/" + prontuario.getId()))
+                .build();*//*
+
+
+        return ResponseEntity.ok().build();
+>>>>>>> develop
     }
 
     @GetMapping("/pdf/{id}")
@@ -141,3 +154,4 @@ public class ProntuarioController {
     }
 
 }
+*/
