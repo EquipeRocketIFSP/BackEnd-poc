@@ -1,6 +1,7 @@
 package br.vet.sidekick.poc.model;
 
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 
@@ -9,6 +10,7 @@ import javax.persistence.*;
 @Getter
 @Entity
 @Setter
+@SuperBuilder
 public class Veterinario extends Funcionario {
     @Column(name = "registro_crmv", nullable = false)
     private String registroCRMV;

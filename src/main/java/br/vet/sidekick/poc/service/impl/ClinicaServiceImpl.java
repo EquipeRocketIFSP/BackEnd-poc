@@ -1,6 +1,7 @@
 package br.vet.sidekick.poc.service.impl;
 
 import br.vet.sidekick.poc.controller.dto.CadastroClinicaDto;
+import br.vet.sidekick.poc.exceptionResolver.exception.ClinicaAlreadyExistsException;
 import br.vet.sidekick.poc.model.Clinica;
 import br.vet.sidekick.poc.repository.ClinicaRepository;
 import br.vet.sidekick.poc.service.ClinicaService;
@@ -15,8 +16,12 @@ public class ClinicaServiceImpl implements ClinicaService {
     private ClinicaRepository clinicaRepository;
 
     @Override
-    public Optional<Clinica> create(CadastroClinicaDto cadastro) {
-        Clinica clinica = Clinica.builder()
+    public Optional<Clinica> create(CadastroClinicaDto cadastro) throws RuntimeException{
+        if (clinicaRepository.existsByCnpj(cadastro.getClinicaCnpj())) {
+            throw new ClinicaAlreadyExistsException("Clinica já cadastrada");
+        }
+        return Optional.of(clinicaRepository.save(
+                Clinica.builder()
                 .razaoSocial(cadastro.getCliniaRazao())
                 .bairro(cadastro.getClinicaBairro())
                 .celular(cadastro.getClinicaCelular())
@@ -31,10 +36,8 @@ public class ClinicaServiceImpl implements ClinicaService {
                 .numero(cadastro.getClinicaNumero())
                 .responsavelTecnico(cadastro.getTecnicoCpf())
                 .telefone(cadastro.getTecnicoTelefone())
-                .build();
-        if (clinicaRepository.existsByCnpj(clinica.getCnpj())) {
-            return Optional.empty();
-        }
-        return Optional.of(clinicaRepository.save(clinica));
+                .donoCpf(cadastro.getDonoCpf())
+                .build()
+        ));
     }
 }

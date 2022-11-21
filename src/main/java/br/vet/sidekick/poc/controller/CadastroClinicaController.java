@@ -5,8 +5,6 @@ import br.vet.sidekick.poc.exceptionResolver.exception.ClinicaAlreadyExistsExcep
 import br.vet.sidekick.poc.exceptionResolver.exception.FuncionarioAlreadyExistsException;
 import br.vet.sidekick.poc.exceptionResolver.exception.ResponsavelTecnicoAlreadyExistsException;
 import br.vet.sidekick.poc.model.Clinica;
-import br.vet.sidekick.poc.model.Funcionario;
-import br.vet.sidekick.poc.model.Veterinario;
 import br.vet.sidekick.poc.service.ClinicaService;
 import br.vet.sidekick.poc.service.FuncionarioService;
 import br.vet.sidekick.poc.service.VeterinarioService;
@@ -17,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,6 +30,9 @@ public class CadastroClinicaController {
 
     @Autowired
     private VeterinarioService veterinarioService;
+
+    @Autowired
+    private FuncionarioService funcionarioService;
 
     //TODO: remover as duas linhas abaixo
     private static List<CadastroClinicaDto> cadastros = new ArrayList<>();
@@ -50,19 +50,22 @@ public class CadastroClinicaController {
             clinica = clinicaService.create(cadastro);
             if(clinica.isPresent()) {
                 try {
-                    Optional<Veterinario> responsavelTecnico = veterinarioService.createResponsavelTecnico(cadastro, clinica.get());
+                    veterinarioService.createResponsavelTecnico(cadastro, clinica.get());
                 } catch (ResponsavelTecnicoAlreadyExistsException e){
-                    log.warn("Responsável Técnico não adicionado pois já existe um cadastrado para a clínica.");
+                    log.warn(e.getLocalizedMessage());
+                }
+                if(!cadastro.getDonoCpf().equals(cadastro.getTecnicoCpf())) {
+                    try {
+                        funcionarioService.createDonoClinica(cadastro, clinica.get());
+                    } catch (FuncionarioAlreadyExistsException e){
+                        log.warn(e.getLocalizedMessage());
+                    }
                 }
             }
         } catch (ClinicaAlreadyExistsException e){
             throwExceptionFromController(e);
-        } catch (FuncionarioAlreadyExistsException e){
-            throwExceptionFromController(e);
         }
-        return clinica.isEmpty()
-                ? ResponseEntity.badRequest().build()
-                : ResponseEntity.created(URI.create("/clinica/" + clinica.get().getId().toString())).build();
+        return ResponseEntity.created(URI.create("/clinica/" + clinica.get().getId().toString())).build();
     }
 
     @GetMapping("/{id}")

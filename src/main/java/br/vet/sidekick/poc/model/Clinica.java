@@ -2,6 +2,8 @@ package br.vet.sidekick.poc.model;
 
 import lombok.*;
 import org.hibernate.validator.constraints.br.CNPJ;
+import org.hibernate.validator.constraints.br.CPF;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -67,4 +69,7 @@ public class Clinica {
 
     @Column(name = "telefone")
     private String telefone;
+
+    @CPF
+    private String donoCpf;
 }

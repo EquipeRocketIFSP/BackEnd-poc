@@ -21,5 +21,5 @@ public interface VeterinarioService {
 
     void deleteById(Long id);
 
-    Optional<Veterinario> createResponsavelTecnico(CadastroClinicaDto cadastro, Clinica clinica) throws FuncionarioAlreadyExistsException;
+    Veterinario createResponsavelTecnico(CadastroClinicaDto cadastro, Clinica clinica) throws FuncionarioAlreadyExistsException;
 }

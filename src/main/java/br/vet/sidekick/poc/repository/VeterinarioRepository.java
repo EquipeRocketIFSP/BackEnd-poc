@@ -18,13 +18,5 @@ public interface VeterinarioRepository extends JpaRepository<Veterinario, Long> 
 
     Boolean existsByUsername(String username);
 
-    @Query("""
-    SELECT v.registroCRMV 
-    FROM Veterinario v 
-    WHERE ( v.clinica.id = :clinica )
-    """)
-    boolean existsByCrmvAndClinica__id(
-            @Param("crmv") String crmv,
-            @Param("clinica") Long id);
-//    boolean existsByCrmvAndClinica__id(String crmv, Long id);
+    boolean existsByRegistroCRMVAndClinica_id(String crmv, Long id);
 }
