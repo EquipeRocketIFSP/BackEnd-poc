@@ -22,7 +22,7 @@ import java.util.Optional;
 @RequestMapping("/cadastro/clinica")
 @CrossOrigin
 @Slf4j
-public class CadastroClinicaController {
+public class ClinicaController {
     private static CadastroClinicaDto cadastroDto = CadastroClinicaDto.getMock();
 
     @Autowired
@@ -33,10 +33,6 @@ public class CadastroClinicaController {
 
     @Autowired
     private FuncionarioService funcionarioService;
-
-    //TODO: remover as duas linhas abaixo
-    private static List<CadastroClinicaDto> cadastros = new ArrayList<>();
-    static {cadastros.add(cadastroDto);}
 
     private void throwExceptionFromController(RuntimeException e) throws RuntimeException {
         log.error(e.getLocalizedMessage());
@@ -69,14 +65,16 @@ public class CadastroClinicaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CadastroClinicaDto> getOne(@PathVariable Long id){
-        return id != 1L
+    public ResponseEntity<Clinica> getOne(@PathVariable Long id){
+        Optional<Clinica> clinica = clinicaService.getById(id);
+        return clinica.isEmpty()
                 ? ResponseEntity.notFound().build()
-                : ResponseEntity.ok(cadastroDto);
+                : ResponseEntity.ok(clinica.get());
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<CadastroClinicaDto>> getAll(){
-        return ResponseEntity.ok(cadastros);
+    public ResponseEntity<List<Clinica>> getAll(){
+        return ResponseEntity.ok(clinicaService.getAll());
     }
+    // TODO: Implementar métodos PUT e DELETE
 }
