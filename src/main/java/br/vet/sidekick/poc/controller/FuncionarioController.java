@@ -2,11 +2,13 @@ package br.vet.sidekick.poc.controller;
 
 import br.vet.sidekick.poc.controller.dto.CadastroFuncionarioDto;
 import br.vet.sidekick.poc.controller.dto.ListagemFuncionarioDto;
+import br.vet.sidekick.poc.controller.dto.RecuperarFuncionarioDto;
 import br.vet.sidekick.poc.model.Clinica;
 import br.vet.sidekick.poc.model.Funcionario;
 import br.vet.sidekick.poc.model.Veterinario;
 import br.vet.sidekick.poc.repository.ClinicaRepository;
 import br.vet.sidekick.poc.repository.FuncionarioRepository;
+import br.vet.sidekick.poc.repository.VeterinarioRepository;
 import br.vet.sidekick.poc.service.FuncionarioService;
 import br.vet.sidekick.poc.service.VeterinarioService;
 import org.springframework.beans.BeanUtils;
@@ -25,6 +27,9 @@ import java.util.stream.Collectors;
 public class FuncionarioController {
     @Autowired
     private FuncionarioRepository funcionarioRepository;
+
+    @Autowired
+    private VeterinarioRepository veterinarioRepository;
 
     @Autowired
     private FuncionarioService funcionarioService;
@@ -80,14 +85,20 @@ public class FuncionarioController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Funcionario> getOne(
-            @PathVariable() Long id
-    ) {
-        Optional<Funcionario> funcionario = funcionarioRepository.findById(id);
-        if (funcionario.isPresent())
-            return ResponseEntity.ok(funcionario.get());
+    public ResponseEntity<RecuperarFuncionarioDto> getOne(@PathVariable() Long id) {
+        Optional<Funcionario> responseFuncionario = funcionarioRepository.findById(id);
 
-        return ResponseEntity.notFound().build();
+        if (responseFuncionario.isEmpty())
+            return ResponseEntity.notFound().build();
+
+        Funcionario funcionario = responseFuncionario.get();
+        Optional<Veterinario> responseVeterinario = this.veterinarioRepository.findById(funcionario.getId());
+
+        RecuperarFuncionarioDto funcionarioDto = responseVeterinario.isEmpty() ?
+                new RecuperarFuncionarioDto(funcionario) :
+                new RecuperarFuncionarioDto(responseVeterinario.get());
+
+        return ResponseEntity.ok(funcionarioDto);
     }
 
     @PutMapping("/{id}")
