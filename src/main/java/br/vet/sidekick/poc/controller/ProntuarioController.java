@@ -1,16 +1,22 @@
-/*
 package br.vet.sidekick.poc.controller;
 
 import br.vet.sidekick.poc.controller.dto.ProntuarioDto;
+import br.vet.sidekick.poc.model.Animal;
+import br.vet.sidekick.poc.model.Clinica;
 import br.vet.sidekick.poc.model.Prontuario;
-import br.vet.sidekick.poc.service.ProntuarioService;
+import br.vet.sidekick.poc.model.Veterinario;
+import br.vet.sidekick.poc.repository.AnimalRepository;
+import br.vet.sidekick.poc.repository.ClinicaRepository;
+import br.vet.sidekick.poc.repository.ProntuarioRepository;
+import br.vet.sidekick.poc.repository.VeterinarioRepository;
+import br.vet.sidekick.poc.service.ClinicaService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
-
+import java.util.Optional;
 
 @RestController
 @Slf4j
@@ -19,29 +25,42 @@ import java.net.URI;
 public class ProntuarioController {
 
     @Autowired
-    private ProntuarioService prontuarioService;
+    private ClinicaRepository clinicaRepository;
+
+    @Autowired
+    private VeterinarioRepository veterinarioRepository;
+
+    @Autowired
+    private AnimalRepository animalRepository;
+
+    @Autowired
+    private ProntuarioRepository prontuarioRepository;
 
     @PostMapping
-    public ResponseEntity<Prontuario> create(
-            @RequestBody ProntuarioDto prontuarioDto
-    ){
-        log.info("Iniciado create de prontuário");
-        if(prontuarioService.exists(prontuarioDto.getDataAtendimento())){
-            log.info("prontuário já em elaboração");
-            return ResponseEntity.badRequest()
-                    .header("motivo", "Já existe um item em elaboração no momento. Tente novamente.")
-                    .build();
-        }
-        //Prontuario prontuario = prontuarioService.save(prontuarioDto.convert());
-        log.info("prontuário salvo");
-        */
-/*return ResponseEntity
+    public ResponseEntity<Prontuario> create(@RequestBody ProntuarioDto prontuarioDto) {
+        Prontuario prontuario = prontuarioDto.convert();
+
+        Optional<Clinica> responseClinica = this.clinicaRepository.findById(prontuarioDto.getClinica());
+        Optional<Veterinario> responseVeterinario = this.veterinarioRepository.findById(prontuarioDto.getVeterinario());
+        Optional<Animal> responseAnimal = this.animalRepository.findById(prontuarioDto.getAnimal());
+
+        System.out.println(responseClinica.isEmpty());
+        System.out.println(responseVeterinario.isEmpty());
+        System.out.println(responseAnimal.isEmpty());
+
+        if (responseClinica.isEmpty() || responseVeterinario.isEmpty() || responseAnimal.isEmpty())
+            return ResponseEntity.badRequest().build();
+
+        prontuario.setClinica(responseClinica.get());
+        prontuario.setVeterinario(responseVeterinario.get());
+        prontuario.setAnimal(responseAnimal.get());
+
+        prontuario = this.prontuarioRepository.save(prontuario);
+
+        return ResponseEntity
                 .created(URI.create("/prontuario/" + prontuario.getId()))
-                .build();*//*
-
-
-        return ResponseEntity.ok().build();
+                .build();
     }
 
+
 }
-*/

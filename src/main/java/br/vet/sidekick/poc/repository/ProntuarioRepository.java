@@ -1,4 +1,3 @@
-/*
 package br.vet.sidekick.poc.repository;
 
 import br.vet.sidekick.poc.model.Prontuario;
@@ -9,7 +8,4 @@ import java.time.LocalDateTime;
 
 @Repository
 public interface ProntuarioRepository extends JpaRepository<Prontuario, Long> {
-
-    boolean existsByDataAtendimento(LocalDateTime dataAtendimento);
 }
-*/

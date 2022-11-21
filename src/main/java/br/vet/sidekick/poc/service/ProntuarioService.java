@@ -1,3 +1,4 @@
+/*
 package br.vet.sidekick.poc.service;
 
 import br.vet.sidekick.poc.model.Prontuario;
@@ -11,3 +12,4 @@ public interface ProntuarioService {
 
     boolean exists(LocalDateTime dataAtendimento);
 }
+*/

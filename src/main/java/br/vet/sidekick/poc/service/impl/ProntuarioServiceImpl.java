@@ -28,10 +28,7 @@ public class ProntuarioServiceImpl implements ProntuarioService {
     private TutorRepository tutorRepository;
     @Override
     public Prontuario save(Prontuario prontuario) {
-        return prontuarioRepository.save(
-                prontuario
-                        .setCirurgia(cirurgiaRepository.save(prontuario.getCirurgia())))
-                .setTutor(tutorRepository.findById(prontuario.getTutor().getId()).orElseThrow(() -> new RuntimeException("Tutor nao identificado")));
+        return prontuarioRepository.save(prontuario);
     }
 
     @Override
