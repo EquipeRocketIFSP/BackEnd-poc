@@ -7,4 +7,6 @@ import java.util.Optional;
 @Service
 public interface AnimalService {
     Optional<Animal> create(Animal animal);
+
+    Animal updateAnimal(Animal updateAnimal);
 }

@@ -9,7 +9,6 @@ import br.vet.sidekick.poc.repository.ClinicaRepository;
 import br.vet.sidekick.poc.service.AgendamentoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.Optional;
 
 @Service
@@ -37,6 +36,21 @@ public class AgendamentoServiceImpl implements AgendamentoService {
         agendamento.setClinica(clinicaId.getId());
 
         return Optional.of(agendamentoRepository.save(agendamento));
+    }
+
+    @Override
+    public Agendamento updateAgendamento(Agendamento updateAgendamento) {
+        Agendamento agendamento = agendamentoRepository.getReferenceById(updateAgendamento.getId());
+
+        agendamento.setAnimal(updateAgendamento.getAnimal());
+        agendamento.setClinica(updateAgendamento.getClinica());
+        agendamento.setDataConsulta(updateAgendamento.getDataConsulta());
+        agendamento.setTipoConsulta(updateAgendamento.getTipoConsulta());
+
+        agendamento = agendamentoRepository.save(agendamento);
+
+        return agendamento;
+
     }
 
 }

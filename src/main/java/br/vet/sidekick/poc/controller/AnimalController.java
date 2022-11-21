@@ -82,10 +82,16 @@ public class AnimalController {
         return ResponseEntity.notFound().build();
     }
 
-    //TODO
-    @PutMapping
-    public ResponseEntity<Animal> updateAnimal() {
-        return null;
+    @PutMapping("/editar/{id}")
+    public ResponseEntity<Animal> updateAnimal(
+            @PathVariable Long id,
+            @RequestBody Animal updateAnimal
+    ) {
+        if (animalRepository.existsById(id)){
+            Animal animal = animalService.updateAnimal(updateAnimal);
+            return ResponseEntity.ok(animal);
+        }
+        return ResponseEntity.notFound().build();
     }
 
 }

@@ -52,23 +52,15 @@ public class AgendamentoController {
         return ResponseEntity.ok(agendamentos);
     }
 
-    //TODO: TESTAR e revisar se há uma forma melhor de fazer o put method / criar função de upddate no service
+    //TODO: Verificar regras de edição (quando eu não mando uma informação, ainda que eu não queira editá-la, ela vem null)
     @PutMapping("/editar/{id}")
     public ResponseEntity<Agendamento> updateAgendamento(
             @PathVariable Long id,
-            @RequestBody Agendamento agendamento
+            @RequestBody Agendamento updateAgendamento
     ){
-        Agendamento referenceAgendamento = agendamentoRepository.getReferenceById(id);
-
-        if (referenceAgendamento != null){
-            referenceAgendamento.setAnimal(agendamento.getAnimal());
-            referenceAgendamento.setClinica(agendamento.getClinica());
-            referenceAgendamento.setCriadoEm(agendamento.getCriadoEm());
-            referenceAgendamento.setDataConsulta(agendamento.getDataConsulta());
-            referenceAgendamento.setTipoConsulta(agendamento.getTipoConsulta());
-            agendamentoRepository.save(referenceAgendamento);
-
-            return ResponseEntity.ok(referenceAgendamento);
+        if (agendamentoRepository.existsById(id)){
+            Agendamento agendamento = agendamentoService.updateAgendamento(updateAgendamento);
+            return ResponseEntity.ok(agendamento);
         }
 
         return ResponseEntity.notFound().build();
