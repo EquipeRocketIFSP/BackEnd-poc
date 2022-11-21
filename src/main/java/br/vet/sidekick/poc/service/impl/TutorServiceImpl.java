@@ -20,12 +20,34 @@ public class TutorServiceImpl implements TutorService {
 
     @Override
     public Optional<Tutor> create(Tutor tutor) {
-        //TODO: precisa checar se existe, antes de registrar um tutor. incluir id da clinica em findByCpf()
         if (tutorRepository.existsByCpfAndClinica(tutor.getCpf(), tutor.getClinica()))
             return Optional.empty();
         Clinica clinica = clinicaRepository.getReferenceById(tutor.getClinica());
         tutor.setClinica(clinica.getId());
 
         return Optional.of(tutorRepository.save(tutor));
+    }
+
+    @Override
+    public Tutor updateTutor(Tutor updateTutor) {
+        Tutor tutor = tutorRepository.getReferenceById(updateTutor.getId());
+
+        tutor.setBairro(updateTutor.getBairro());
+        tutor.setCelular(updateTutor.getCelular());
+        tutor.setCep(updateTutor.getCep());
+        tutor.setCidade(updateTutor.getCidade());
+        tutor.setClinica(updateTutor.getClinica());
+        tutor.setCpf(updateTutor.getCpf());
+        tutor.setEstado(updateTutor.getEstado());
+        tutor.setEmail(updateTutor.getEmail());
+        tutor.setLogradouro(updateTutor.getLogradouro());
+        tutor.setNome(updateTutor.getNome());
+        tutor.setNumero(updateTutor.getNumero());
+        tutor.setRg(updateTutor.getRg());
+        tutor.setTelefone(updateTutor.getTelefone());
+
+        tutor = tutorRepository.save(tutor);
+        return tutor;
+
     }
 }

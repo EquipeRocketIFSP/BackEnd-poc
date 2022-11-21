@@ -58,36 +58,17 @@ public class TutorController {
         return ResponseEntity.ok(tutores);
     }
 
-    //TODO: arrumar lógica do put method
-//    @PutMapping("/editar/{id}")
-//    public ResponseEntity<Tutor> updateTutor(
-//            @PathVariable Long id,
-//            @RequestBody Tutor tutor
-//    ){
-//        if (tutorRepository.existsById(id)){
-//            tutorRepository.findById(id)
-//                    .map(updatedTutor -> {
-//                        tutor.setNome(updatedTutor.getNome());
-//                        tutor.setCpf(updatedTutor.getCpf());
-//                        tutor.setRg(updatedTutor.getRg());
-//                        tutor.setEmail(updatedTutor.getEmail());
-//                        tutor.setTelefone(updatedTutor.getTelefone());
-//                        tutor.setCelular(updatedTutor.getCelular());
-//                        tutor.setAnimais(updatedTutor.getAnimais());
-//                        tutor.setCep(updatedTutor.getCep());
-//                        tutor.setLogradouro(updatedTutor.getLogradouro());
-//                        tutor.setNumero(updatedTutor.getNumero());
-//                        tutor.setBairro(updatedTutor.getBairro());
-//                        tutor.setCidade(updatedTutor.getCidade());
-//                        tutor.setEstado(updatedTutor.getEstado());
-//                        tutorRepository.save(tutor);
-//
-//                        return ResponseEntity.ok(tutor);
-//                    });
-//        }
-//
-//        return ResponseEntity.notFound().build();
-//    }
+    @PutMapping("/editar/{id}")
+    public ResponseEntity<Tutor> updateTutor(
+            @PathVariable Long id,
+            @RequestBody Tutor updateTutor
+    ){
+        if (tutorRepository.existsById(id)){
+            Tutor tutor = tutorService.updateTutor(updateTutor);
+            return ResponseEntity.ok(tutor);
+        }
+        return ResponseEntity.notFound().build();
+    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Tutor> deleteTutor(

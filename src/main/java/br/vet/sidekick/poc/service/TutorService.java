@@ -6,5 +6,8 @@ import java.util.Optional;
 
 @Service
 public interface TutorService {
+
     Optional<Tutor> create(Tutor tutor);
+
+    Tutor updateTutor(Tutor updateTutor);
 }
