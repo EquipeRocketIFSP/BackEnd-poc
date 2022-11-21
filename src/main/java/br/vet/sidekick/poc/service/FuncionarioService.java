@@ -1,8 +1,6 @@
 package br.vet.sidekick.poc.service;
 
 import br.vet.sidekick.poc.controller.dto.CadastroClinicaDto;
-import br.vet.sidekick.poc.controller.dto.CadastroFuncionarioDto;
-import br.vet.sidekick.poc.exceptionResolver.exception.FuncionarioAlreadyExistsException;
 import br.vet.sidekick.poc.model.Clinica;
 import br.vet.sidekick.poc.model.Funcionario;
 import java.util.Optional;
@@ -17,4 +15,6 @@ public interface FuncionarioService {
     Funcionario save(Funcionario funcionario);
 
     void deleteById(Long id);
+
+    Funcionario createDonoClinica(CadastroClinicaDto cadastro, Clinica clinica) throws RuntimeException;
 }
