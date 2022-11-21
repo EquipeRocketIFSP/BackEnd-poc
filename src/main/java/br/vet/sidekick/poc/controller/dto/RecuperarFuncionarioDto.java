@@ -9,12 +9,12 @@ import java.util.Optional;
 @Getter
 public class RecuperarFuncionarioDto {
     private Long id;
-    private String username, nome, logradouro, numero, cep, bairro, estado, cpf, rg, celular, telofone;
+    private String email, nome, logradouro, numero, cep, bairro, estado, cpf, rg, celular, telofone;
     private Optional<String> crmv;
 
     public RecuperarFuncionarioDto(Funcionario funcionario) {
         this.id = funcionario.getId();
-        this.username = funcionario.getUsername();
+        this.email = funcionario.getUsername();
         this.nome = funcionario.getNome();
         this.logradouro = funcionario.getLogradouro();
         this.numero = funcionario.getNumero();
@@ -30,7 +30,7 @@ public class RecuperarFuncionarioDto {
 
     public RecuperarFuncionarioDto(Veterinario veterinario) {
         this.id = veterinario.getId();
-        this.username = veterinario.getUsername();
+        this.email = veterinario.getUsername();
         this.nome = veterinario.getNome();
         this.logradouro = veterinario.getLogradouro();
         this.numero = veterinario.getNumero();
