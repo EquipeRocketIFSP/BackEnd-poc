@@ -1,6 +1,6 @@
 package br.vet.sidekick.poc.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -21,11 +21,15 @@ public class Procedimento {
 
     @ManyToOne
     @JoinColumn(name = "prontuario_id")
-    @JsonIgnore
+    @JsonBackReference("prontuario_procedimentos")
     private Prontuario prontuario;
 
     @Column(nullable = false)
     private String descricao;
+
+    @ManyToOne
+    @JsonBackReference("clinica_procedimentos")
+    private Clinica clinica;
 
     public enum Tipo {
         PRESCRITIVO,

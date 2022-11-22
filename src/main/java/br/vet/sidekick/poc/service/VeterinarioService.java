@@ -1,6 +1,7 @@
 package br.vet.sidekick.poc.service;
 
 import br.vet.sidekick.poc.controller.dto.CadastroClinicaDto;
+import br.vet.sidekick.poc.controller.dto.VeterinarioDto;
 import br.vet.sidekick.poc.exceptionResolver.exception.FuncionarioAlreadyExistsException;
 import br.vet.sidekick.poc.model.Clinica;
 import br.vet.sidekick.poc.model.Funcionario;
@@ -16,6 +17,7 @@ public interface VeterinarioService {
     Funcionario get(Veterinario veterinario);
 
     Optional<Veterinario> create(Veterinario veterinario);
+    Optional<Veterinario> create(VeterinarioDto veterinarioDto);
 
     Veterinario save(Veterinario veterinario);
 

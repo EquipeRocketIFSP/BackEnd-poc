@@ -1,5 +1,6 @@
 package br.vet.sidekick.poc.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 import javax.persistence.*;
 
@@ -12,10 +13,10 @@ import javax.persistence.*;
 public class Exame {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
     private Long id;
 
     @ManyToOne
+    @JsonBackReference("clinica_exames")
     private Clinica clinica;
 
     @Column(nullable = false)

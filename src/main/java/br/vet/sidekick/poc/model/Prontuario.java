@@ -1,10 +1,14 @@
 package br.vet.sidekick.poc.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -24,28 +28,34 @@ public class Prontuario {
 
     @ManyToOne
     @JoinColumn(name = "tutor_id")
+    @JsonBackReference("tutor_prontuarios")
     private Tutor tutor;
 
     @ManyToOne
+    @JsonBackReference("animal_prontuarios")
     private Animal animal;
 
     @ManyToOne
+    @JsonBackReference("clinica_prontuarios")
     private Clinica clinica;
 
     @Column(nullable = false)
     private LocalDateTime criadoEm;
 
     @ManyToOne
+    @JsonBackReference("veterinario_prontuarios")
     private Veterinario veterinario;
     private LocalDateTime dataAtendimento;
 
     @OneToMany(mappedBy = "prontuario")
+    @JsonManagedReference("prontuario_procedimentos")
     private List<Procedimento> procedimentos = new java.util.ArrayList<>();
 
     @OneToOne
     private Cirurgia cirurgia;
 
     @OneToMany(mappedBy = "prontuario")
+    @JsonManagedReference("prontuario_prescricoes")
     private List<Prescricao> prescricoes;
 
     private String diagnostico;
@@ -53,6 +63,7 @@ public class Prontuario {
     private String observacoes;
 
     @OneToMany(mappedBy = "id")
+    @JsonManagedReference("prontuario_documentos")
     private List<Documento> documentos;
 
     @OneToOne(fetch = FetchType.LAZY)
@@ -81,7 +92,7 @@ public class Prontuario {
     }
 
     public static String createCodigo(LocalDateTime now) {
-        return "VT-P-"+new SimpleDateFormat("yyyy_MM_dd_hh_mm_ss").format(now);
+        return "VT-P-"+now.format(DateTimeFormatter.ofPattern("yyyy_MM_dd_hh_mm_ss"))+".pdf";
     }
     public Prontuario setCirurgia(Cirurgia cirurgia){
         this.cirurgia = cirurgia;
@@ -94,14 +105,20 @@ public class Prontuario {
     }
 
     public Prontuario addDocumentoPdf(Documento documento) {
-        documentos.add(documento);
+        documentos = Arrays.asList(documento);
         return this;
     }
 
     public Prontuario setDocumentoDetails(Documento documento){
         return addDocumentoPdf(documento)
                 .setCodigo(documento.getName())
-                .setVersao(documento.getVersao());
+                .setVersao(documento.getVersao())
+                .setCriadoEm(documento.getCriadoEm());
+    }
+
+    private Prontuario setCriadoEm(LocalDateTime criadoEm) {
+        this.criadoEm = criadoEm;
+        return this;
     }
 
     private Prontuario setCodigo(String codigo) {

@@ -12,7 +12,10 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(value= {
             ProntuarioNotFoundException.class,
-            TutorNotFoundException.class
+            TutorNotFoundException.class,
+            VeterinarioNotFoundException.class,
+            ClinicaNotFoundException.class,
+            AnimalNotFoundException.class
     })
     protected ResponseEntity<Object> handleNotFound(
             RuntimeException ex,

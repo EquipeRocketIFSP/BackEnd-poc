@@ -1,10 +1,12 @@
 package br.vet.sidekick.poc.service.impl;
 
 import br.vet.sidekick.poc.controller.dto.CadastroClinicaDto;
+import br.vet.sidekick.poc.controller.dto.VeterinarioDto;
 import br.vet.sidekick.poc.exceptionResolver.exception.FuncionarioAlreadyExistsException;
 import br.vet.sidekick.poc.exceptionResolver.exception.ResponsavelTecnicoAlreadyExistsException;
 import br.vet.sidekick.poc.model.Clinica;
 import br.vet.sidekick.poc.model.Veterinario;
+import br.vet.sidekick.poc.repository.ClinicaRepository;
 import br.vet.sidekick.poc.repository.VeterinarioRepository;
 import br.vet.sidekick.poc.service.VeterinarioService;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +18,10 @@ import java.util.Optional;
 @Service
 @Slf4j
 public class VeterinarioServiceImpl implements VeterinarioService {
+
+
+    @Autowired
+    private ClinicaRepository clinicaRepository;
     @Autowired
     private VeterinarioRepository veterinarioRepository;
 
@@ -39,6 +45,33 @@ public class VeterinarioServiceImpl implements VeterinarioService {
         return veterinarioRepository.existsByUsername(funcionario.getUsername())
                 ? Optional.empty()
                 : Optional.of(veterinarioRepository.save(funcionario));
+    }
+
+    @Override
+    public Optional<Veterinario> create(VeterinarioDto veterinarioDto) {
+        Clinica clinica = clinicaRepository.getReferenceById(veterinarioDto.getClinica());
+        return Optional.of(
+                veterinarioRepository.save(
+                        Veterinario.builder()
+                                .registroCRMV(veterinarioDto.getRegistroCRMV())
+                                .clinica(clinica)
+                                .nome(veterinarioDto.getNome())
+                                .rg(veterinarioDto.getRg())
+                                .bairro(veterinarioDto.getBairro())
+                                .username(veterinarioDto.getUsername())
+                                .logradouro(veterinarioDto.getLogradouro())
+                                .celular(veterinarioDto.getCelular())
+                                .cpf(veterinarioDto.getCpf())
+                                .email(veterinarioDto.getEmail())
+                                .cidade(veterinarioDto.getCidade())
+                                .password(veterinarioDto.getPassword())
+                                .telefone(veterinarioDto.getTelefone())
+                                .cep(veterinarioDto.getCep())
+                                .numero(veterinarioDto.getNumero())
+                                .build()
+                )
+        );
+
     }
 
     @Override

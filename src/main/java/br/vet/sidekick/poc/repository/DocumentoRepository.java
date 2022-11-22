@@ -11,5 +11,5 @@ import java.util.Optional;
 
 @Repository
 public interface DocumentoRepository extends JpaRepository<Documento, Long> {
-    Optional<List<Prontuario>> findByVeterinario_IdAndDateCreationBetween(LocalDateTime minusSeconds, LocalDateTime now, Long veterinarioId);
+    Optional<List<Prontuario>> findAllByVeterinario_IdAndDateCreationBetween(Long veterinarioId, LocalDateTime minusSeconds, LocalDateTime now);
 }

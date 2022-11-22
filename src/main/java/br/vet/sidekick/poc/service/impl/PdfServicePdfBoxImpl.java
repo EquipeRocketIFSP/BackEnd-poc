@@ -163,6 +163,7 @@ public class PdfServicePdfBoxImpl implements PdfService {
     }
     @Override
     public byte[] writeProntuario(Prontuario prontuario) throws Exception {
+        log.info("Iniciando escrita do pdf do prontuário");
         // TODO: Passar essas variáveis para arquivo de configuração
         final String title = "Prontuário Clínico veterinário";
         final String vetQualificacaoL1 = "prontuario.getVeterinario().getNome()";
@@ -346,17 +347,25 @@ public class PdfServicePdfBoxImpl implements PdfService {
                         }
                 );
 
+                log.info("Desenhando tabela");
                 table.draw();
             } catch (IOException e){
                 writeException(e);
             }
-
-            document.protect(getProtectionPolicy(defaultPass, getTutorPass(prontuario)));
+            log.info("Adicionando proteção ao PDF");
+            try {
+                var policy = getProtectionPolicy(defaultPass, getTutorPass(prontuario));
+                document.protect(policy);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
             document.save(fileName);
+            log.info("PDF do prontuário salvo!");
         } catch (IllegalArgumentException e){
             writeException(e);
         }
         Path path = Path.of(fileName);
+        log.info("Iniciando persistência no serviço AWS S3");
         pdfRepository.putObject(
                 clinicaRepository.findById(prontuario.getClinica().getId()).stream()
                         .findFirst()
@@ -365,6 +374,7 @@ public class PdfServicePdfBoxImpl implements PdfService {
                 fileName.substring(fileName.indexOf("/")+1),
                 path.toFile()
         );
+        log.info("Prontuário Salvo");
         try {
             return Files.readAllBytes(path);
         } finally {
@@ -386,7 +396,6 @@ public class PdfServicePdfBoxImpl implements PdfService {
         accessPermission.setCanPrint(true);
         accessPermission.setCanExtractContent(true);
         var std = new StandardProtectionPolicy(defaultPass, tutorPass, accessPermission);
-        log.info(std.getOwnerPassword());
         return std;
     }
 

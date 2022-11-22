@@ -1,5 +1,6 @@
 package br.vet.sidekick.poc.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 import javax.persistence.*;
 
@@ -19,7 +20,12 @@ public class Cirurgia {
 
     @OneToOne
     @JoinColumn(name = "id")
+    @JsonBackReference("prontuario_cirurgias")
     private Prontuario prontuario;
+
+    @ManyToOne
+    @JsonBackReference("clinica_cirurgias")
+    private Clinica clinica;
 
     public void setProntuario(Prontuario prontuario) {
         this.prontuario = prontuario;

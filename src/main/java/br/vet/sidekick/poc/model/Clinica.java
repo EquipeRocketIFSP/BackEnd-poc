@@ -1,5 +1,6 @@
 package br.vet.sidekick.poc.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.hibernate.validator.constraints.br.CNPJ;
 import org.hibernate.validator.constraints.br.CPF;
@@ -22,24 +23,31 @@ public class Clinica {
     private Long id;
 
     @OneToMany(mappedBy = "id")
+    @JsonManagedReference("clinica_agendamentos")
     private List<Agendamento> agendamentos;
 
     @OneToMany(mappedBy = "id")
+    @JsonManagedReference("clinica_tutores")
     private List<Tutor> tutores;
 
     @OneToMany(mappedBy = "id")
+    @JsonManagedReference("clinica_procedimentos")
     private List<Procedimento> procedimentos;
 
     @OneToMany(mappedBy = "id")
+    @JsonManagedReference("clinica_exames")
     private List<Exame> exames;
 
     @OneToMany(mappedBy = "id")
+    @JsonManagedReference("clinica_cirurgias")
     private List<Cirurgia> cirurgias;
 
     @OneToMany(mappedBy = "id")
+    @JsonManagedReference("clinica_animais")
     private List<Animal> animais;
 
     @OneToMany(mappedBy = "id")
+    @JsonManagedReference("clinica_telefones")
     private List<Telefone> telefones;
 
     private String bairro;
@@ -76,6 +84,7 @@ public class Clinica {
     private String telefone;
 
     @OneToMany(mappedBy = "id")
+    @JsonManagedReference("clinica_documentos")
     private List<Documento> documentos;
 
     @CPF

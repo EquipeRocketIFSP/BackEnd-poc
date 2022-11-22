@@ -1,4 +1,3 @@
-/*
 package br.vet.sidekick.poc.controller;
 
 import br.vet.sidekick.poc.conf.security.service.TokenService;
@@ -50,28 +49,22 @@ public class ProntuarioController {
     public ResponseEntity<Prontuario> create(
             @RequestBody ProntuarioDto prontuarioDto
     ) throws Exception {
+        log.info("Processando o prontuário");
         Prontuario prontuario = null;
         try {
-            prontuario = prontuarioService.save(prontuarioDto.convert());
+            prontuario = prontuarioService.save(prontuarioService.convert(prontuarioDto));
+            log.info(("Prontuario salvo: " + prontuario.getCodigo()));
         } catch (ProntuarioAlreadyStartedException e){
             log.info("prontuário já em elaboração");
             throw e;
         }
-<<<<<<< HEAD
         return ResponseEntity
                 .created(URI.create("/prontuario/" + prontuario.getCodigo()))
                 .build();
-=======
-        //Prontuario prontuario = prontuarioService.save(prontuarioDto.convert());
-        log.info("prontuário salvo");
-        */
-/*return ResponseEntity
-                .created(URI.create("/prontuario/" + prontuario.getId()))
-                .build();*//*
-
-
-        return ResponseEntity.ok().build();
->>>>>>> develop
+//        Prontuario prontuario = prontuarioService.save(prontuarioDto.convert());
+//        return ResponseEntity
+//                .created(URI.create("/prontuario/" + prontuario.getId()))
+//                .build();
     }
 
     @GetMapping("/pdf/{id}")
@@ -154,4 +147,3 @@ public class ProntuarioController {
     }
 
 }
-*/

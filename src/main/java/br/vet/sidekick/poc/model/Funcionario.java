@@ -1,5 +1,7 @@
 package br.vet.sidekick.poc.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.validator.constraints.br.CPF;
@@ -59,17 +61,18 @@ public class Funcionario implements UserDetails {
 
     private String celular;
 
-    @Column(nullable = true)
     private String telefone;
 
     @Email
     private String email = this.username;
 
     @ManyToOne
+    @JsonBackReference("clinica_funcionarios")
     private Clinica clinica;
 
     @ToString.Exclude
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "funcionario")
+    @JsonManagedReference("funcionario_perfis")
     private List<Perfil> perfis = new ArrayList<>();
 
     public void setPerfis(List<Perfil> perfis) {

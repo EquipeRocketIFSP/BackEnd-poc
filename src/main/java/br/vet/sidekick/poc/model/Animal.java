@@ -1,6 +1,7 @@
 package br.vet.sidekick.poc.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -20,9 +21,12 @@ public class Animal {
     private Long id;
 
     @OneToMany(mappedBy = "id")
+    @Setter
+    @JsonManagedReference("animal_prontuarios")
     private List<Prontuario> prontuarios;
 
     @OneToMany(mappedBy = "id")
+    @JsonManagedReference("animal_agendamentos")
     private List<Agendamento> agendamentos;
 
     private String nome;
@@ -42,12 +46,13 @@ public class Animal {
     private String especie;
 
     @ManyToOne
+    @JsonBackReference("clinica_animais")
     private Clinica clinica;
 
-    @OneToMany(mappedBy = "id")
-    @Column(name = "filho_id")
-    @JsonIgnore
-    private List<Animal> filho;
+//    @OneToMany(mappedBy = "id")
+//    @Column(name = "filho_id")
+//    @JsonManagedReference("animal_filhos")
+//    private List<Animal> filho;
 
     @Column(name = "forma_identificacao")
     private String formaIdentificacao;
@@ -55,13 +60,13 @@ public class Animal {
     @PositiveOrZero(message = "Idade tem que ser maior ou igual a zero ano(s)")
     private Integer idade;
 
-    @ManyToOne
-    @JoinColumn(name = "mae_id", insertable = false, updatable = false)
-    private Animal mae;
-
-    @ManyToOne
-    @JoinColumn(name = "pai_id", insertable = false, updatable = false)
-    private Animal pai;
+//    @ManyToOne
+//    @JoinColumn(name = "mae_id", insertable = false, updatable = false)
+//    private Animal mae;
+//
+//    @ManyToOne
+//    @JoinColumn(name = "pai_id", insertable = false, updatable = false)
+//    private Animal pai;
     @Setter
     @ManyToMany
     @JoinTable(

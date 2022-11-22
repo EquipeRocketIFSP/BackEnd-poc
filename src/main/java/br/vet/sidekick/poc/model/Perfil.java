@@ -1,6 +1,7 @@
 package br.vet.sidekick.poc.model;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
@@ -17,11 +18,11 @@ public class Perfil implements GrantedAuthority{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "perfil_id", nullable = false)
     private Long id;
 
     @ManyToOne
     @JoinColumn(name = "funcionario_id")
+    @JsonBackReference("funcionario_perfis")
     private Funcionario funcionario;
 
     @Override

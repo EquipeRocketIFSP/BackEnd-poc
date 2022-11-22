@@ -1,6 +1,6 @@
 package br.vet.sidekick.poc.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -22,7 +22,7 @@ public class Prescricao {
 
     @ManyToOne
     @JoinColumn(name = "prontuario_id")
-    @JsonIgnore
+    @JsonBackReference("prontuario_prescricoes")
     private Prontuario prontuario;
 
 }

@@ -1,5 +1,6 @@
 package br.vet.sidekick.poc.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -14,11 +15,11 @@ import java.util.List;
 public class Estoque {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
     private Long id;
 
     @Column(nullable = false)
     @OneToMany
+    @JsonManagedReference("estoque_clinicas")
     private List<Clinica> clinicas;
 
     private Long entradaQtd;

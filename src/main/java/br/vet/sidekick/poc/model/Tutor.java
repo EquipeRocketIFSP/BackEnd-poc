@@ -1,5 +1,6 @@
 package br.vet.sidekick.poc.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 import org.hibernate.validator.constraints.br.CPF;
 import javax.persistence.*;
@@ -15,7 +16,6 @@ import java.util.List;
 public class Tutor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Long id;
 
     @ManyToMany(mappedBy = "tutores")
@@ -33,6 +33,7 @@ public class Tutor {
     private String cidade;
 
     @ManyToOne
+    @JsonBackReference("clinica_tutores")
     private Clinica clinica;
 
     @CPF

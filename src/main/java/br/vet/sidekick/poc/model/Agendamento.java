@@ -1,5 +1,6 @@
 package br.vet.sidekick.poc.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
@@ -20,9 +21,11 @@ public class Agendamento {
 
 //    @OneToMany(mappedBy = "id") Illegal attempt to map a non collection as a @OneToMany, @ManyToMany or @CollectionOfElements: br.vet.sidekick.poc.model.Agendamento.animal
     @ManyToOne
+    @JsonBackReference("animal_agendamentos")
     private Animal animal;
 
     @ManyToOne
+    @JsonBackReference("clinica_agendamentos")
     private Clinica clinica;
 
     @CreationTimestamp
