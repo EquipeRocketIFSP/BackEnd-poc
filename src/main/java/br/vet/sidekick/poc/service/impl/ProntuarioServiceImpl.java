@@ -112,16 +112,20 @@ public class ProntuarioServiceImpl implements ProntuarioService {
                 .tipoDocumento("Prontuario")
                 .versao(1)
                 .criadoEm(LocalDateTime.now())
+                .dateCreation(LocalDateTime.now())
                 .veterinario(prontuario.getVeterinario())
                 .clinica(prontuario.getClinica())
                 .build();
+        log.info("doc criado: " + doc);
         Documento tempDoc = documentoRepository.save(doc);
-        log.debug("Documento: " + tempDoc);
+        log.info("doc persistido");
         var pront = prontuario.setDocumentoDetails(tempDoc);
+        log.info("Prontuario atualizado");
         Prontuario p = prontuarioRepository.save(pront);
+        log.info("prontuario persistido");
         documentoRepository.save(tempDoc.setProntuario(p));
 
-        log.info("prontuario persistido");
+        log.info("documento persistido");
         try {
             pdfService.writeProntuario(p);
             log.info("Pdf de prontuário escrito e persistido");

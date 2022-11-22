@@ -1,7 +1,7 @@
 INSERT INTO clinica
     (nome_fantasia,razao_social,cnpj,cnae,cep,logradouro,numero,bairro,cidade,estado,responsavel_tecnico,email)
 VALUES
-    ("cLI","Teste", "65.622.164/0001-04","46546","03808-130","Rua Miguel Rachid", "546","Vila Paranaguá","São Paulo","AM","resp. tecnico","teste@email");
+    ("cLI","Teste", "65.622.164/0001-04","46546","03808-130","Rua Miguel Rachid", "546","Vila Paranaguá","São Paulo","AM","resp. tecnico","teste@email.COM");
 
 INSERT INTO funcionario
     (user_name, password, email, cep, clinica_id, cpf, logradouro, nome, numero, bairro, celular)
@@ -15,7 +15,7 @@ VALUES
 INSERT INTO animal
     (especie, idade, nome, outros, pelagem, raca, sexo)
 VALUES
-    ('canina', '3', 'totó', 'outros', 'curta', 'SRD', 'M');
+    ('canina', '3', 'totó', 'outros', 'curta', 'SRD', 'MASCULINO');
 
 INSERT INTO tutor
 (cpf, email, endereco, nome, rg, telefone, estado)
