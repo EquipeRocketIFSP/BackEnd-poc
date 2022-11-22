@@ -52,20 +52,28 @@ public class AgendamentoController {
         return ResponseEntity.ok(agendamentos);
     }
 
-    //TODO: Verificar regras de edição (quando eu não mando uma informação, ainda que eu não queira editá-la, ela vem null)
+    //TODO: Refatorar regra respeitando as camadas
     @PutMapping("/editar/{id}")
     public ResponseEntity<Agendamento> updateAgendamento(
             @PathVariable Long id,
             @RequestBody Agendamento updateAgendamento
     ){
-        if (agendamentoRepository.existsById(id)){
-            Agendamento agendamento = agendamentoService.updateAgendamento(updateAgendamento);
-            return ResponseEntity.ok(agendamento);
+        Optional<Agendamento> referenceAgendamento = agendamentoRepository.findById(id);
+
+        if (referenceAgendamento.isPresent()){
+            return referenceAgendamento
+                    .map(agendamento -> {
+                        agendamento.setAnimal(updateAgendamento.getAnimal());
+                        agendamento.setDataConsulta(updateAgendamento.getDataConsulta());
+                        agendamento.setTipoConsulta(updateAgendamento.getTipoConsulta());
+                        agendamento = agendamentoRepository.save(agendamento);
+                        return ResponseEntity.ok(agendamento);
+                    })
+                    .orElseGet(() -> ResponseEntity.badRequest().build());
         }
 
         return ResponseEntity.notFound().build();
     }
-
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Agendamento> deleteAgendamento(

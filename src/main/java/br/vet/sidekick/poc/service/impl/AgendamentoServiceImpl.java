@@ -50,7 +50,6 @@ public class AgendamentoServiceImpl implements AgendamentoService {
         agendamento = agendamentoRepository.save(agendamento);
 
         return agendamento;
-
     }
 
 }

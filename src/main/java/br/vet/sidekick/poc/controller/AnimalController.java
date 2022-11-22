@@ -87,10 +87,20 @@ public class AnimalController {
             @PathVariable Long id,
             @RequestBody Animal updateAnimal
     ) {
-        if (animalRepository.existsById(id)){
-            Animal animal = animalService.updateAnimal(updateAnimal);
-            return ResponseEntity.ok(animal);
+        Optional<Animal> referenceAnimal = animalRepository.findById(id);
+        if (referenceAnimal.isPresent()){
+            return referenceAnimal.map(animal -> {
+                animal.setEspecie(updateAnimal.getEspecie());
+                animal.setFormaIdentificacao(updateAnimal.getFormaIdentificacao());
+                animal.setIdade(updateAnimal.getIdade());
+                animal.setNome(updateAnimal.getNome());
+                animal.setPelagem(updateAnimal.getPelagem());
+                animal.setRaca(updateAnimal.getRaca());
+                animal.setSexo(updateAnimal.getSexo());
+                return ResponseEntity.ok(animal);
+            }).orElseGet(() -> ResponseEntity.badRequest().build());
         }
+
         return ResponseEntity.notFound().build();
     }
 
