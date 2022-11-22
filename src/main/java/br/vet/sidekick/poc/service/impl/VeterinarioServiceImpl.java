@@ -8,6 +8,7 @@ import br.vet.sidekick.poc.repository.VeterinarioRepository;
 import br.vet.sidekick.poc.service.VeterinarioService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -86,7 +87,7 @@ public class VeterinarioServiceImpl implements VeterinarioService {
                 .rg(cadastro.getTecnicoRg())
                 .estado(cadastro.getTecnicoEstado())
                 .nome(cadastro.getTecnicNome())
-                .password(cadastro.getTecnicoSenha())
+                .password(new BCryptPasswordEncoder().encode(cadastro.getTecnicoSenha()))
                 .logradouro(cadastro.getTecnicoLogradouro())
                 .username(cadastro.getTecnicoEmail())
                 .numero(cadastro.getTecnicoNumero())
