@@ -16,6 +16,7 @@ import java.util.Objects;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@Setter
 @ToString
 @Entity
 public class Prontuario {
@@ -25,6 +26,18 @@ public class Prontuario {
 
     private String codigo;
     private Integer versao;
+
+    /**
+     * temporario
+     */
+    private String medicamento;
+    private String medida;
+    private String tipoCirugia;
+    private String asa;
+    private String exames;
+    private String procedimento;
+    private String prescricoesT;
+    private Integer quantidade;
 
     @ManyToOne
     @JoinColumn(name = "tutor_id")

@@ -1,6 +1,7 @@
 package br.vet.sidekick.poc.service.impl;
 
 import br.vet.sidekick.poc.controller.dto.ProntuarioDto;
+import br.vet.sidekick.poc.controller.dto.ProntuarioV0Dto;
 import br.vet.sidekick.poc.exceptionResolver.exception.*;
 import br.vet.sidekick.poc.model.*;
 import br.vet.sidekick.poc.repository.*;
@@ -44,7 +45,36 @@ public class ProntuarioServiceImpl implements ProntuarioService {
     @Autowired
     private AnimalRepository animalRepository;
 
+    @Override
+    public Prontuario convert(ProntuarioV0Dto prontuarioV0Dto) {
+        Clinica clinica = clinicaRepository.getReferenceById(prontuarioV0Dto.getClinica());
+        Veterinario veterinario = veterinarioRepository.getReferenceById(prontuarioV0Dto.getVeterinario());
+        Animal animal = animalRepository.getReferenceById(prontuarioV0Dto.getAnimal());
 
+        return Prontuario.builder()
+                .clinica(clinica)
+                .veterinario(veterinario)
+                .animal(animal)
+                .diagnostico(prontuarioV0Dto.getDiagnostico())
+                .observacoes(prontuarioV0Dto.getObservacoes())
+                .medicamento(prontuarioV0Dto.getMedicamento())
+                .medida(prontuarioV0Dto.getMedida())
+                .tipoCirugia(prontuarioV0Dto.getTipoCirugia())
+                .asa(prontuarioV0Dto.getAsa())
+                .exames(prontuarioV0Dto.getExames())
+                .procedimento(prontuarioV0Dto.getProcedimento())
+                .prescricoesT(prontuarioV0Dto.getPrescricoes())
+                .quantidade(prontuarioV0Dto.getQuantidade())
+                .build();
+
+    }
+
+    @Override
+    public Optional<Prontuario> getById(Long id) {
+        return Optional.of(prontuarioRepository.getReferenceById(id));
+    }
+
+    @Override
     public Prontuario convert(ProntuarioDto prontuarioDto) {
         log.info("Convertendo o prontuario");
         Clinica clinica = clinicaRepository.getReferenceById(prontuarioDto.getClinica());//.orElseThrow(() -> new ClinicaNotFoundException("Clínica não identificada")))

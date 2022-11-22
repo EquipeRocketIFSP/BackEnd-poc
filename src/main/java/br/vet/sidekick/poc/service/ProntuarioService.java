@@ -1,6 +1,7 @@
 package br.vet.sidekick.poc.service;
 
 import br.vet.sidekick.poc.controller.dto.ProntuarioDto;
+import br.vet.sidekick.poc.controller.dto.ProntuarioV0Dto;
 import br.vet.sidekick.poc.model.Prontuario;
 import org.springframework.stereotype.Service;
 
@@ -17,4 +18,8 @@ public interface ProntuarioService {
     Optional<List<Prontuario>> getByCodigo(String codigo);
 
     Prontuario convert(ProntuarioDto prontuarioDto);
+
+    Prontuario convert(ProntuarioV0Dto prontuarioV0Dto);
+
+    Optional<Prontuario> getById(Long id);
 }

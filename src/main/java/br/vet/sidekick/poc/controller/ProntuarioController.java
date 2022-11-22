@@ -1,11 +1,15 @@
 package br.vet.sidekick.poc.controller;
 
 import br.vet.sidekick.poc.conf.security.service.TokenService;
+import br.vet.sidekick.poc.controller.dto.ListagemProntuarioDto;
 import br.vet.sidekick.poc.controller.dto.ProntuarioDto;
+import br.vet.sidekick.poc.controller.dto.ProntuarioV0Dto;
 import br.vet.sidekick.poc.exceptionResolver.exception.ProntuarioAlreadyStartedException;
 import br.vet.sidekick.poc.exceptionResolver.exception.ProntuarioNotFoundException;
-import br.vet.sidekick.poc.model.Funcionario;
-import br.vet.sidekick.poc.model.Prontuario;
+import br.vet.sidekick.poc.model.*;
+import br.vet.sidekick.poc.repository.AnimalRepository;
+import br.vet.sidekick.poc.repository.ClinicaRepository;
+import br.vet.sidekick.poc.repository.VeterinarioRepository;
 import br.vet.sidekick.poc.service.FuncionarioClinicaValidator;
 import br.vet.sidekick.poc.service.FuncionarioService;
 import br.vet.sidekick.poc.service.PdfService;
@@ -45,7 +49,41 @@ public class ProntuarioController {
     @Autowired
     private FuncionarioClinicaValidator funcionarioClinicaValidator;
 
+    @Autowired
+    private ClinicaRepository clinicaRepository;
+    @Autowired
+    private VeterinarioRepository veterinarioRepository;
+    @Autowired
+    private AnimalRepository animalRepository;
+
     @PostMapping
+    public ResponseEntity<Prontuario> create(
+            @RequestBody ProntuarioV0Dto prontuariodto
+    ) throws Exception {
+        log.info("Iniciando cadastro prontuario");
+        Prontuario prontuario = prontuarioService.convert(prontuariodto);
+        log.info("Prontuario convertido");
+        Optional<Clinica> responseClinica = clinicaRepository.findById(prontuariodto.getClinica());
+        Optional<Veterinario> responseVeterinario = veterinarioRepository.findById(prontuariodto.getVeterinario());
+        Optional<Animal> responseAnimal = animalRepository.findById(prontuariodto.getAnimal());
+        log.info("Composições identificadas");
+        if (responseClinica.isEmpty() || responseVeterinario.isEmpty() || responseAnimal.isEmpty()) {
+            log.info("Seguindo Bad Request");
+            return ResponseEntity.badRequest().build();
+        }
+
+        prontuario.setClinica(responseClinica.get());
+        prontuario.setVeterinario(responseVeterinario.get());
+        prontuario.setAnimal(responseAnimal.get());
+
+        prontuario = prontuarioService.save(prontuario);
+
+        return ResponseEntity
+                .created(URI.create("/prontuario/" + prontuario.getId()))
+                .build();
+    }
+
+    @PostMapping("/new")
     public ResponseEntity<Prontuario> create(
             @RequestBody ProntuarioDto prontuarioDto
     ) throws Exception {
@@ -85,7 +123,17 @@ public class ProntuarioController {
         return ResponseEntity.notFound().build();
 
     }
-    @GetMapping("/{codigo}")
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ListagemProntuarioDto> getOne(@PathVariable Long id) {
+        Optional<Prontuario> responseProntuario = prontuarioService.getById(id);
+
+        if (responseProntuario.isEmpty())
+            return ResponseEntity.notFound().build();
+
+        return ResponseEntity.ok(new ListagemProntuarioDto(responseProntuario.get()));
+    }
+    @GetMapping("/byCode/{codigo}")
     public ResponseEntity<Prontuario> getProntuario(
             @RequestHeader(HttpHeaders.CONTENT_TYPE) String contentType,
             @PathVariable String codigo
