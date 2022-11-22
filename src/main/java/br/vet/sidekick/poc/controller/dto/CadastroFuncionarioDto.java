@@ -4,6 +4,7 @@ import br.vet.sidekick.poc.model.Funcionario;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Builder
 @Setter
@@ -39,6 +40,7 @@ public class CadastroFuncionarioDto {
                 .celular(this.celular)
                 .telefone(this.telefone)
                 .username(this.email)
-                .password(this.senha).build();
+                .email(this.email)
+                .password(new BCryptPasswordEncoder().encode(this.senha)).build();
     }
 }
