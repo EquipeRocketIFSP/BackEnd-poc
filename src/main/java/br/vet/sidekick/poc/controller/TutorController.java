@@ -1,6 +1,8 @@
 package br.vet.sidekick.poc.controller;
 
+import br.vet.sidekick.poc.conf.security.service.TokenService;
 import br.vet.sidekick.poc.model.Animal;
+import br.vet.sidekick.poc.model.Funcionario;
 import br.vet.sidekick.poc.model.Tutor;
 import br.vet.sidekick.poc.repository.TutorRepository;
 import br.vet.sidekick.poc.service.TutorService;
@@ -12,6 +14,8 @@ import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
+import static org.springframework.http.HttpHeaders.AUTHORIZATION;
+
 @CrossOrigin
 @RestController
 @RequestMapping("/tutor")
@@ -22,6 +26,9 @@ public class TutorController {
 
     @Autowired
     private TutorRepository tutorRepository;
+
+    @Autowired
+    private TokenService tokenService;
 
     @PostMapping
     public ResponseEntity<Tutor> registerTutor(@RequestBody Tutor tutor) {
@@ -50,10 +57,13 @@ public class TutorController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Tutor>> getAll() {
-        List<Tutor> tutores = tutorRepository.findAll();
+    public ResponseEntity<List<Tutor>> getAll(
+            @RequestHeader(AUTHORIZATION) String auth
+    ) {
+        Funcionario requester = tokenService.getFuncionario(auth);
+        List<Tutor> tutores = tutorRepository.findAllByClinica(requester.getClinica().getId());
 
-        tutores.forEach((tutor) -> tutor.setAnimais(null));
+        tutores.forEach(tutor -> tutor.setAnimais(null));
 
         return ResponseEntity.ok(tutores);
     }

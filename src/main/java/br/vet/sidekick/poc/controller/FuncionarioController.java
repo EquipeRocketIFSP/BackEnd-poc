@@ -79,7 +79,7 @@ public class FuncionarioController {
     public ResponseEntity<List<ListagemFuncionarioDto>> getAll(
             @RequestHeader(AUTHORIZATION) String auth
     ) {
-        Funcionario requester = funcionarioService.find(tokenService.getFuncionarioId(auth.substring(6)));
+        Funcionario requester = tokenService.getFuncionario(auth);
         List<ListagemFuncionarioDto> funcionarioDtos = funcionarioRepository.findAllByClinica(requester.getClinica())
                 .stream()
                 .map(f -> new ListagemFuncionarioDto(f))

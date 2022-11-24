@@ -1,8 +1,10 @@
 package br.vet.sidekick.poc.conf.security.service;
 
 import br.vet.sidekick.poc.model.Funcionario;
+import br.vet.sidekick.poc.service.FuncionarioService;
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
@@ -12,6 +14,9 @@ import java.util.Date;
 @Service
 @Slf4j
 public class TokenService {
+
+    @Autowired
+    private FuncionarioService funcionarioService;
     @Value("${app.jwt.expiration}")
     private String EXPIRATION;
     @Value("${app.jwt.secret}")
@@ -58,12 +63,18 @@ public class TokenService {
     }
 
     public Long getFuncionarioId(String token) {
-        var temp = jwtDecode(token);
-        System.out.println("temp com sucesso");
         return Long.parseLong(
-                temp
+                jwtDecode(token)
                         .getBody()
                         .getSubject()
-        );
+                );
+    }
+
+    public Funcionario getFuncionario(String token){
+        return funcionarioService.find(getFuncionarioId(
+                token.startsWith("Bearer ")
+                        ? token.substring(7)
+                        : token
+        ));
     }
 }
