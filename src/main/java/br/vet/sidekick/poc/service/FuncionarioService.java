@@ -17,4 +17,6 @@ public interface FuncionarioService {
     void deleteById(Long id);
 
     Funcionario createDonoClinica(CadastroClinicaDto cadastro, Clinica clinica) throws RuntimeException;
+
+    Funcionario find(Long funcionarioId);
 }

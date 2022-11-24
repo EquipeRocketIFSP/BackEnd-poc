@@ -1,0 +1,21 @@
+version: '3'
+services:
+  front:
+    image: "local"
+#    image: "equiperocket/front-end-mvp:latest"
+    ports:
+      - '80:5000'
+#  https-portal:
+#    image: steveltn/https-portal
+#    ports:
+#      - '80:80'
+#      - '443:443'
+#    links:
+#      - front
+#    restart: always
+#    environment:
+#      DOMAINS: 'teste.local -> http://front:5000'
+#      STAGE: local
+##      DOMAINS: 'certvet-https.us-east-1.elasticbeanstalk.com -> http://front:5000'
+##      STAGE: 'production'
+#      FORCE_RENEW: 'false'

@@ -1,5 +1,6 @@
 package br.vet.sidekick.poc.controller;
 
+import br.vet.sidekick.poc.conf.security.service.TokenService;
 import br.vet.sidekick.poc.controller.dto.CadastroFuncionarioDto;
 import br.vet.sidekick.poc.controller.dto.ListagemFuncionarioDto;
 import br.vet.sidekick.poc.controller.dto.RecuperarFuncionarioDto;
@@ -21,10 +22,15 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static org.springframework.http.HttpHeaders.AUTHORIZATION;
+
 @CrossOrigin
 @RestController
 @RequestMapping("/funcionario")
 public class FuncionarioController {
+
+    @Autowired
+    private TokenService tokenService;
     @Autowired
     private FuncionarioRepository funcionarioRepository;
 
@@ -70,15 +76,13 @@ public class FuncionarioController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ListagemFuncionarioDto>> getAll() {
-        List<ListagemFuncionarioDto> funcionarioDtos = this.funcionarioRepository.findAll()
+    public ResponseEntity<List<ListagemFuncionarioDto>> getAll(
+            @RequestHeader(AUTHORIZATION) String auth
+    ) {
+        Funcionario requester = funcionarioService.find(tokenService.getFuncionarioId(auth.substring(6)));
+        List<ListagemFuncionarioDto> funcionarioDtos = funcionarioRepository.findAllByClinica(requester.getClinica())
                 .stream()
-                .map((funcionario) -> {
-                    ListagemFuncionarioDto funcionarioDto = new ListagemFuncionarioDto(funcionario);
-
-                    //TODO: Setar CRMV
-                    return funcionarioDto;
-                })
+                .map(f -> new ListagemFuncionarioDto(f))
                 .collect(Collectors.toList());
 
         return ResponseEntity.ok(funcionarioDtos);

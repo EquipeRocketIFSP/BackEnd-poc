@@ -58,8 +58,10 @@ public class TokenService {
     }
 
     public Long getFuncionarioId(String token) {
+        var temp = jwtDecode(token);
+        System.out.println("temp com sucesso");
         return Long.parseLong(
-                jwtDecode(token)
+                temp
                         .getBody()
                         .getSubject()
         );

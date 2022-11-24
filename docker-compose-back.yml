@@ -1,13 +1,6 @@
 version: '3'
 services:
   back:
-#    build:
-#      dockerfile: ./Dockerfile
-#      args:
-#        - DB_PASSWORD=kASe1QkIm5xQUZMF7cXo5000
-#        - DB_USER=admin
-#        - PROFILE=dev
-#        - SPRING_DATASOURCE_URL=jdbc:mysql://poc.cy57hfox1fy1.us-east-1.rds.amazonaws.com:3306/poc?useUnicode=true&characterEncoding=utf8&useSSL=true&allowPublicKeyRetrieval=true&useTimezone=true&serverTimezone=UTC
     image: "equiperocket/poc-back:latest"
     ports:
       - '8080:8080'
@@ -18,7 +11,17 @@ services:
       - PROFILE=dev
       - DB_PASSWORD=kASe1QkIm5xQUZMF7cXo5000
       - DB_USER=admin
-  front:
-    image: "equiperocket/front-end-mvp:latest"
+  https-portal:
+    image: steveltn/https-portal
     ports:
-      - '80:5000'
+      - '80:80'
+      - '443:443'
+    links:
+      - back
+    restart: always
+    environment:
+      #      DOMAINS: 'teste.local -> http://back:8080'
+      #      STAGE: local
+      DOMAINS: 'https://certvet-front.us-east-1.elasticbeanstalk.com -> http://back:8080/'
+#       STAGE: 'production'
+#       FORCE_RENEW: 'true'

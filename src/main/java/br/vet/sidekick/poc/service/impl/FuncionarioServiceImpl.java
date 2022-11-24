@@ -76,4 +76,9 @@ public class FuncionarioServiceImpl implements FuncionarioService {
             log.debug("Funcionário persistido");
         }
     }
+
+    @Override
+    public Funcionario find(Long funcionarioId) {
+        return funcionarioRepository.getReferenceById(funcionarioId);
+    }
 }
