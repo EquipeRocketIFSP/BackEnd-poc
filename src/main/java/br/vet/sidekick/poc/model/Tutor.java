@@ -1,5 +1,7 @@
 package br.vet.sidekick.poc.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.hibernate.validator.constraints.br.CPF;
 import javax.persistence.*;
@@ -20,8 +22,7 @@ public class Tutor {
 
     @ManyToMany(mappedBy = "tutores")
 //    @Column(name = "animal_id")
-//    @JsonManagedReference(value = "tutor_animal")
-
+    @JsonManagedReference("tutor_animal")
     private List<Animal> animais;
 
     private String bairro;

@@ -1,11 +1,12 @@
 package br.vet.sidekick.poc.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.PositiveOrZero;
 import java.util.List;
 
@@ -57,14 +58,14 @@ public class Animal {
     @Column(name = "raca", nullable = false)
     private String raca;
 
-    @Pattern(message = "O sexo do animal deve ser: MASCULINO, FEMININO ou INDEFINIDO", regexp = "(MASCULINO|FEMININO|INDEFINIDO)")
+//    @Pattern(message = "O sexo do animal deve ser: MASCULINO, FEMININO ou INDEFINIDO", regexp = "(MASCULINO|FEMININO|INDEFINIDO)")
     @Column(name = "sexo", nullable = false)
     private String sexo;
 
     @Setter
     @ManyToMany
 //    @Column(name = "tutor_id")
-//    @JsonBackReference//(value = "tutor_animal")
+    @JsonBackReference("tutor_animal")
     @JoinTable(name = "tutor_animal", joinColumns = {@JoinColumn(name = "animal_id")}, inverseJoinColumns = {@JoinColumn(name = "tutor_id")})
     private List<Tutor> tutores;
 

@@ -63,8 +63,6 @@ public class TutorController {
         Funcionario requester = tokenService.getFuncionario(auth);
         List<Tutor> tutores = tutorRepository.findAllByClinica(requester.getClinica().getId());
 
-        tutores.forEach(tutor -> tutor.setAnimais(null));
-
         return ResponseEntity.ok(tutores);
     }
 

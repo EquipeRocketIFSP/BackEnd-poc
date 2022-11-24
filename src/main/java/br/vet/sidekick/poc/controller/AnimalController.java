@@ -1,7 +1,9 @@
 package br.vet.sidekick.poc.controller;
 
+import br.vet.sidekick.poc.conf.security.service.TokenService;
 import br.vet.sidekick.poc.controller.dto.CadastroAnimalDto;
 import br.vet.sidekick.poc.model.Animal;
+import br.vet.sidekick.poc.model.Funcionario;
 import br.vet.sidekick.poc.model.Tutor;
 import br.vet.sidekick.poc.repository.AnimalRepository;
 import br.vet.sidekick.poc.service.AnimalService;
@@ -15,6 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static org.springframework.http.HttpHeaders.AUTHORIZATION;
+
 @CrossOrigin
 @RestController
 @RequestMapping("/animal")
@@ -26,14 +30,9 @@ public class AnimalController {
 
     @Autowired
     private AnimalService animalService;
-    private static CadastroAnimalDto cadastroAnimalDto = CadastroAnimalDto.getMock();
 
-    //TODO: remover depois
-    private static List<CadastroAnimalDto> list = new ArrayList<>();
-
-    static {
-        list.add(cadastroAnimalDto);
-    }
+    @Autowired
+    private TokenService tokenService;
 
     @PostMapping
     public ResponseEntity<Animal> registerAnimal(@RequestBody Animal animal) {
@@ -62,10 +61,11 @@ public class AnimalController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Animal>> getAll() {
-        List<Animal> animais = animalRepository.findAll();
-
-        animais.forEach(animal -> animal.setTutores(null));
+    public ResponseEntity<List<Animal>> getAll(
+            @RequestHeader(AUTHORIZATION) String auth
+    ) {
+        Funcionario requester = tokenService.getFuncionario(auth);
+        List<Animal> animais = animalRepository.findAllByClinica(requester.getClinica().getId());
 
         return ResponseEntity.ok(animais);
     }
