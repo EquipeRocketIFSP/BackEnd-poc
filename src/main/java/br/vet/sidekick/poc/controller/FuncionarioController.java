@@ -27,7 +27,7 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 @CrossOrigin
 @RestController
 @RequestMapping("/funcionario")
-public class FuncionarioController {
+public class FuncionarioController extends BaseController {
 
     @Autowired
     private TokenService tokenService;

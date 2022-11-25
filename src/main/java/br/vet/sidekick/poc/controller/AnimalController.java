@@ -23,7 +23,7 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 @RestController
 @RequestMapping("/animal")
 @Slf4j
-public class AnimalController {
+public class AnimalController extends BaseController {
 
     @Autowired
     private AnimalRepository animalRepository;
@@ -31,43 +31,29 @@ public class AnimalController {
     @Autowired
     private AnimalService animalService;
 
-    @Autowired
-    private TokenService tokenService;
-
     @PostMapping
     public ResponseEntity<Animal> registerAnimal(@RequestBody Animal animal) {
         Optional<Animal> referenceAnimal = animalService.create(animal);
-        if (referenceAnimal.isEmpty())
-            return ResponseEntity.badRequest().build();
-        return ResponseEntity.created(
-                URI.create("/animal/" + animal.getId().toString())
-        ).build();
+        return referenceAnimal.isEmpty()
+                ? ResponseEntity.badRequest().build()
+                : ResponseEntity.created(URI.create("/animal/" + animal.getId().toString())).build();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Animal> getOne(@PathVariable Long id) {
         Optional<Animal> referenceAnimal = animalRepository.findById(id);
+        return referenceAnimal.isPresent()
+                ? ResponseEntity.ok().body(referenceAnimal.get())
+                : ResponseEntity.notFound().build();
 
-        if (referenceAnimal.isEmpty())
-            return ResponseEntity.notFound().build();
-
-        Animal animal = referenceAnimal.get();
-        List<Tutor> tutores = referenceAnimal.get().getTutores();
-
-        tutores.forEach(tutor -> tutor.setAnimais(null));
-        animal.setTutores(tutores);
-
-        return ResponseEntity.ok().body(animal);
     }
 
     @GetMapping
     public ResponseEntity<List<Animal>> getAll(
             @RequestHeader(AUTHORIZATION) String auth
     ) {
-        Funcionario requester = tokenService.getFuncionario(auth);
-        List<Animal> animais = animalRepository.findAllByClinica(requester.getClinica().getId());
-
-        return ResponseEntity.ok(animais);
+        return ResponseEntity.ok()
+                .body(animalRepository.findAllByClinica(getClinicaFromRequester(auth)));
     }
 
     @DeleteMapping("/{id}")

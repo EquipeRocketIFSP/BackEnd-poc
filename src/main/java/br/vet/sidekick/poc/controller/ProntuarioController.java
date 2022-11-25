@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @CrossOrigin
 @RequestMapping("/prontuario")
-public class ProntuarioController {
+public class ProntuarioController extends BaseController {
 
     @Autowired
     private ClinicaRepository clinicaRepository;

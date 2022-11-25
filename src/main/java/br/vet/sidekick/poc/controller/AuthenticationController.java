@@ -27,7 +27,7 @@ import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
 @RequestMapping("/auth")
 @CrossOrigin
 @Slf4j
-public class AuthenticationController {
+public class AuthenticationController extends BaseController {
 
     @Autowired
     private FuncionarioService funcionarioService;

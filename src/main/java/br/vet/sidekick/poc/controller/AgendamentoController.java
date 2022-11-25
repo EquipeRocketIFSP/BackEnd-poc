@@ -13,7 +13,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/agendamento")
 @CrossOrigin
-public class AgendamentoController {
+public class AgendamentoController extends BaseController {
 
     @Autowired
     private AgendamentoService agendamentoService;

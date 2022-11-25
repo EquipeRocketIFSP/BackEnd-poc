@@ -17,11 +17,9 @@ import java.util.List;
 public class Tutor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Long id;
 
     @ManyToMany(mappedBy = "tutores")
-//    @Column(name = "animal_id")
     @JsonManagedReference("tutor_animal")
     private List<Animal> animais;
 

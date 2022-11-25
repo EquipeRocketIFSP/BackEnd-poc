@@ -22,9 +22,7 @@ import java.util.Optional;
 @RequestMapping("/cadastro/clinica")
 @CrossOrigin
 @Slf4j
-public class ClinicaController {
-    private static CadastroClinicaDto cadastroDto = CadastroClinicaDto.getMock();
-
+public class ClinicaController extends BaseController {
     @Autowired
     private ClinicaService clinicaService;
 
@@ -34,13 +32,10 @@ public class ClinicaController {
     @Autowired
     private FuncionarioService funcionarioService;
 
-    private void throwExceptionFromController(RuntimeException e) throws RuntimeException {
-        log.error(e.getLocalizedMessage());
-        throw e;
-    }
     @PostMapping
     public ResponseEntity<Clinica> registerClinica(
-            @RequestBody CadastroClinicaDto cadastro) throws RuntimeException {
+            @RequestBody CadastroClinicaDto cadastro
+    ) throws RuntimeException {
         Optional<Clinica> clinica = null;
         try {
             clinica = clinicaService.create(cadastro);
