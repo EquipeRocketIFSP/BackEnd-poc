@@ -68,4 +68,4 @@ api:
     version: "v0.0.1"
     description: "Interface de aplicação para sistema CertVet"
     server:
-        url: "http://localhost:8080"
+        url: "https://localhost:8443"

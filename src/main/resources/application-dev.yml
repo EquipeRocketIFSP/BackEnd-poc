@@ -37,9 +37,17 @@ spring:
 #    sql:
 #        init:
 #            continue-on-error: true
+
+http:
+    port: 8080
 server:
     port:
-        8080
+        8443
+    ssl:
+        certificate: "classpath:keystore/public.crt"
+        certificate-private-key: "classpath:keystore/privatekey.pem"
+    http2:
+        enabled: true
 app:
     jwt:
         secret: qwertyuiosdfghjk
@@ -62,4 +70,4 @@ api:
     description: "Interface de aplicação para sistema CertVet"
     server:
         # TODO: Checar a URL que será a base no momento do deploy
-        url: "http://localhost:8080"
+        url: "https://certvet-back.us-east-1.elasticbeanstalk.com:8443"
