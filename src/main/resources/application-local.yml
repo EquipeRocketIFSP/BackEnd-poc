@@ -37,9 +37,16 @@ spring:
 #    sql:
 #        init:
 #            continue-on-error: true
+http:
+    port: 8080
 server:
     port:
-        8080
+        8443
+    ssl:
+        certificate: "classpath:keystore/public.crt"
+        certificate-private-key: "classpath:keystore/privatekey.pem"
+    http2:
+        enabled: true
 app:
     jwt:
         secret: qwertyuiosdfghjk

@@ -1,9 +1,9 @@
 version: '3'
 services:
   front:
-    image: "equiperocket/front-end-mvp:test"
+#    image: "equiperocket/front-end-mvp:test"
 #    image: "local"
-#    image: "equiperocket/front-end-mvp:latest"
+    image: "equiperocket/front-end-mvp:latest"
     ports:
       - '80:5000'
 #    volumes:
