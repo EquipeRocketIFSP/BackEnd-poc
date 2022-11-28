@@ -43,7 +43,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http
                 .requiresChannel().anyRequest().requiresSecure()
                 .and().authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/why").permitAll()
+                .antMatchers(HttpMethod.GET, "/hello").permitAll()
                 .antMatchers(HttpMethod.POST, "/auth").permitAll()
                 .antMatchers(HttpMethod.GET, "/actuator/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/cadastro/clinica/*").permitAll()
