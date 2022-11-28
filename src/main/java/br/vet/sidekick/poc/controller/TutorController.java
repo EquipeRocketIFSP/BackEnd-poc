@@ -1,10 +1,12 @@
 package br.vet.sidekick.poc.controller;
 
 import br.vet.sidekick.poc.conf.security.service.TokenService;
+import br.vet.sidekick.poc.controller.dto.CadastroTutorDto;
 import br.vet.sidekick.poc.model.Animal;
 import br.vet.sidekick.poc.model.Tutor;
 import br.vet.sidekick.poc.repository.TutorRepository;
 import br.vet.sidekick.poc.service.TutorService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +21,7 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 @CrossOrigin
 @RestController
 @RequestMapping("/tutor")
+@Slf4j
 public class TutorController extends BaseController {
 
     @Autowired
@@ -31,11 +34,12 @@ public class TutorController extends BaseController {
     private TokenService tokenService;
 
     @PostMapping
-    public ResponseEntity<Tutor> registerTutor(@RequestBody Tutor tutor) {
-        Optional<Tutor> referenceTutor = tutorService.create(tutor);
+    public ResponseEntity<Tutor> registerTutor(@RequestBody CadastroTutorDto tutorDto) {
+        log.info("Tutor a ser cadastrado: " + tutorDto);
+        Optional<Tutor> referenceTutor = tutorService.create(tutorDto);
         return referenceTutor.isEmpty()
                 ? ResponseEntity.badRequest().build()
-                : ResponseEntity.created(URI.create("/tutor/" + tutor.getId().toString())).build();
+                : ResponseEntity.created(URI.create("/tutor/" + referenceTutor.get().getId().toString())).build();
     }
 
     @GetMapping("/{id}")
