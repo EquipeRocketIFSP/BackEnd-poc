@@ -1,10 +1,18 @@
 version: '3'
 services:
   back:
+#    build:
+#      dockerfile: ./Dockerfile
+#      args:
+#        - SPRING_DATASOURCE_URL=jdbc:mysql://localhost:3306/poc2?useUnicode=true&characterEncoding=utf8&useSSL=true&allowPublicKeyRetrieval=true&useTimezone=true&serverTimezone=UTC
+#        - ARGS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5000 -Xmx1G -Xms128m -XX:MaxMetaspaceSize=128m
+#        - PROFILE=dev
+#        - DB_PASSWORD=kASe1QkIm5xQUZMF7cXo5000
+#        - DB_USER=admin
     image: "equiperocket/poc-back:latest"
     ports:
-      - '8080:8080'
-      - '5001:5000'
+      - '8443:8443'
+      - '5000:5000'
     environment:
       - SPRING_DATASOURCE_URL=jdbc:mysql://poc.cy57hfox1fy1.us-east-1.rds.amazonaws.com:3306/poc?useUnicode=true&characterEncoding=utf8&useSSL=true&allowPublicKeyRetrieval=true
       - ARGS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5000 -Xmx1G -Xms128m -XX:MaxMetaspaceSize=128m

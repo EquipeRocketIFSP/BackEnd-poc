@@ -41,8 +41,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .requiresChannel(channel -> channel.anyRequest().requiresSecure())
-                .authorizeRequests()
+                .requiresChannel().anyRequest().requiresSecure()
+                .and().authorizeRequests()
+                .antMatchers(HttpMethod.GET, "/why").permitAll()
                 .antMatchers(HttpMethod.POST, "/auth").permitAll()
                 .antMatchers(HttpMethod.GET, "/actuator/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/cadastro/clinica/*").permitAll()

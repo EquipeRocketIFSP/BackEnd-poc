@@ -20,10 +20,8 @@ COPY ${WAR_FILE} app.jar
 
 SHELL ["/bin/sh", "-c"]
 
-EXPOSE 5001
+EXPOSE 5000
 
-EXPOSE 8080
-
-CMD keytool -import -alias certvet -file myCertificate.crt -keystore springboot.p12 -storepass password
+EXPOSE 8443
 
 CMD java ${ARGS} -jar app.jar --spring.profiles.active=${PROFILE}
