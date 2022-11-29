@@ -25,7 +25,6 @@ import java.util.List;
 public class Funcionario implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
     private Long id;
 
     @Column(name = "user_name", nullable = false)
@@ -64,10 +63,10 @@ public class Funcionario implements UserDetails {
     private String estado;
 
     @CPF
-    @Column(name = "cpf", nullable = false, unique = true)
+    @Column(name = "cpf", nullable = false)
     private String cpf;
 
-    @Column(name = "rg", unique = true)
+    @Column(name = "rg")
     private String rg;
 
     @Column(name = "celular")
