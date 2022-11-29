@@ -4,46 +4,32 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.util.List;
+import java.util.Map;
+
 @Builder
 @Getter
 public class CadastroAnimalDto {
 
-    @JsonProperty("nome")
     private String nome;
-
-    @JsonProperty("idade")
-    private String idade;
-
-    @JsonProperty("sexo")
+    private Integer idade;
     private String sexo;
-
-    @JsonProperty("raca")
     private String raca;
-
-    @JsonProperty("especie")
     private String especie;
-
-    @JsonProperty("pelagem")
     private String pelagem;
-
-    @JsonProperty("tutor")
-    private String tutor;
-
-    @JsonProperty("pai")
+    private List<Long> tutores;
     private String pai;
-
-    @JsonProperty("mae")
     private String mae;
 
     public static CadastroAnimalDto getMock(){
         return CadastroAnimalDto.builder()
                 .nome("Teste")
-                .idade("55")
+                .idade(1)
                 .sexo("Macho")
                 .raca("dgjlkdjlfg")
                 .especie("dfgsdfg")
                 .pelagem("dfsgsdfgsd")
-                .tutor("Tutor")
+                .tutores(List.of(1L))
                 .build();
     }
 

@@ -32,11 +32,15 @@ public class AnimalController extends BaseController {
     private AnimalService animalService;
 
     @PostMapping
-    public ResponseEntity<Animal> registerAnimal(@RequestBody Animal animal) {
-        Optional<Animal> referenceAnimal = animalService.create(animal);
+    public ResponseEntity<Animal> registerAnimal(
+            @RequestBody CadastroAnimalDto animalDto,
+            @RequestHeader(AUTHORIZATION) String auth
+    ) {
+        Long clinicaId = getClinicaFromRequester(auth);
+        Optional<Animal> referenceAnimal = animalService.create(animalDto, clinicaId);
         return referenceAnimal.isEmpty()
                 ? ResponseEntity.badRequest().build()
-                : ResponseEntity.created(URI.create("/animal/" + animal.getId().toString())).build();
+                : ResponseEntity.created(URI.create("/animal/" + referenceAnimal.get().getId().toString())).build();
     }
 
     @GetMapping("/{id}")
