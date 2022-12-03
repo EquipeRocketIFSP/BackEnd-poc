@@ -19,7 +19,6 @@ import java.util.List;
 public class Clinica {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
     private Long id;
 
     @OneToMany(mappedBy = "clinica")

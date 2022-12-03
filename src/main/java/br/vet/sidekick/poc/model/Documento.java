@@ -1,9 +1,12 @@
 package br.vet.sidekick.poc.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Builder
 @AllArgsConstructor
@@ -14,22 +17,31 @@ import java.time.LocalDateTime;
 public class Documento {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "id_prontuario")
-    private Long idProntuario;
+    @ManyToOne
+    @JsonManagedReference("prontuario_documentos")
+    private Prontuario prontuario;
 
-    @Column(name = "caminho_arquivo", nullable = false)
+    @Column(nullable = false)
     private String caminhoArquivo;
 
-    @Column(name = "clinica", nullable = false)
+    @Column(name = "clinica_id", nullable = false)
     private Long clinica;
 
-    @Column(name = "criado_em")
-    private LocalDateTime criadoEm;
+    @Column(nullable = false)
+    private String tipoDocumento;
 
-    @Column(name = "tipo_documento", nullable = false)
-    private Long tipoDocumento;
+    private Date criadoEm;
+    private String name;
+    private Integer versao;
 
+    @ManyToOne
+    @JsonBackReference("veterinario_documentos")
+    private Veterinario veterinario;
+
+    public Documento setProntuario(Prontuario p) {
+        this.prontuario = p;
+        return this;
+    }
 }

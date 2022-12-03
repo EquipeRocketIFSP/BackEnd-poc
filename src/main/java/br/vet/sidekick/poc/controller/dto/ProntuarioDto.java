@@ -27,6 +27,7 @@ public class ProntuarioDto {
     private String procedimento;
     private String prescricoes;
     private int quantidade;
+    private String certvetCode;
 
     public Prontuario convert() {
         return Prontuario.builder()
@@ -37,5 +38,9 @@ public class ProntuarioDto {
                 .prescricoes(this.prescricoes)
                 .quantidade(this.quantidade)
                 .build();
+    }
+
+    public String getCertvetCode() {
+        return certvetCode;
     }
 }

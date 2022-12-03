@@ -12,6 +12,7 @@ import br.vet.sidekick.poc.repository.FuncionarioRepository;
 import br.vet.sidekick.poc.repository.VeterinarioRepository;
 import br.vet.sidekick.poc.service.FuncionarioService;
 import br.vet.sidekick.poc.service.VeterinarioService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +28,7 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 @CrossOrigin
 @RestController
 @RequestMapping("/funcionario")
+@Slf4j
 public class FuncionarioController extends BaseController {
 
     @Autowired
@@ -70,7 +72,7 @@ public class FuncionarioController extends BaseController {
 
             return ResponseEntity.created(URI.create("/funcionario/" + String.valueOf(funcionario.getId()))).build();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            log.error(e.getMessage());
             return ResponseEntity.badRequest().build();
         }
     }

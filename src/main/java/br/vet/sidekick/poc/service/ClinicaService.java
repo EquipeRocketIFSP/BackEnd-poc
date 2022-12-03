@@ -15,4 +15,5 @@ public interface ClinicaService {
     Optional<Clinica> getById(Long id);
 
     List<Clinica> getAll();
+
 }

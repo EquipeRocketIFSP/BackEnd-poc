@@ -1,9 +1,12 @@
 package br.vet.sidekick.poc.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -14,6 +17,9 @@ import javax.persistence.*;
 public class Veterinario extends Funcionario {
     @Column(name = "registro_crmv", nullable = false)
     private String registroCRMV;
+    @OneToMany(mappedBy = "id")
+    @JsonManagedReference("veterinario_documentos")
+    private List<Documento> documentos;
 
     public Veterinario(Funcionario funcionario) {
         super();
