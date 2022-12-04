@@ -10,7 +10,10 @@ import br.vet.sidekick.poc.service.AgendamentoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class AgendamentoServiceImpl implements AgendamentoService {
@@ -39,4 +42,12 @@ public class AgendamentoServiceImpl implements AgendamentoService {
         return Optional.of(agendamentoRepository.save(agendamento));
     }
 
+    @Override
+    public List<LocalDateTime> getScheduleConsultsDates() {
+        List<Agendamento> agendamentos = this.agendamentoRepository.findByDataConsultaGreaterThan(LocalDateTime.now());
+
+        return agendamentos.stream()
+                .map(Agendamento::getDataConsulta)
+                .collect(Collectors.toList());
+    }
 }

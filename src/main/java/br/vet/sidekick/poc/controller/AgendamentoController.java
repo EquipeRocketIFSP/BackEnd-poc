@@ -6,7 +6,9 @@ import br.vet.sidekick.poc.service.AgendamentoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.net.URI;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,7 +26,7 @@ public class AgendamentoController extends BaseController {
     @PostMapping
     public ResponseEntity<Agendamento> registerAgendamento(
             @RequestBody Agendamento agendamento
-    ){
+    ) {
         Optional<Agendamento> referenceAgendamento = agendamentoService.create(agendamento);
         if (referenceAgendamento.isEmpty())
             return ResponseEntity.badRequest().build();
@@ -37,7 +39,7 @@ public class AgendamentoController extends BaseController {
     @GetMapping("/{id}")
     public ResponseEntity<Agendamento> getOne(
             @PathVariable Long id
-    ){
+    ) {
         Optional<Agendamento> referenceAgendamento = agendamentoRepository.findById(id);
         if (referenceAgendamento.isEmpty())
             return ResponseEntity.notFound().build();
@@ -46,10 +48,11 @@ public class AgendamentoController extends BaseController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Agendamento>> getAll(){
-        List<Agendamento> agendamentos = agendamentoRepository.findAll();
+    public ResponseEntity<List> getAll(@RequestParam(value = "consultas-marcadas", required = false) boolean consultasMarcadas) {
+        if (consultasMarcadas)
+            return ResponseEntity.ok(this.agendamentoService.getScheduleConsultsDates());
 
-        return ResponseEntity.ok(agendamentos);
+        return ResponseEntity.ok(agendamentoRepository.findAll());
     }
 
     //TODO: TESTAR e revisar se há uma forma melhor de fazer o put method / criar função de upddate no service
@@ -57,10 +60,10 @@ public class AgendamentoController extends BaseController {
     public ResponseEntity<Agendamento> updateAgendamento(
             @PathVariable Long id,
             @RequestBody Agendamento agendamento
-    ){
+    ) {
         Agendamento referenceAgendamento = agendamentoRepository.getReferenceById(id);
 
-        if (referenceAgendamento != null){
+        if (referenceAgendamento != null) {
             referenceAgendamento.setAnimal(agendamento.getAnimal());
             referenceAgendamento.setClinica(agendamento.getClinica());
             referenceAgendamento.setCriadoEm(agendamento.getCriadoEm());
@@ -78,8 +81,8 @@ public class AgendamentoController extends BaseController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Agendamento> deleteAgendamento(
             @PathVariable Long id
-    ){
-        if (agendamentoRepository.existsById(id)){
+    ) {
+        if (agendamentoRepository.existsById(id)) {
             agendamentoRepository.deleteById(id);
             return ResponseEntity.ok().build();
         }
