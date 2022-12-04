@@ -2,6 +2,7 @@ package br.vet.sidekick.poc.model;
 
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -19,22 +20,22 @@ public class Agendamento {
     @Column(name = "id", nullable = false)
     private Long id;
 
-//    @OneToMany(mappedBy = "id") Illegal attempt to map a non collection as a @OneToMany, @ManyToMany or @CollectionOfElements: br.vet.sidekick.poc.model.Agendamento.animal
-    @Column(name = "animal_id")
-    private Long animal;
+    @ManyToOne
+    @JoinColumn(name = "animal", nullable = false)
+    private Animal animal;
 
-    @Column(name = "clinica_id")
-    private Long clinica;
+    @ManyToOne
+    @JoinColumn(name = "clinica", nullable = false)
+    private Clinica clinica;
 
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "criado_em")
+    @Column(name = "criado_em", nullable = false)
     private Date criadoEm;
 
-    @Column(name = "data_consulta")
+    @Column(name = "data_consulta", nullable = false)
     private LocalDateTime dataConsulta;
 
-    @Column(name = "tipo_consulta")
+    @Column(name = "tipo_consulta", nullable = false)
     private String tipoConsulta;
-
 }

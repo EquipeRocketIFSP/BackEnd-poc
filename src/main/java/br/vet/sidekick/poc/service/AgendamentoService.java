@@ -10,7 +10,9 @@ import java.util.Optional;
 
 @Service
 public interface AgendamentoService {
-    Optional<Agendamento> create(Agendamento agendamento);
+    Agendamento create(CadastroAgendamentoDto agendamentoDto);
+
+    Agendamento getOne(Long id);
 
     List<LocalDateTime> getScheduleConsultsDates();
 }

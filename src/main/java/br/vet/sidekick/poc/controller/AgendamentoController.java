@@ -1,11 +1,14 @@
 package br.vet.sidekick.poc.controller;
 
+import br.vet.sidekick.poc.controller.dto.CadastroAgendamentoDto;
+import br.vet.sidekick.poc.controller.dto.RecuperarAgendamentoDto;
 import br.vet.sidekick.poc.model.Agendamento;
 import br.vet.sidekick.poc.repository.AgendamentoRepository;
 import br.vet.sidekick.poc.service.AgendamentoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.net.URI;
 import java.time.LocalDateTime;
@@ -24,27 +27,35 @@ public class AgendamentoController extends BaseController {
     private AgendamentoRepository agendamentoRepository;
 
     @PostMapping
-    public ResponseEntity<Agendamento> registerAgendamento(
-            @RequestBody Agendamento agendamento
-    ) {
-        Optional<Agendamento> referenceAgendamento = agendamentoService.create(agendamento);
-        if (referenceAgendamento.isEmpty())
-            return ResponseEntity.badRequest().build();
+    public ResponseEntity<Agendamento> registerAgendamento(@RequestBody CadastroAgendamentoDto agendamentoDto) {
+        try {
+            Agendamento agendamento = this.agendamentoService.create(agendamentoDto);
 
-        return ResponseEntity.created(
-                URI.create("/agendamento/" + agendamento.getId().toString())
-        ).build();
+            return ResponseEntity.created(URI.create("/agendamento/" + agendamento.getId())).build();
+        } catch (ResponseStatusException e) {
+            return ResponseEntity.status(e.getStatus()).build();
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Agendamento> getOne(
-            @PathVariable Long id
-    ) {
-        Optional<Agendamento> referenceAgendamento = agendamentoRepository.findById(id);
-        if (referenceAgendamento.isEmpty())
-            return ResponseEntity.notFound().build();
+    public ResponseEntity<RecuperarAgendamentoDto> getOne(@PathVariable Long id) {
+        try {
+            Agendamento agendamento = this.agendamentoService.getOne(id);
+            RecuperarAgendamentoDto agendamentoDto = new RecuperarAgendamentoDto(
+                    agendamento.getAnimal().getNome(),
+                    agendamento.getDataConsulta(),
+                    agendamento.getCriadoEm(),
+                    agendamento.getTipoConsulta()
+            );
 
-        return ResponseEntity.ok(agendamentoRepository.getReferenceById(id));
+            return ResponseEntity.ok(agendamentoDto);
+        } catch (ResponseStatusException e) {
+            return ResponseEntity.status(e.getStatus()).build();
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
     }
 
     @GetMapping
