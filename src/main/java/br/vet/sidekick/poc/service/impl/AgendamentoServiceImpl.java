@@ -1,7 +1,8 @@
 package br.vet.sidekick.poc.service.impl;
 
 import br.vet.sidekick.poc.controller.dto.CadastroAgendamentoDto;
-import br.vet.sidekick.poc.controller.dto.CadastroFuncionarioDto;
+import br.vet.sidekick.poc.exceptionResolver.exception.AgendamentoCreateException;
+import br.vet.sidekick.poc.exceptionResolver.exception.AgendamentoNotFound;
 import br.vet.sidekick.poc.model.Agendamento;
 import br.vet.sidekick.poc.model.Animal;
 import br.vet.sidekick.poc.model.Clinica;
@@ -9,10 +10,7 @@ import br.vet.sidekick.poc.repository.AgendamentoRepository;
 import br.vet.sidekick.poc.repository.AnimalRepository;
 import br.vet.sidekick.poc.repository.ClinicaRepository;
 import br.vet.sidekick.poc.service.AgendamentoService;
-import org.apache.http.HttpException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -38,12 +36,12 @@ public class AgendamentoServiceImpl implements AgendamentoService {
         Optional<Clinica> optClinica = this.clinicaRepository.findById(agendamentoDto.getClinica());
 
         if (optClinica.isEmpty())
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Clinica Not Found");
+            throw new AgendamentoCreateException("Clinica não encontrada.");
 
         Optional<Animal> optAnimal = this.animalRepository.findById(agendamentoDto.getAnimal());
 
         if (optAnimal.isEmpty())
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Animal Not Found");
+            throw new AgendamentoCreateException("Animal não encontrado.");
 
         Agendamento agendamento = new Agendamento();
 
@@ -60,7 +58,7 @@ public class AgendamentoServiceImpl implements AgendamentoService {
         Optional<Agendamento> optAgendamento = this.agendamentoRepository.findById(id);
 
         if (optAgendamento.isEmpty())
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+            throw new AgendamentoNotFound();
 
         return optAgendamento.get();
     }
