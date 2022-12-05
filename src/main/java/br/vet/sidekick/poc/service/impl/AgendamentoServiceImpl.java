@@ -32,7 +32,7 @@ public class AgendamentoServiceImpl implements AgendamentoService {
     private ClinicaRepository clinicaRepository;
 
     @Override
-    public Agendamento create(CadastroAgendamentoDto agendamentoDto) throws ResponseStatusException {
+    public Agendamento create(CadastroAgendamentoDto agendamentoDto) throws AgendamentoCreateException {
         Optional<Clinica> optClinica = this.clinicaRepository.findById(agendamentoDto.getClinica());
 
         if (optClinica.isEmpty())
@@ -43,10 +43,16 @@ public class AgendamentoServiceImpl implements AgendamentoService {
         if (optAnimal.isEmpty())
             throw new AgendamentoCreateException("Animal não encontrado.");
 
+        LocalDateTime data = LocalDateTime.parse(agendamentoDto.getDataConsulta().replace("Z", ""));
+        Optional<Agendamento> optAgendamento = this.agendamentoRepository.findByAnimalAndDataConsulta(optAnimal.get(), data);
+
+        if (optAgendamento.isPresent())
+            throw new AgendamentoCreateException("Esse animal já possui um agendamento para esse horário.");
+
         Agendamento agendamento = new Agendamento();
 
         agendamento.setTipoConsulta(agendamentoDto.getTipoConsulta());
-        agendamento.setDataConsulta(LocalDateTime.parse(agendamentoDto.getDataConsulta().replace("Z", "")));
+        agendamento.setDataConsulta(data);
         agendamento.setClinica(optClinica.get());
         agendamento.setAnimal(optAnimal.get());
 
@@ -54,7 +60,7 @@ public class AgendamentoServiceImpl implements AgendamentoService {
     }
 
     @Override
-    public Agendamento getOne(Long id) throws ResponseStatusException {
+    public Agendamento getOne(Long id) throws AgendamentoNotFound {
         Optional<Agendamento> optAgendamento = this.agendamentoRepository.findById(id);
 
         if (optAgendamento.isEmpty())
