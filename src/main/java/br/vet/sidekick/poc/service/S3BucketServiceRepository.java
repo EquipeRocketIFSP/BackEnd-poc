@@ -27,8 +27,10 @@ public class S3BucketServiceRepository implements PdfRepository {
         String bucketName = getConventionedBucketName(cnpj);
 //        log.info("data for fileName search: " + keyName);
         byte[] arr = null;
-        try {
+        if(!s3.doesBucketExistV2(bucketName)){
             s3.createBucket(bucketName);
+        }
+        try {
             arr = s3.getObject(bucketName, keyName)
                     .getObjectContent()
                     .readAllBytes();

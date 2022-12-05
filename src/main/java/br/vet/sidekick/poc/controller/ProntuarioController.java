@@ -3,7 +3,6 @@ package br.vet.sidekick.poc.controller;
 import br.vet.sidekick.poc.controller.dto.ListagemProntuarioDto;
 import br.vet.sidekick.poc.controller.dto.ProntuarioDto;
 import br.vet.sidekick.poc.controller.dto.RecuperarProntuarioDto;
-import br.vet.sidekick.poc.exceptionResolver.exception.ProntuarioAlreadyExistsException;
 import br.vet.sidekick.poc.exceptionResolver.exception.ProntuarioNotFoundException;
 import br.vet.sidekick.poc.model.Animal;
 import br.vet.sidekick.poc.model.Clinica;
@@ -105,23 +104,24 @@ public class ProntuarioController extends BaseController {
                 .build();
     }
 
-    @GetMapping("/pdf/{id}")
-    public ResponseEntity<byte[]> getProntuarioPdf(
-            @RequestHeader(HttpHeaders.CONTENT_TYPE) String contentType,
-            @PathVariable String codigo
-    ) throws IOException {
-        if (!MediaType.APPLICATION_PDF_VALUE.equals(contentType))
-            return ResponseEntity.badRequest()
-                    .header("reason", "Media type not allowed")
-                    .build();
-        Prontuario prontuario = getProntuarioLatestVersion(codigo);
-        return prontuario != null
-                ? ResponseEntity.ok()
-                    .contentType(MediaType.valueOf(MediaType.APPLICATION_PDF_VALUE))
-                    .body(pdfService.retrieveFromRepository(prontuario))
-                : ResponseEntity.notFound().build();
+//@GetMapping("/pdf/{codigo}")
+@GetMapping("/pdf/{id}")
+public ResponseEntity<byte[]> getProntuarioPdf(
+        @RequestHeader(HttpHeaders.CONTENT_TYPE) String contentType,
+//            @PathVariable String codigo
+        @PathVariable Long id
+) throws IOException {
+    if (!MediaType.APPLICATION_PDF_VALUE.equals(contentType))
+        return ResponseEntity.badRequest()
+                .header("reason", "Media type not allowed")
+                .build();
+//        Prontuario prontuario = getProntuarioLatestVersion(codigo);
+    Optional<Prontuario> prontuario = prontuarioService.findById(id);
+    return prontuario.isPresent()
+            ? ResponseEntity.ok().contentType(MediaType.APPLICATION_PDF).body(pdfService.retrieveFromRepository(prontuario.get()))
+            : ResponseEntity.notFound().build();
 
-    }
+}
 
     @GetMapping
     public ResponseEntity<List<RecuperarProntuarioDto>> getAll() {

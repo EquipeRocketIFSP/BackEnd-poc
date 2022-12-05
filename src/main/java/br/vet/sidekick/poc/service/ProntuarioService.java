@@ -1,7 +1,6 @@
 
 package br.vet.sidekick.poc.service;
 
-import br.vet.sidekick.poc.model.Clinica;
 import br.vet.sidekick.poc.model.Prontuario;
 import org.springframework.stereotype.Service;
 
@@ -18,4 +17,6 @@ public interface ProntuarioService {
     Optional<String> findByCertvetProntuario(String certvetCode);
 
     Optional<List<Prontuario>> getByCodigo(String codigo);
+
+    Optional<Prontuario> findById(Long id);
 }

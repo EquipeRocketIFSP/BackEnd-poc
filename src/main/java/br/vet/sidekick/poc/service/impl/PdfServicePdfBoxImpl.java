@@ -165,7 +165,7 @@ public class PdfServicePdfBoxImpl implements PdfService {
     }
 
     public String getProntuarioName(Prontuario prontuario){
-        return "prontuario_"+prontuario.getCodigo()+".pdf";
+        return prontuario.getCodigo() + ".pdf";
     }
     @Override
     public byte[] writeProntuario(Prontuario prontuario) throws Exception {

@@ -105,4 +105,9 @@ public class ProntuarioServiceImpl implements ProntuarioService {
     public Optional<List<Prontuario>> getByCodigo(String codigo) {
         return prontuarioRepository.findAllByCodigo(codigo);
     }
+
+    @Override
+    public Optional<Prontuario> findById(Long id) {
+        return prontuarioRepository.findById(id);
+    }
 }
