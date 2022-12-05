@@ -1,13 +1,10 @@
 package br.vet.sidekick.poc.service.impl;
 
-import br.vet.sidekick.poc.model.Documento;
-import br.vet.sidekick.poc.model.Prontuario;
-import br.vet.sidekick.poc.repository.CirurgiaRepository;
-import br.vet.sidekick.poc.repository.DocumentoRepository;
-import br.vet.sidekick.poc.repository.ProntuarioRepository;
-import br.vet.sidekick.poc.repository.TutorRepository;
+import br.vet.sidekick.poc.model.*;
+import br.vet.sidekick.poc.repository.*;
 import br.vet.sidekick.poc.service.PdfService;
 import br.vet.sidekick.poc.service.ProntuarioService;
+import br.vet.sidekick.poc.repository.impl.S3BucketServiceRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,34 +34,55 @@ public class ProntuarioServiceImpl implements ProntuarioService {
     @Autowired
     private PdfService pdfService;
 
+    @Autowired
+    private TipoDocumentoRepository tipoDocumentoRepository;
+
+    @Autowired
+    private ClinicaRepository clinicaRepository;
+
+    @Autowired
+    private AnimalRepository animalRepository;
+
     @Override
     public Prontuario save(Prontuario prontuario) {
+        log.info("prontuario: " + prontuario);
         Date now = new Date();
+        String codigo = Prontuario.createCodigo(LocalDateTime.now());
 //        return prontuarioRepository.save(prontuario);
-        log.debug("Iniciando persistência do prontuário");
+        prontuario.setCodigo(codigo);
+        Optional<Clinica> clinica = clinicaRepository.findById(prontuario.getClinica().getId());
+        prontuario.setClinica(clinica.get());
+
+        Optional<Tutor> tutor = tutorRepository.findByCpf(prontuario.getTutor().getCpf());
+        prontuario.setTutor(tutor.get());
+
+        List<Animal> animais = animalRepository.findAllByTutores_idAndNome(tutor.get().getId(), prontuario.getAnimal().getNome());
+
+        Optional<Animal> animal = animalRepository.findByTutores_idAndNome(tutor.get().getId(), prontuario.getAnimal().getNome());
+        prontuario.setAnimal(animal.get());
+
+        log.info("Iniciando persistência do prontuário");
         Documento doc = Documento.builder()
-                .name(Prontuario.createCodigo(LocalDateTime.now()))
-                .tipoDocumento("Prontuario")
+                .name(codigo)
+                .tipoDocumento(tipoDocumentoRepository.findByDescricao("Prontuario"))
                 .versao(1)
                 .criadoEm(now)
                 .veterinario(prontuario.getVeterinario())
-                .clinica(prontuario.getClinica()
-                        .getId()
-                )
+                .clinica(clinica.get())
+                .caminhoArquivo("/" + S3BucketServiceRepository.getConventionedBucketName(prontuario.getClinica().getCnpj()) + "/" + prontuario.getCodigo()+".pdf")
                 .build();
-        log.debug("doc criado: " + doc);
+//        log.info("doc a ser persistido: " + doc);
         Documento tempDoc = documentoRepository.save(doc);
-        log.debug("doc persistido");
-        var pront = prontuario.setDocumentoDetails(tempDoc);
-        log.debug("Prontuario atualizado");
-        Prontuario p = prontuarioRepository.save(pront);
-        log.debug("prontuario persistido");
+        log.info("doc persistido");
+        Prontuario p = prontuario.setDocumentoDetails(tempDoc);
+        log.info("Prontuario atualizado");
+        p = prontuarioRepository.save(p);
+        log.info("prontuario persistido");
         documentoRepository.save(tempDoc.setProntuario(p));
-
-        log.debug("documento persistido");
+        log.info("documento persistido");
         try {
             pdfService.writeProntuario(p);
-            log.debug("Pdf de prontuário escrito e persistido");
+            log.info("Processo de gravação de PDF finalizado");
         } catch (SQLException e){
             log.error("\"Erro de validação SQL do ID da Clínica\": " + e.getMessage());
         } catch (Exception e) {

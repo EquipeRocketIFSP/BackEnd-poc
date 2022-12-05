@@ -26,11 +26,14 @@ public class Documento {
     @Column(nullable = false)
     private String caminhoArquivo;
 
-    @Column(name = "clinica_id", nullable = false)
-    private Long clinica;
+    @ManyToOne
+    @JsonManagedReference("clinica_documentos")
+    private Clinica clinica;
 
-    @Column(nullable = false)
-    private String tipoDocumento;
+    @ManyToOne
+    @JsonManagedReference("prontuario_tipoDocumento")
+    @JoinColumn(nullable = false)
+    private TipoDocumento tipoDocumento;
 
     private Date criadoEm;
     private String name;

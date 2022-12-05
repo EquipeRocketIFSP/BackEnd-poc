@@ -17,8 +17,10 @@ import java.util.List;
 public class Veterinario extends Funcionario {
     @Column(name = "registro_crmv", nullable = false)
     private String registroCRMV;
+
     @OneToMany(mappedBy = "id")
     @JsonManagedReference("veterinario_documentos")
+    @ToString.Exclude
     private List<Documento> documentos;
 
     public Veterinario(Funcionario funcionario) {

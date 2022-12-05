@@ -73,7 +73,7 @@ public class ProntuarioController extends BaseController {
     public ResponseEntity<Prontuario> create(
             @RequestBody ProntuarioDto prontuarioDto
     ) {
-        log.debug("Iniciando cadastro prontuario");
+        log.info("Iniciando cadastro prontuario");
 // TODO: Verificar a implementação de validação de duplicidade de prontuários
 //        Optional<String> certvetCode = certvetCodingService.checkExistingProntuario(prontuarioDto.getCertvetCode());
 //        if (certvetCode.isPresent()){
@@ -81,14 +81,14 @@ public class ProntuarioController extends BaseController {
 //        }
 
         Prontuario prontuario = prontuarioDto.convert();
-        log.debug("Prontuario convertido");
+        log.info("Prontuario convertido");
 
         Optional<Clinica> responseClinica = this.clinicaRepository.findById(prontuarioDto.getClinica());
         Optional<Veterinario> responseVeterinario = this.veterinarioRepository.findById(prontuarioDto.getVeterinario());
         Optional<Animal> responseAnimal = this.animalRepository.findById(prontuarioDto.getAnimal());
 
         boolean willThrow = responseClinica.isEmpty() || responseVeterinario.isEmpty() || responseAnimal.isEmpty();
-        log.debug("Composições identificadas. " + (willThrow ? "Seguindo Bad Request" : "Persistindo"));
+        log.info("Composições processadas. " + (willThrow ? "Seguindo Bad Request" : "Persistindo"));
 
         if (willThrow)
             return ResponseEntity.badRequest().build();

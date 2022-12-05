@@ -27,6 +27,7 @@ import java.nio.file.Path;
 import java.sql.SQLException;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 /**
@@ -164,11 +165,11 @@ public class PdfServicePdfBoxImpl implements PdfService {
     }
 
     public String getProntuarioName(Prontuario prontuario){
-        return "prontuario_"+prontuario.getId()+".pdf";
+        return "prontuario_"+prontuario.getCodigo()+".pdf";
     }
     @Override
     public byte[] writeProntuario(Prontuario prontuario) throws Exception {
-        log.info("Iniciando escrita do pdf do prontuário");
+        log.info("Iniciando escrita do pdf do prontuário: " + prontuario.getCodigo() + ", id: " + prontuario.getId());
         // TODO: Passar essas variáveis para arquivo de configuração
         final String title = "Prontuário Clínico veterinário";
         final String vetQualificacaoL1 = prontuario.getVeterinario().getNome();
@@ -177,6 +178,7 @@ public class PdfServicePdfBoxImpl implements PdfService {
         final String clinicaQualificacao1 = prontuario.getClinica()
                 .getTelefone();
 //                .getTelefones().toString();
+        final String codigo = "Prontuário: " + prontuario.getCodigo();
 
 //        final String fileName = "res/" + getProntuarioName(prontuario);
         final String fileName = prontuario.getCodigo() + ".pdf";
@@ -194,15 +196,14 @@ public class PdfServicePdfBoxImpl implements PdfService {
                 DataTable t = new DataTable(table, page);
                 Row<PDPage> headerRow = table.createRow(15f);
                 Map<Float, String> map = new LinkedHashMap<>();
-                map.put(70f, title);
+                map.put(65f, title);
 //                map.put(30f, "Prontuário: " + String.valueOf(prontuario.getId())); //TODO: Ajustar para capturar a numeração do prontuário
-                map.put(30f, "Prontuário: numeroMock");
+                map.put(35f, codigo);
                 map.forEach(
                         (width, value) -> headerRow.createCell(width, value).setFont(PDType1Font.HELVETICA_BOLD)
                 );
 
                 table.addHeaderRow(headerRow);
-
                 table.createRow(15f).createCell(100f, "");
 
                 Row<PDPage> row1 = table.createRow(12);
@@ -217,7 +218,7 @@ public class PdfServicePdfBoxImpl implements PdfService {
                 createCellDefaulFont(row3, 100f, clinicaQualificacao0);
 
                 Row<PDPage> row3_0 = table.createRow(12);
-                createCellDefaulFont(row3_0,25f, "Telefones");
+                createCellDefaulFont(row3_0,25f, "Telefone");
                 createCellDefaulFont(row3_0,75f, clinicaQualificacao1);
 
                 table.createRow(15f).createCell(100f, "");
@@ -225,12 +226,12 @@ public class PdfServicePdfBoxImpl implements PdfService {
                 Row<PDPage> row4 = table.createRow(12);
                 createCellDefaulFont(row4, 25f, "Animal");
 //              row4.createCell(70, prontuario.getAnimal().getNome()       ); //TODO: Quando a classe Animal estiver minimamente integrada com o prontuário, passar a string correta
-                createCellDefaulFont(row4, 75f, "prontuario.getAnimal().getNome()");
+                createCellDefaulFont(row4, 75f, prontuario.getAnimal().getNome());
 
                 Row<PDPage> row7 = table.createRow(12);
                 Map.of(
                         25f, "Raça",
-                        75f, "prontuario.getAnimal().getRaca()"
+                        75f, prontuario.getAnimal().getRaca()
                 ).forEach(
                         (width, value) -> createCellDefaulFont(row7, width, value)
                 );
@@ -242,10 +243,11 @@ public class PdfServicePdfBoxImpl implements PdfService {
                                         "Idade",
                                         "Microchip"
                                 ),
-                                List.of("prontuario.getAnimal().getEspecie()",
-                                        "prontuario.getAnimal().getSexo()",
-                                        "String.valueOf(prontuario.getAnimal().getIdade())",
-                                        "prontuario.getAnimal().getOutros()"
+                                List.of(
+                                        prontuario.getAnimal().getEspecie(),
+                                        prontuario.getAnimal().getSexo(),
+                                        String.valueOf(prontuario.getAnimal().getIdade()),
+                                        prontuario.getAnimal().getFormaIdentificacao()
                                 )
                         ),
                         DataTable.NOHEADER
@@ -274,22 +276,22 @@ public class PdfServicePdfBoxImpl implements PdfService {
                 Row<PDPage> row8 = table.createRow(12); // TODO: Alterar para dados reais
                 Map.of(
                         10f, "Tutor",
-                        50f, "prontuario.getTutor().getNome()"
+                        50f, prontuario.getTutor().getNome()
                 ).forEach(
                         (width, value) -> createCellDefaulFont(row8, width, value)
                 );
                 Map.of(
                         10f, "CPF",
-                        30f, "prontuario.getTutor().getCpf()"
+                        30f, prontuario.getTutor().getCpf()
                 ).forEach(
                         (width, value) -> createCellDefaulFont(row8, width, value)
                 );
 
 
-                Row<PDPage> row9 = table.createRow(12); // TODO: Alterar para dados reais
+                Row<PDPage> row9 = table.createRow(12);
                 map = new LinkedHashMap<>();
                 map.put(10f, "Endereço");
-                map.put(50f, "prontuario.getTutor().getNome()");
+                map.put(50f, prontuario.getTutor().getLogradouro() + ", " + prontuario.getTutor().getNumero());
                 map.forEach(
                         (width, value) -> createCellDefaulFont(row9, width, value)
                 );
@@ -302,7 +304,7 @@ public class PdfServicePdfBoxImpl implements PdfService {
 //                                .collect(Collectors.toList()
 //                                ).get(0)
 //                                .getNumeracao() // TODO: Adicinar atributo com o telefone principal
-                        30f, "prontuario.getTutor().getTelefones()"
+                        30f, prontuario.getTutor().getTelefone()
                 );
                 map.forEach(
                         (width, value) -> createCellDefaulFont(row9, width, value)
@@ -315,14 +317,14 @@ public class PdfServicePdfBoxImpl implements PdfService {
 //                var date = prontuario.getDataAtendimento();
                 map = new LinkedHashMap<>();
                 map.put(10f, "Data");
-                map.put(40f, new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
-//                map.put(40f, new SimpleDateFormat("dd/MM/yyyy").format(date)); // TODO: Descomentar essa string para trazer dados do prontuário
+//                map.put(40f, new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
+                map.put(40f, prontuario.getDataAtendimento().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))); // TODO: Descomentar essa string para trazer dados do prontuário
                 map.forEach(
                         (width, value) -> createCellDefaulFont(row10, width, value)
                 );
                 map.put(10f, "Horário");
-                map.put(40f, new SimpleDateFormat("hh:mm:ss").format(new Date()));
-//                map.put(40f, new SimpleDateFormat("hh:mm:ss").format(date)); // TODO: Descomentar essa string para trazer dados do prontuário
+//                map.put(40f, new SimpleDateFormat("hh:mm:ss").format(new Date()));
+                map.put(40f, prontuario.getDataAtendimento().format(DateTimeFormatter.ofPattern("hh:mm:ss"))); // TODO: Descomentar essa string para trazer dados do prontuário
                 map.forEach(
                         (width, value) -> createCellDefaulFont(row10, width, value)
                 );
@@ -362,13 +364,13 @@ public class PdfServicePdfBoxImpl implements PdfService {
             }
             log.info("Adicionando proteção ao PDF");
             try {
-                var policy = getProtectionPolicy(defaultPass, getTutorPass(prontuario));
+                ProtectionPolicy policy = getProtectionPolicy(defaultPass, getTutorPass(prontuario));
                 document.protect(policy);
-            }catch (Exception e){
+            } catch (Exception e){
                 e.printStackTrace();
             }
             document.save(fileName);
-            log.info("PDF do prontuário salvo!");
+            log.info("PDF do prontuário criado");
         } catch (IllegalArgumentException e){
             writeException(e);
         }

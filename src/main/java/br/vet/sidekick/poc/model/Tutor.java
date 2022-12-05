@@ -21,9 +21,12 @@ public class Tutor {
 
     @ManyToMany(mappedBy = "tutores")
     @JsonManagedReference("tutor_animal")
+    @ToString.Exclude
     private List<Animal> animais;
 
     @OneToMany(mappedBy = "id")
+    @JsonManagedReference("tutor_prontuarios")
+    @ToString.Exclude
     private List<Prontuario> prontuarios;
 
     private String bairro;

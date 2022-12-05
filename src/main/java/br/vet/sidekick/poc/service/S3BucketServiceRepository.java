@@ -28,10 +28,14 @@ public class S3BucketServiceRepository implements PdfRepository {
 //        log.info("data for fileName search: " + keyName);
         byte[] arr = null;
         try {
+            s3.createBucket(bucketName);
             arr = s3.getObject(bucketName, keyName)
                     .getObjectContent()
                     .readAllBytes();
         } catch (AmazonS3Exception e) {
+//            if(e.getLocalizedMessage().contains("NoSuchBucket")){
+//                s3.createBucket(bucketName);
+//            }
             log.error(e.getLocalizedMessage());
         }
         if (arr == null) {
@@ -44,7 +48,7 @@ public class S3BucketServiceRepository implements PdfRepository {
     @Override
     public void putObject(String cnpj, String keyName, File storedFile) {
         String bucketName = getConventionedBucketName(cnpj);
-        log.info("keyName: " + keyName);
+        log.info("bucketName:" + bucketName + ", keyName: " + keyName);
         try {
             if (retrieveObject(bucketName, keyName) != null) {
                 log.info("Arquivo identificado: " + keyName + ". Não será gravado");
@@ -54,6 +58,7 @@ public class S3BucketServiceRepository implements PdfRepository {
             log.warn("Arquivo não identificado. Gravando...");
         }
         try {
+            log.info("Persistindo o arquivo pdf");
             s3.putObject(bucketName, keyName, storedFile);
         } catch (AmazonServiceException e) {
             log.error(e.getErrorMessage());
@@ -61,7 +66,7 @@ public class S3BucketServiceRepository implements PdfRepository {
         log.info(SUCESSFULLY_SAVED + keyName);
     }
 
-    private static String getConventionedBucketName(String cnpj) {
+    public static String getConventionedBucketName(String cnpj) {
         return cnpj.replace("/", ".").toLowerCase();
     }
 

@@ -1,12 +1,10 @@
 package br.vet.sidekick.poc.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
@@ -26,19 +24,23 @@ public class Prontuario {
     private Long id;
 
     @OneToMany
-    @JsonManagedReference("prontuario_documentos")
+    @JsonBackReference("prontuario_documentos")
+    @ToString.Exclude
     private List<Documento> documentos;
 
     @ManyToOne
+    @JsonBackReference("tutor_prontuarios")
     @JoinColumn(name = "tutor_id", nullable = false)
     private Tutor tutor;
 
     @ManyToOne
+    @JsonBackReference("prontuario_animais")
     @JoinColumn(name = "animal_id", nullable = false)
     private Animal animal;
 
     @ManyToOne
-    @JoinColumn(name = "clinica_id" ,nullable = false)
+    @JsonBackReference("clinica_prontuarios")
+    @JoinColumn(name = "clinica_id", nullable = false)
     private Clinica clinica;
 
     @CreationTimestamp
@@ -54,7 +56,7 @@ public class Prontuario {
     @JoinColumn(nullable = false)
     private Veterinario veterinario;
 
-    private LocalDate dataAtendimento;
+    private LocalDateTime dataAtendimento;
     private String prescricoes;
     private String diagnostico;
     private String observacoes;
@@ -70,12 +72,12 @@ public class Prontuario {
         return this;
     }
 
-    private Prontuario setCodigo(String codigo) {
+    public Prontuario setCodigo(String codigo) {
         this.codigo = codigo;
         return this;
     }
 
-    private Prontuario setVersao(int versao) {
+    public Prontuario setVersao(int versao) {
         this.versao = versao;
         return this;
     }
@@ -109,6 +111,11 @@ public class Prontuario {
 
     public Prontuario setAnimal(Animal animal) {
         this.animal = animal;
+        return this;
+    }
+
+    public Prontuario setTutor(Tutor tutor) {
+        this.tutor = tutor;
         return this;
     }
 }
