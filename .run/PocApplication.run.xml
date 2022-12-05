@@ -1,0 +1,25 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="PocApplication" type="Application" factoryName="Application" nameIsGenerated="true">
+    <option name="ALTERNATIVE_JRE_PATH" value="corretto-17" />
+    <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+    <envs>
+      <env name="ARGS" value="-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5000 -Xmx1G -Xms128m -XX:MaxMetaspaceSize=128m" />
+      <env name="DEFAULT_PDF_PASS" value="8$6E9tj9Z0ip4OLN" />
+      <env name="PROFILE" value="local" />
+      <env name="DB_PASSWORD" value="1234" />
+      <env name="DB_USER" value="root" />
+      <env name="SPRING_DATASOURCE_URL" value="jdbc:mysql://localhost:3306/poc?useUnicode=true&amp;characterEncoding=utf8&amp;useSSL=true&amp;allowPublicKeyRetrieval=true&amp;useTimezone=true&amp;serverTimezone=UTC" />
+    </envs>
+    <option name="MAIN_CLASS_NAME" value="br.vet.sidekick.poc.PocApplication" />
+    <module name="BackEnd-poc" />
+    <shortenClasspath name="ARGS_FILE" />
+    <extension name="software.aws.toolkits.jetbrains.core.execution.JavaAwsConnectionExtension">
+      <option name="credential" />
+      <option name="region" />
+      <option name="useCurrentConnection" value="false" />
+    </extension>
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

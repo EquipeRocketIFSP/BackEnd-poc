@@ -20,6 +20,7 @@ public class CadastroAnimalDto {
     private List<Long> tutores;
     private String pai;
     private String mae;
+    private String formaIdentificacao;
 
     public static CadastroAnimalDto getMock(){
         return CadastroAnimalDto.builder()

@@ -1,15 +1,10 @@
 package br.vet.sidekick.poc.controller.dto;
 
 import br.vet.sidekick.poc.model.*;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.ToString;
 
-import javax.persistence.Column;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @Getter
 @ToString
@@ -17,11 +12,12 @@ public class ProntuarioDto {
     private Long clinica;
     private Long veterinario;
     private Long animal;
+    private String tutor;
     private String diagnostico;
     private String observacoes;
     private String medicamento;
     private String medida;
-    private String tipoCirugia;
+    private String tipoCirurgia;
     private String asa;
     private String exames;
     private String procedimento;
@@ -36,6 +32,12 @@ public class ProntuarioDto {
                 .medida(this.medida)
                 .prescricoes(this.prescricoes)
                 .quantidade(this.quantidade)
+                .tutor(Tutor.builder().cpf(tutor).build())
+                .dataAtendimento(LocalDateTime.now())
                 .build();
     }
+
+//    public String getCertvetCode() {
+//        return certvetCode;
+//    }
 }

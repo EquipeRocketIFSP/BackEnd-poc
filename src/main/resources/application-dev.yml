@@ -54,7 +54,7 @@ app:
 #        expiration: "10000"
         expiration: "864000000"
     tomcat:
-        uri-encoding=UTF-8:
+        uri-encoding: UTF-8
     servlet:
         encoding:
             charset: UTF-8
@@ -62,6 +62,9 @@ app:
             force: true
     temp:
         path: "/opt/pdf"
+    default:
+        pdf:
+            pass: ${DEFAULT_PDF_PASS}
 springdoc:
     swagger-ui:
         path: "/api/swagger-ui.html"

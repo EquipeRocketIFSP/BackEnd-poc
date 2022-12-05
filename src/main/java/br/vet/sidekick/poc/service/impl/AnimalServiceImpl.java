@@ -5,6 +5,7 @@ import br.vet.sidekick.poc.model.Animal;
 import br.vet.sidekick.poc.repository.AnimalRepository;
 import br.vet.sidekick.poc.repository.TutorRepository;
 import br.vet.sidekick.poc.service.AnimalService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class AnimalServiceImpl implements AnimalService {
 
     @Autowired
@@ -32,6 +34,7 @@ public class AnimalServiceImpl implements AnimalService {
     }
 
     private Animal convert(CadastroAnimalDto animalDto, Long clinicaId) {
+        log.info("Animal: " + animalDto);
         return Animal.builder()
                 .nome(animalDto.getNome())
                 .idade(animalDto.getIdade())
@@ -40,6 +43,7 @@ public class AnimalServiceImpl implements AnimalService {
                 .especie(animalDto.getEspecie())
                 .pelagem(animalDto.getPelagem())
                 .clinica(clinicaId)
+                .formaIdentificacao(animalDto.getFormaIdentificacao() == null ? animalDto.getFormaIdentificacao() : "Sem dados")
                 .tutores(
                         animalDto.getTutores().stream()
                                 .map(t -> tutorRepository.findById(t).get())

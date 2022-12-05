@@ -17,4 +17,6 @@ public interface TutorRepository extends JpaRepository<Tutor, Long> {
     List<Tutor> findAllByClinica(Long clinicaId);
 
     Optional<Tutor> findByIdAndClinica(Long id, Long clinicaFromFuncionarioAuthenticated);
+
+    Optional<Tutor> findByCpf(String cpf);
 }

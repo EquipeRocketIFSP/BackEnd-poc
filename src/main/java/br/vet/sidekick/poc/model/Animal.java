@@ -19,13 +19,12 @@ import java.util.List;
 public class Animal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Long id;
 
     @Column(name = "clinica_id", nullable = false)
     private Long clinica;
 
-    @Column(name = "especie", nullable = false)
+    @Column(nullable = false)
     private String especie;
 
     @OneToMany(mappedBy = "id")
@@ -66,7 +65,14 @@ public class Animal {
     @ManyToMany
 //    @Column(name = "tutor_id")
     @JsonBackReference("tutor_animal")
-    @JoinTable(name = "tutor_animal", joinColumns = {@JoinColumn(name = "animal_id")}, inverseJoinColumns = {@JoinColumn(name = "tutor_id")})
+    @JoinTable(name = "tutor_animal",
+            joinColumns = {@JoinColumn(name = "animal_id")},
+            inverseJoinColumns = {@JoinColumn(name = "tutor_id")}
+    )
     private List<Tutor> tutores;
+
+    @OneToMany(mappedBy = "id")
+    @JsonManagedReference("prontuario_animais")
+    private List<Prontuario> prontuarios;
 
 }

@@ -1,5 +1,6 @@
 package br.vet.sidekick.poc.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 import org.hibernate.validator.constraints.br.CNPJ;
 import org.hibernate.validator.constraints.br.CPF;
@@ -19,57 +20,50 @@ import java.util.List;
 public class Clinica {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
     private Long id;
 
-    @OneToMany(mappedBy = "clinica")
+    @OneToMany(mappedBy = "id")
+    @JsonBackReference("clinica_documentos")
+    @ToString.Exclude
+    private List<Documento> documentos;
+
+    @OneToMany(mappedBy = "id")
+    @ToString.Exclude
     private List<Animal> animais;
 
-    @Column(name = "bairro")
-    private String bairro;
-
-    @Column(name = "celular")
-    private String celular;
-
-    @Column(name = "cep", nullable = false)
+    @Column(nullable = false)
     private String cep;
 
-    @Column(name = "cidade", nullable = false)
+    @Column(nullable = false)
     private String cidade;
 
-    @NotBlank(message = "Informar o Código de Atividade do CNAE")
-    @Column(name = "cnae")
-    private String cnae;
-
-    @CNPJ
-    @Column(name = "cnpj", nullable = false, unique = true)
-    private String cnpj;
-
-    @Email
-    @Column(name = "email", nullable = false, unique = true)
-    private String email;
-
-    @Column(name = "estado", nullable = false)
+    @Column(nullable = false)
     private String estado;
 
-    @Column(name = "logradouro", nullable = false)
+    @Column(nullable = false)
     private String logradouro;
 
-    @Column(name = "numero", nullable = false)
+    @Column(nullable = false)
     private String numero;
-
-    @Column(name = "nome_fantasia")
-    private String nomeFantasia;
-
-    @Column(name = "razao_social")
-    private String razaoSocial;
-
-    @Column(name = "responsavel_tecnico")
-    private String responsavelTecnico;
-
-    @Column(name = "telefone")
-    private String telefone;
 
     @CPF
     private String donoCpf;
+
+    @NotBlank(message = "Informar o Código de Atividade do CNAE")
+    private String cnae;
+
+    @CNPJ
+    @Column(nullable = false, unique = true)
+    private String cnpj;
+
+    @Email
+    @Column(nullable = false, unique = true)
+    private String email;
+
+    private String bairro;
+    private String celular;
+    private String nomeFantasia;
+    private String razaoSocial;
+    private String responsavelTecnico;
+    private String telefone;
 }

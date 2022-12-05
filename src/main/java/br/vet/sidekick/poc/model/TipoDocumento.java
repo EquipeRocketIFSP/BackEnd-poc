@@ -1,7 +1,9 @@
 package br.vet.sidekick.poc.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 import javax.persistence.*;
+import java.util.List;
 
 @Builder
 @AllArgsConstructor
@@ -12,10 +14,11 @@ import javax.persistence.*;
 public class TipoDocumento {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_tipo_documento", nullable = false)
-    private Long id;
-
-    @Column(name = "descricao")
+    private Long idTipoDocumento;
     private String descricao;
 
+    @OneToMany(mappedBy = "id")
+    @JsonBackReference("prontuario_tipoDocumento")
+    @ToString.Exclude
+    private List<Documento> documento;
 }

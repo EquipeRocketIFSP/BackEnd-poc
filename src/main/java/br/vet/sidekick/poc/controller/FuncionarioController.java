@@ -12,6 +12,7 @@ import br.vet.sidekick.poc.repository.FuncionarioRepository;
 import br.vet.sidekick.poc.repository.VeterinarioRepository;
 import br.vet.sidekick.poc.service.FuncionarioService;
 import br.vet.sidekick.poc.service.VeterinarioService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +28,7 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 @CrossOrigin
 @RestController
 @RequestMapping("/funcionario")
+@Slf4j
 public class FuncionarioController extends BaseController {
 
     @Autowired
@@ -47,21 +49,28 @@ public class FuncionarioController extends BaseController {
     private ClinicaRepository clinicaService;
 
     @PostMapping
-    public ResponseEntity<Funcionario> registerFuncionario(@RequestBody CadastroFuncionarioDto funcionarioDto) {
+    public ResponseEntity<Funcionario> registerFuncionario(
+            @RequestHeader(AUTHORIZATION)  String auth,
+            @RequestBody    CadastroFuncionarioDto funcionarioDto
+    ) {
+        log.debug("Iniciando cadastro Funcionario");
         try {
-            Optional<Clinica> clinica = this.clinicaService.findById(funcionarioDto.getClinica());
+            log.debug("Busca de clínica");
+            Optional<Clinica> clinica = this.clinicaService.findById(getClinicaFromRequester(auth));
 
             if (clinica.isEmpty())
                 return ResponseEntity.badRequest().build();
-
+            log.debug("Clinica identificada. Convertendo Funcionário");
             Funcionario funcionario = funcionarioDto.convert();
             funcionario.setClinica(clinica.get());
 
-            if (funcionarioDto.getCrmv().length() != 0) {
+            if (funcionarioDto.getCrmv() != null) {
+                log.debug("Funcionário é um veterinário");
                 Veterinario veterinario = new Veterinario(funcionario);
                 veterinario.setRegistroCRMV(funcionarioDto.getCrmv());
-
+                log.debug("Veterinario será persistido");
                 this.veterinarioService.save(veterinario);
+                log.debug("Veterinário persistido");
 
                 return ResponseEntity.created(URI.create("/funcionario/" + String.valueOf(funcionario.getId()))).build();
             }
@@ -70,7 +79,7 @@ public class FuncionarioController extends BaseController {
 
             return ResponseEntity.created(URI.create("/funcionario/" + String.valueOf(funcionario.getId()))).build();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            log.error(e.getMessage());
             return ResponseEntity.badRequest().build();
         }
     }
