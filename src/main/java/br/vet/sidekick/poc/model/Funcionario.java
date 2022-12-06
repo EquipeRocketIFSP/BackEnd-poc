@@ -1,5 +1,6 @@
 package br.vet.sidekick.poc.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.validator.constraints.br.CPF;
@@ -42,6 +43,7 @@ public class Funcionario implements UserDetails {
 
     @ManyToOne
     @JoinColumn(name = "clinica")
+    @JsonBackReference("clinica_funcionarios")
     private Clinica clinica;
 
     @Column(name = "logradouro", nullable = false)

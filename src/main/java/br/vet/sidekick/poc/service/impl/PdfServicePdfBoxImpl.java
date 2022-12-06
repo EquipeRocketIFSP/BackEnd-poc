@@ -236,6 +236,11 @@ public class PdfServicePdfBoxImpl implements PdfService {
                         (width, value) -> createCellDefaulFont(row7, width, value)
                 );
 
+                log.info(prontuario.getAnimal().getEspecie());
+                log.info(prontuario.getAnimal().getSexo());
+                log.info(String.valueOf(prontuario.getAnimal().getIdade()));
+                log.info(prontuario.getAnimal().getFormaIdentificacao());
+
                 t.addListToTable(
                         List.of(
                                 List.of("Espécie",

@@ -23,7 +23,7 @@ public class Animal {
 
     @JoinColumn(name = "clinica_id", nullable = false)
     @ManyToOne
-    @JsonManagedReference("clinica_animais")
+    @JsonBackReference("clinica_animais")
     private Clinica clinica;
 
     @Column(nullable = false)
@@ -31,6 +31,7 @@ public class Animal {
 
     @OneToMany(mappedBy = "id")
     @Column(name = "filho_id")
+//    @JsonManagedReference()
     @JsonIgnore
     private List<Animal> filho;
 

@@ -1,6 +1,7 @@
 package br.vet.sidekick.poc.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import javax.persistence.*;
 import java.util.List;
@@ -18,7 +19,7 @@ public class TipoDocumento {
     private String descricao;
 
     @OneToMany(mappedBy = "id")
-    @JsonBackReference("prontuario_tipoDocumento")
+    @JsonManagedReference("prontuario_tipoDocumento")
     @ToString.Exclude
     private List<Documento> documento;
 }

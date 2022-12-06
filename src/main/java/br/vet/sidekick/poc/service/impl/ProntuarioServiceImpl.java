@@ -55,8 +55,6 @@ public class ProntuarioServiceImpl implements ProntuarioService {
         Optional<Tutor> tutor = tutorRepository.findById(prontuario.getTutor().getId());
         prontuario.setTutor(tutor.get());
 
-        List<Animal> animais = animalRepository.findAllByTutores_idAndNome(tutor.get().getId(), prontuario.getAnimal().getNome());
-
         Optional<Animal> animal = animalRepository.findByTutores_idAndNome(tutor.get().getId(), prontuario.getAnimal().getNome());
         prontuario.setAnimal(animal.get());
 

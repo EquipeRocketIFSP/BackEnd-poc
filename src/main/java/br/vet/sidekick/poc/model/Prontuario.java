@@ -1,6 +1,7 @@
 package br.vet.sidekick.poc.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -24,7 +25,7 @@ public class Prontuario {
     private Long id;
 
     @OneToMany
-    @JsonBackReference("prontuario_documentos")
+    @JsonManagedReference("prontuario_documentos")
     @ToString.Exclude
     private List<Documento> documentos;
 

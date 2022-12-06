@@ -1,6 +1,7 @@
 package br.vet.sidekick.poc.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.hibernate.validator.constraints.br.CNPJ;
 import org.hibernate.validator.constraints.br.CPF;
@@ -23,13 +24,17 @@ public class Clinica {
     private Long id;
 
     @OneToMany(mappedBy = "id")
-    @JsonBackReference("clinica_documentos")
+    @JsonManagedReference("clinica_funcionarios")
+    private List<Funcionario> funcionarios;
+
+    @OneToMany(mappedBy = "id")
+    @JsonManagedReference("clinica_documentos")
     @ToString.Exclude
     private List<Documento> documentos;
 
     @OneToMany(mappedBy = "id")
     @ToString.Exclude
-    @JsonBackReference("clinica_animais")
+    @JsonManagedReference("clinica_animais")
     private List<Animal> animais;
 
     @Column(nullable = false)

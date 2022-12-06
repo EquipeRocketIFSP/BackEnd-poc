@@ -33,6 +33,8 @@ public class ProntuarioDto {
                 .prescricoes(this.prescricoes)
                 .quantidade(this.quantidade)
                 .tutor(Tutor.builder().id(tutor).build())
+                .animal(Animal.builder().id(animal).build())
+                .veterinario(Veterinario.builder().id(veterinario).build())
                 .dataAtendimento(LocalDateTime.now())
                 .build();
     }

@@ -65,6 +65,10 @@ public class AnimalController extends BaseController {
     public ResponseEntity<List<Animal>> getAll(
             @RequestHeader(AUTHORIZATION) String auth
     ) {
+        var clinica = getClinicaFromRequester(auth);
+        log.info("clinica:" + clinica);
+        var animais = animalRepository.findAllByClinicaId(clinica);
+        log.info("Animais");
         return ResponseEntity.ok()
                 .body(animalRepository.findAllByClinicaId(getClinicaFromRequester(auth)));
     }

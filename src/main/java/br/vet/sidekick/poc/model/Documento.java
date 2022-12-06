@@ -1,6 +1,7 @@
 package br.vet.sidekick.poc.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import javax.persistence.*;
@@ -20,18 +21,18 @@ public class Documento {
     private Long id;
 
     @ManyToOne
-    @JsonManagedReference("prontuario_documentos")
+    @JsonBackReference("prontuario_documentos")
     private Prontuario prontuario;
 
     @Column(nullable = false)
     private String caminhoArquivo;
 
     @ManyToOne
-    @JsonManagedReference("clinica_documentos")
+    @JsonBackReference("clinica_documentos")
     private Clinica clinica;
 
     @ManyToOne
-    @JsonManagedReference("prontuario_tipoDocumento")
+    @JsonBackReference("prontuario_tipoDocumento")
     @JoinColumn(nullable = false)
     private TipoDocumento tipoDocumento;
 
