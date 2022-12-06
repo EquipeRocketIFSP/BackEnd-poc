@@ -29,6 +29,7 @@ public class Clinica {
 
     @OneToMany(mappedBy = "id")
     @ToString.Exclude
+    @JsonBackReference("clinica_animais")
     private List<Animal> animais;
 
     @Column(nullable = false)

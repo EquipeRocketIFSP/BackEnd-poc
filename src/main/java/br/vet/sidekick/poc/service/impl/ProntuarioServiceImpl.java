@@ -53,7 +53,7 @@ public class ProntuarioServiceImpl implements ProntuarioService {
         Optional<Clinica> clinica = clinicaRepository.findById(prontuario.getClinica().getId());
         prontuario.setClinica(clinica.get());
 
-        Optional<Tutor> tutor = tutorRepository.findByCpf(prontuario.getTutor().getCpf());
+        Optional<Tutor> tutor = tutorRepository.findById(prontuario.getTutor().getId());
         prontuario.setTutor(tutor.get());
 
         List<Animal> animais = animalRepository.findAllByTutores_idAndNome(tutor.get().getId(), prontuario.getAnimal().getNome());

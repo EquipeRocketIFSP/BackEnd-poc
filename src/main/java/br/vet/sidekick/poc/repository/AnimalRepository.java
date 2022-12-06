@@ -10,8 +10,8 @@ import java.util.Optional;
 
 @Repository
 public interface AnimalRepository extends JpaRepository<Animal, Long> {
-    List<Animal> findAllByClinica(Long id);
-    List<Animal> findAllByClinica(Clinica clinica);
+    List<Animal> findAllByClinicaId(Long id);
+    List<Animal> findAllByClinicaId(Clinica clinica);
 
     Optional<Animal> findByTutores_idAndNome(Long id, String nome);
 

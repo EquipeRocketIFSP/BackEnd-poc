@@ -23,9 +23,12 @@ public class ListagemProntuarioDto {
     private int quantidade;
 
     public ListagemProntuarioDto(Prontuario prontuario) {
+        Animal animal = prontuario.getAnimal();
+        animal.setProntuarios(null);
+
         this.id = prontuario.getId();
         this.veterinario = prontuario.getVeterinario().getNome();
-        this.animal = prontuario.getAnimal();
+        this.animal = animal;
         this.diagnostico = prontuario.getDiagnostico();
         this.observacoes = prontuario.getObservacoes();
         this.medicamento = prontuario.getMedicamento();

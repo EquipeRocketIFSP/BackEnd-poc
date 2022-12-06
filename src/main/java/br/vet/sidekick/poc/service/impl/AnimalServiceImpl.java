@@ -3,6 +3,7 @@ package br.vet.sidekick.poc.service.impl;
 import br.vet.sidekick.poc.controller.dto.CadastroAnimalDto;
 import br.vet.sidekick.poc.exceptionResolver.exception.AnimalNotFound;
 import br.vet.sidekick.poc.model.Animal;
+import br.vet.sidekick.poc.model.Clinica;
 import br.vet.sidekick.poc.model.Tutor;
 import br.vet.sidekick.poc.repository.AnimalRepository;
 import br.vet.sidekick.poc.repository.TutorRepository;
@@ -55,7 +56,7 @@ public class AnimalServiceImpl implements AnimalService {
                 .raca(animalDto.getRaca())
                 .especie(animalDto.getEspecie())
                 .pelagem(animalDto.getPelagem())
-                .clinica(clinicaId)
+                .clinica(Clinica.builder().id(clinicaId).build())
                 .formaIdentificacao(animalDto.getFormaIdentificacao() == null ? animalDto.getFormaIdentificacao() : "Sem dados")
                 .tutores(
                         animalDto.getTutores().stream()

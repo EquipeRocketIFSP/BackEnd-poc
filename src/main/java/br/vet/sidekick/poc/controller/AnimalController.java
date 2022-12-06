@@ -1,10 +1,8 @@
 package br.vet.sidekick.poc.controller;
 
-import br.vet.sidekick.poc.conf.security.service.TokenService;
 import br.vet.sidekick.poc.controller.dto.CadastroAnimalDto;
 import br.vet.sidekick.poc.controller.dto.ListagemTutoresAnimalDto;
 import br.vet.sidekick.poc.model.Animal;
-import br.vet.sidekick.poc.model.Funcionario;
 import br.vet.sidekick.poc.model.Tutor;
 import br.vet.sidekick.poc.repository.AnimalRepository;
 import br.vet.sidekick.poc.service.AnimalService;
@@ -13,9 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.ws.rs.QueryParam;
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -70,7 +66,7 @@ public class AnimalController extends BaseController {
             @RequestHeader(AUTHORIZATION) String auth
     ) {
         return ResponseEntity.ok()
-                .body(animalRepository.findAllByClinica(getClinicaFromRequester(auth)));
+                .body(animalRepository.findAllByClinicaId(getClinicaFromRequester(auth)));
     }
 
     @DeleteMapping("/{id}")

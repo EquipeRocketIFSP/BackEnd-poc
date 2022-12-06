@@ -22,7 +22,7 @@ public class AnimalResponse {
     private List<TutorResponse> tutores;
     public AnimalResponse(Animal animal) {
         this.id = animal.getId();
-        this.clinica = animal.getClinica();
+        this.clinica = animal.getClinica().getId();
         this.especie = animal.getEspecie();
         this.filho = animal.getFilho().stream().map(Animal::getId).collect(Collectors.toList());
         this.formaIdentificacao = animal.getFormaIdentificacao();

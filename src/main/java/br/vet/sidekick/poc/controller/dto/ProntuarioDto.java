@@ -12,7 +12,7 @@ public class ProntuarioDto {
     private Long clinica;
     private Long veterinario;
     private Long animal;
-    private String tutor;
+    private Long tutor;
     private String diagnostico;
     private String observacoes;
     private String medicamento;
@@ -32,7 +32,7 @@ public class ProntuarioDto {
                 .medida(this.medida)
                 .prescricoes(this.prescricoes)
                 .quantidade(this.quantidade)
-                .tutor(Tutor.builder().cpf(tutor).build())
+                .tutor(Tutor.builder().id(tutor).build())
                 .dataAtendimento(LocalDateTime.now())
                 .build();
     }

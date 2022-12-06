@@ -21,8 +21,10 @@ public class Animal {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "clinica_id", nullable = false)
-    private Long clinica;
+    @JoinColumn(name = "clinica_id", nullable = false)
+    @ManyToOne
+    @JsonManagedReference("clinica_animais")
+    private Clinica clinica;
 
     @Column(nullable = false)
     private String especie;
