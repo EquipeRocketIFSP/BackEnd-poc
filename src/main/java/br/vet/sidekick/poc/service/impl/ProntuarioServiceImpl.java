@@ -4,7 +4,6 @@ import br.vet.sidekick.poc.model.*;
 import br.vet.sidekick.poc.repository.*;
 import br.vet.sidekick.poc.service.PdfService;
 import br.vet.sidekick.poc.service.ProntuarioService;
-import br.vet.sidekick.poc.repository.impl.S3BucketServiceRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
