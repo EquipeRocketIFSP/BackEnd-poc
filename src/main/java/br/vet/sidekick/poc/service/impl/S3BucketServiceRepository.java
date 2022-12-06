@@ -1,4 +1,4 @@
-package br.vet.sidekick.poc.repository.impl;
+package br.vet.sidekick.poc.service.impl;
 
 import br.vet.sidekick.poc.repository.PdfRepository;
 import com.amazonaws.AmazonServiceException;
