@@ -2,6 +2,7 @@ package br.vet.sidekick.poc.controller;
 
 import br.vet.sidekick.poc.conf.security.service.TokenService;
 import br.vet.sidekick.poc.controller.dto.CadastroAnimalDto;
+import br.vet.sidekick.poc.controller.dto.ListagemTutoresAnimalDto;
 import br.vet.sidekick.poc.model.Animal;
 import br.vet.sidekick.poc.model.Funcionario;
 import br.vet.sidekick.poc.model.Tutor;
@@ -12,10 +13,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.ws.rs.QueryParam;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
@@ -50,6 +53,16 @@ public class AnimalController extends BaseController {
                 ? ResponseEntity.ok().body(referenceAnimal.get())
                 : ResponseEntity.notFound().build();
 
+    }
+
+    @GetMapping("/{id}/tutores")
+    public ResponseEntity<List<ListagemTutoresAnimalDto>> getTutoresFromAnimal(@PathVariable Long id) {
+        List<Tutor> tutores = this.animalService.getAllTutoresByAnimal(id);
+        List<ListagemTutoresAnimalDto> tutoresAnimalDtos = tutores.stream()
+                .map((tutor) -> new ListagemTutoresAnimalDto(tutor))
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(tutoresAnimalDtos);
     }
 
     @GetMapping

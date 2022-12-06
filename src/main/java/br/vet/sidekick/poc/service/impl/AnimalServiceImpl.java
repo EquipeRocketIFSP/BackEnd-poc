@@ -1,7 +1,9 @@
 package br.vet.sidekick.poc.service.impl;
 
 import br.vet.sidekick.poc.controller.dto.CadastroAnimalDto;
+import br.vet.sidekick.poc.exceptionResolver.exception.AnimalNotFound;
 import br.vet.sidekick.poc.model.Animal;
+import br.vet.sidekick.poc.model.Tutor;
 import br.vet.sidekick.poc.repository.AnimalRepository;
 import br.vet.sidekick.poc.repository.TutorRepository;
 import br.vet.sidekick.poc.service.AnimalService;
@@ -9,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -31,6 +34,16 @@ public class AnimalServiceImpl implements AnimalService {
 //            return Optional.empty();
 
         return Optional.of(animalRepository.save(animal));
+    }
+
+    @Override
+    public List<Tutor> getAllTutoresByAnimal(Long id) {
+        Optional<Animal> responseAnimal = this.animalRepository.findById(id);
+
+        if (responseAnimal.isEmpty())
+            throw new AnimalNotFound();
+
+        return responseAnimal.get().getTutores();
     }
 
     private Animal convert(CadastroAnimalDto animalDto, Long clinicaId) {
