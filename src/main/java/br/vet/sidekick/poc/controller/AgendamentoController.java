@@ -28,34 +28,22 @@ public class AgendamentoController extends BaseController {
 
     @PostMapping
     public ResponseEntity<Agendamento> registerAgendamento(@RequestBody CadastroAgendamentoDto agendamentoDto) {
-        try {
-            Agendamento agendamento = this.agendamentoService.create(agendamentoDto);
+        Agendamento agendamento = this.agendamentoService.create(agendamentoDto);
 
-            return ResponseEntity.created(URI.create("/agendamento/" + agendamento.getId())).build();
-        } catch (ResponseStatusException e) {
-            return ResponseEntity.status(e.getStatus()).build();
-        } catch (Exception e) {
-            return ResponseEntity.internalServerError().build();
-        }
+        return ResponseEntity.created(URI.create("/agendamento/" + agendamento.getId())).build();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<RecuperarAgendamentoDto> getOne(@PathVariable Long id) {
-        try {
-            Agendamento agendamento = this.agendamentoService.getOne(id);
-            RecuperarAgendamentoDto agendamentoDto = new RecuperarAgendamentoDto(
-                    agendamento.getAnimal().getNome(),
-                    agendamento.getDataConsulta(),
-                    agendamento.getCriadoEm(),
-                    agendamento.getTipoConsulta()
-            );
+        Agendamento agendamento = this.agendamentoService.getOne(id);
+        RecuperarAgendamentoDto agendamentoDto = new RecuperarAgendamentoDto(
+                agendamento.getAnimal().getNome(),
+                agendamento.getDataConsulta(),
+                agendamento.getCriadoEm(),
+                agendamento.getTipoConsulta()
+        );
 
-            return ResponseEntity.ok(agendamentoDto);
-        } catch (ResponseStatusException e) {
-            return ResponseEntity.status(e.getStatus()).build();
-        } catch (Exception e) {
-            return ResponseEntity.internalServerError().build();
-        }
+        return ResponseEntity.ok(agendamentoDto);
     }
 
     @GetMapping
